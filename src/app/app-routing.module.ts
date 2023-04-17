@@ -4,12 +4,14 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { InventoryComponent } from './components/inventory/inventory.component';
 import { StoragesComponent } from './components/storages/storages.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { OrdersComponent } from './orders/orders.component';
 
 const routes: Routes = [
   {path:'', component: DashboardComponent},
   {path: 'inventory', component: InventoryComponent},
   {path: 'storages', component: StoragesComponent},
-  {path: 'profile', component: ProfileComponent}
+  {path: 'profile', component: ProfileComponent},
+  {path: 'orders', component: OrdersComponent}
 ];
 
 @NgModule({
