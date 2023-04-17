@@ -4,7 +4,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { InventoryComponent } from './components/inventory/inventory.component';
 import { StoragesComponent } from './components/storages/storages.component';
 import { ProfileComponent } from './components/profile/profile.component';
-import { OrdersComponent } from './orders/orders.component';
+import { OrdersComponent } from './components/orders/orders.component';
 
 const routes: Routes = [
   {path:'', component: DashboardComponent},
