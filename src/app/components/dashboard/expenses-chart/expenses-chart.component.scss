@@ -7,6 +7,7 @@
 	background-color: #3e3e3e;
 	//#3e3e3e #ff9500
 	border-radius: 6px;
+	width: 100%;
 	p,
 	span {
 		margin: 0.5rem;
@@ -16,13 +17,19 @@
 		font-weight: 800;
 		font-size: 18px;
 	}
+	span {
+		color: #FF9500;
+	}
 	.expenses-charts {
 		min-width: 100%;
 		display: flex;
 		justify-content: space-around;
+		align-items: center;
 		canvas {
+			// Ни в коем случае
 			max-width: 300px;
 			max-height: 300px;
+			// не удалять эти две строчки
 			background-color: #fff;
 			margin: 1rem;
 			padding: 0.4rem;
