@@ -1,0 +1,19 @@
+<div class="expenses-block">
+  <p>Расходы за последний месяц</p>
+  <span>52000₽</span>
+  <div class="expenses-charts">
+    <canvas baseChart
+			type="doughnut"
+			[datasets]="doughnutData"
+			[labels]="doughnutLabels"
+			[options]="doughnutOptions"
+		></canvas>
+    <canvas
+      style="display: none"
+      baseChart
+      chartType="doughnut"
+      [data]="lineChartData"
+      [labels]="labels"
+    ></canvas>
+  </div>
+</div>

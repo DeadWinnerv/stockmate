@@ -13,6 +13,11 @@ import { StoragesComponent } from './components/storages/storages.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OrdersComponent } from './components/orders/orders.component';
+import { ExpensesChartComponent } from './components/dashboard/expenses-chart/expenses-chart.component';
+import { OrdersChartComponent } from './components/dashboard/orders-chart/orders-chart.component';
+import { StocksChartComponent } from './components/dashboard/stocks-chart/stocks-chart.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +27,12 @@ import { OrdersComponent } from './components/orders/orders.component';
     InventoryComponent,
     StoragesComponent,
     ProfileComponent,
-    OrdersComponent
+    OrdersComponent,
+    ExpensesChartComponent,
+    OrdersChartComponent,
+    StocksChartComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
