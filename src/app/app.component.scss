@@ -1,7 +1,8 @@
 .wrapper {
-	display: grid;
-	grid-template-columns: 16vw 84vw;
-	min-height: 100%;
-	max-width: 100%;
-	overflow-x: hidden;
+	position: relative;
+	display: flex;
+}
+main {
+	flex: 1;
+	margin-left: 16vw;
 }

@@ -1,20 +1,22 @@
+
+
 mat-icon {
-	color: #ff9500;
+	color:#FF9500;
 	fill: none;
 }
 
 mat-icon.active {
-	color: #3e3e3e;
+	color:#3E3E3E;
 }
 
 .side-menu {
 	padding: 0.6rem;
-	position: -webkit-sticky;
-	position: sticky;
-	float: right;
-	min-width: 16vw;
-	min-height: 100%;
-	background-color: #3e3e3e;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 16vw;
+	height: 100vh;
+	background-color: #3E3E3E;
 	display: flex;
 	flex-direction: column;
 	gap: 3rem;
@@ -26,7 +28,7 @@ mat-icon.active {
 		padding: 1rem;
 		span {
 			font-size: 28px;
-			color: #ff9500;
+			color: #FF9500;
 		}
 	}
 	.side-menu__block {
@@ -48,11 +50,11 @@ mat-icon.active {
 				}
 				a:hover {
 					border-radius: 12px;
-					background-color: #ff9500;
+					background-color: #FF9500;
 					transition: 0.4s;
 					mat-icon {
-						transition: 0.4s;
-						color: #3e3e3e;
+					transition: 0.4s;
+					color:#3E3E3E
 					}
 				}
 			}
@@ -61,6 +63,6 @@ mat-icon.active {
 }
 
 .active-button {
-	background-color: #ff9500;
+	background-color: #FF9500;
 	transition: 0.4s;
 }
