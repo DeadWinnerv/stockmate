@@ -1,1 +1,20 @@
-<p>stocks-chart works!</p>
+<div class="stocks-block">
+  <p>Статистика по остаткам</p>
+  <div class="stocks-charts">
+		<div class="stocks-charts__stocks-by-storage">
+			<span>Больше всего позиций</span>
+			<select name="" id="">
+				<option value="">Все</option>
+				<option value="">Хоругвино</option>
+				<option value="">Тверь</option>
+				<option value="">Воронеж</option>
+			</select>
+			<canvas
+				baseChart
+				type="doughnut"
+				[datasets]="doughnutData"
+				[labels]="doughnutLabels"
+			></canvas>
+		</div>
+  </div>
+</div>
