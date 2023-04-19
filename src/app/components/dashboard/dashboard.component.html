@@ -1,17 +1,22 @@
 <div class="dashboard">
   <div class="tabs-menu">
-    <button class="active">Расходы</button>
-		<button>Заказы</button>
-		<button>Остатки</button>
+    <button [ngClass]="buttonValue === 'expenses' ? 'active' : null" (click)="setCurrentGroupValue('expenses')">Расходы</button>
+		<button [ngClass]="buttonValue === 'orders' ? 'active' : null" (click)="setCurrentGroupValue('orders')">Заказы</button>
+		<button [ngClass]="buttonValue === 'stocks' ? 'active' : null" (click)="setCurrentGroupValue('stocks')">Остатки</button>
   </div>
 	<div class="content">
-		<div class="content__expenses-block">
+		<div class="content__expenses-block" *ngIf="buttonValue==='expenses'"
+		>
 			<app-expenses-chart></app-expenses-chart>
 		</div>
-		<div class="content__orders-block">
+		<div class="content__orders-block"
+		*ngIf="buttonValue==='orders'"
+		>
 			<app-orders-chart></app-orders-chart>
 		</div>
-		<div class="content__stocks-block">
+		<div class="content__stocks-block"
+		*ngIf="buttonValue==='stocks'"
+		>
 			<app-stocks-chart></app-stocks-chart>
 		</div>
 	</div>
