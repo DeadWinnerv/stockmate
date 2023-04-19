@@ -1,6 +1,6 @@
 <div class="expenses-block">
   <p>Расходы за последний месяц</p>
-  <span>52000₽</span>
+  <span>Всего: 52000₽</span>
   <div class="expenses-charts">
     <canvas baseChart
 			type="doughnut"
@@ -9,9 +9,8 @@
 			[options]="doughnutOptions"
 		></canvas>
     <canvas
-      style="display: none"
       baseChart
-      chartType="doughnut"
+      type="line"
       [data]="lineChartData"
       [labels]="labels"
     ></canvas>

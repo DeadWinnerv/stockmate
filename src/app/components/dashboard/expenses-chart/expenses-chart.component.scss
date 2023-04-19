@@ -1,28 +1,33 @@
 .expenses-block {
-	margin: 3rem;
 	padding: 0.4rem;
 	font-family: "Montserrat", sans-serif;
 	display: flex;
 	flex-direction: column;
-	background-color: #3e3e3e;
 	//#3e3e3e #ff9500
 	border-radius: 6px;
+	width: 100%;
+	height: 100%;
 	p,
 	span {
 		margin: 0.5rem;
-		color: #fff;
 	}
 	p {
 		font-weight: 800;
-		font-size: 18px;
+		font-size: 26px;
+	}
+	span {
+		color: #FF9500;
 	}
 	.expenses-charts {
 		min-width: 100%;
 		display: flex;
 		justify-content: space-around;
+		align-items: center;
 		canvas {
-			max-width: 300px;
+			// Ни в коем случае
+			max-width: 50%;
 			max-height: 300px;
+			// не удалять эти две строчки
 			background-color: #fff;
 			margin: 1rem;
 			padding: 0.4rem;

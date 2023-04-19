@@ -1,0 +1,41 @@
+.stocks-block {
+	padding: 0.4rem;
+	font-family: "Montserrat", sans-serif;
+	display: flex;
+	flex-direction: column;
+	//#3e3e3e #ff9500
+	border-radius: 6px;
+	width: 100%;
+	min-height: 100%;
+	p,
+	span {
+		margin: 0.5rem;
+	}
+	p {
+		font-weight: 800;
+		font-size: 26px;
+	}
+	span {
+		color: #FF9500;
+	}
+	.stocks-charts {
+		&__stocks-by-storage {
+			min-width: 100%;
+			flex: 1;
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
+
+		}
+	}
+}
+canvas {
+	// Ни в коем случае
+	max-width: 50%;
+	max-height: 300px;
+	// не удалять эти две строчки
+	background-color: #fff;
+	margin: 1rem;
+	padding: 0.4rem;
+	border-radius: 4px;
+}
