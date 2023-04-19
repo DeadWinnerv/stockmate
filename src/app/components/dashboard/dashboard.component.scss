@@ -1,10 +1,31 @@
 .dashboard {
+	margin-left: 16vw;
 	display: flex;
 	flex-direction: column;
-	gap: 1rem;
-	min-height: 200%;
-	margin-left: 16vw;
-	app-expenses-chart {
-		max-width: 60%;
+	align-items: center;
+	.tabs-menu {
+		min-width: 100%;
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		background-color: #3e3e3e;
+		button {
+			cursor: pointer;
+			padding: 1rem;
+			font-size: 18px;
+			background-color: rgba(0,0,0,0);
+			color: #fff;
+			transition: 0.5s;
+		}
+		button:hover {
+			transition: 0.5s;
+			color: #ff9500;
+		}
+		button.active {
+			background-color: #ff9500;
+		}
+		button.active:hover {
+			transition: 0.5s;
+			color: #fff;
+		}
 	}
 }

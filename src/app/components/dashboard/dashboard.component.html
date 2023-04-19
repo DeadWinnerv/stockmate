@@ -1,5 +1,18 @@
 <div class="dashboard">
-	<app-expenses-chart></app-expenses-chart>
-	<app-orders-chart></app-orders-chart>
-	<app-stocks-chart></app-stocks-chart>
+  <div class="tabs-menu">
+    <button class="active">Расходы</button>
+		<button>Заказы</button>
+		<button>Остатки</button>
+  </div>
+	<div class="content">
+		<div class="content__expenses-block">
+			<app-expenses-chart></app-expenses-chart>
+		</div>
+		<div class="content__orders-block">
+			<app-orders-chart></app-orders-chart>
+		</div>
+		<div class="content__stocks-block">
+			<app-stocks-chart></app-stocks-chart>
+		</div>
+	</div>
 </div>
