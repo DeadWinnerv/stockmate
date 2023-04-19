@@ -11,7 +11,7 @@ export class ExpensesChartComponent {
   doughnutData: ChartConfiguration<'doughnut'>['data']['datasets'] = [
     {data: [53,19,69]}
   ] 
-  doughnutLabels: string[] = ['213u1sdjnbsnfbsdbfhsjdfh','2','3']
+  doughnutLabels: string[] = ['Оружие','Контрабанда','Аптека']
 
   doughnutOptions: ChartConfiguration<'doughnut'>['options'] = {
     responsive: true,
