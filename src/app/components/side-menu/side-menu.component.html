@@ -7,8 +7,7 @@
     <ul>
       <li>
         <a routerLink="/profile"
-        [ngClass]="buttonValue === 'profile' ? 'active-button' : null"
-        (click)="setButtonValue('profile')"
+        [ngClass]="activeButton === 'profile' ? 'active-button' : null"
         ><mat-icon>portrait</mat-icon>Профиль</a>
       </li>
       <li>
@@ -21,27 +20,23 @@
       <li>
         <a 
         routerLink="/dashboard"
-        [ngClass]="buttonValue === 'dashboard' ? 'active-button' : null"
-        (click)="setButtonValue('dashboard')"
+        [ngClass]="activeButton === 'dashboard' ? 'active-button' : null"
         ><mat-icon>dashboard</mat-icon>Главная</a
         >
       </li>
       <li>
         <a routerLink="/inventory"
-        [ngClass]="buttonValue === 'inventory' ? 'active-button' : null"
-        (click)="setButtonValue('inventory')"
+        [ngClass]="activeButton === 'inventory' ? 'active-button' : null"
         ><mat-icon>list_alt</mat-icon>Инвентарь</a>
       </li>
       <li>
         <a routerLink="/orders"
-        [ngClass]="buttonValue === 'orders' ? 'active-button' : null"
-        (click)="setButtonValue('orders')"
+        [ngClass]="activeButton === 'orders' ? 'active-button' : null"
         ><mat-icon>grading</mat-icon>Заявки</a>
       </li>
       <li>
         <a routerLink="/storages"
-        [ngClass]="buttonValue === 'storages' ? 'active-button' : null"
-        (click)="setButtonValue('storages')"
+        [ngClass]="activeButton === 'storages' ? 'active-button' : null"
         ><mat-icon>other_houses</mat-icon>Склады</a>
       </li>
     </ul>

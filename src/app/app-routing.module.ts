@@ -10,11 +10,11 @@ import { RegisterComponent } from './components/register/register.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
-  {path: 'dashboard', component: DashboardComponent},
-  {path: 'inventory', component: InventoryComponent},
-  {path: 'storages', component: StoragesComponent},
-  {path: 'profile', component: ProfileComponent},
-  {path: 'orders', component: OrdersComponent},
+  {path: 'dashboard', component: DashboardComponent, data: {activeButton: 'dashboard'}},
+  {path: 'inventory', component: InventoryComponent, data: {activeButton: 'inventory'}},
+  {path: 'storages', component: StoragesComponent, data: {activeButton: 'storages'}},
+  {path: 'profile', component: ProfileComponent, data: {activeButton: 'profile'}},
+  {path: 'orders', component: OrdersComponent, data: {activeButton: 'orders'}},
   {path: 'login', component: LoginComponent, data: {hideMenu: true}},
   {path: 'register', component: RegisterComponent, data: {hideMenu: true}}
 ];
