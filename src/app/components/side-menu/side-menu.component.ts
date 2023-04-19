@@ -17,4 +17,9 @@ export class SideMenuComponent {
       }
     });
   }
+
+  buttonValue: 'profile' | 'dashboard' | 'inventory' | 'orders' | 'storages'  = 'dashboard'
+  setButtonValue(value: 'profile' | 'dashboard' | 'inventory' | 'orders' | 'storages'):void {
+    this.buttonValue = value
+  }
 }

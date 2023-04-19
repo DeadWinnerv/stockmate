@@ -6,7 +6,10 @@
   <div class="side-menu__block side-menu__profile">
     <ul>
       <li>
-        <a routerLink="/profile"><mat-icon>portrait</mat-icon>Профиль</a>
+        <a routerLink="/profile"
+        [ngClass]="buttonValue === 'profile' ? 'active-button' : null"
+        (click)="setButtonValue('profile')"
+        ><mat-icon>portrait</mat-icon>Профиль</a>
       </li>
       <li>
         <a href="/"><mat-icon>logout</mat-icon>Выход</a>
@@ -16,18 +19,30 @@
   <div class="side-menu__block side-menu__navbar">
     <ul>
       <li>
-        <a routerLink="/" class="active-button"
-          ><mat-icon class="active">dashboard</mat-icon>Главная</a
+        <a 
+        routerLink="/dashboard"
+        [ngClass]="buttonValue === 'dashboard' ? 'active-button' : null"
+        (click)="setButtonValue('dashboard')"
+        ><mat-icon>dashboard</mat-icon>Главная</a
         >
       </li>
       <li>
-        <a routerLink="/inventory"><mat-icon>list_alt</mat-icon>Инвентарь</a>
+        <a routerLink="/inventory"
+        [ngClass]="buttonValue === 'inventory' ? 'active-button' : null"
+        (click)="setButtonValue('inventory')"
+        ><mat-icon>list_alt</mat-icon>Инвентарь</a>
       </li>
       <li>
-        <a routerLink="/orders"><mat-icon>grading</mat-icon>Заявки</a>
+        <a routerLink="/orders"
+        [ngClass]="buttonValue === 'orders' ? 'active-button' : null"
+        (click)="setButtonValue('orders')"
+        ><mat-icon>grading</mat-icon>Заявки</a>
       </li>
       <li>
-        <a routerLink="/storages"><mat-icon>other_houses</mat-icon>Склады</a>
+        <a routerLink="/storages"
+        [ngClass]="buttonValue === 'storages' ? 'active-button' : null"
+        (click)="setButtonValue('storages')"
+        ><mat-icon>other_houses</mat-icon>Склады</a>
       </li>
     </ul>
   </div>

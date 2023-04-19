@@ -4,11 +4,6 @@ mat-icon {
 	color:#FF9500;
 	fill: none;
 }
-
-mat-icon.active {
-	color:#3E3E3E;
-}
-
 .side-menu {
 	padding: 0.6rem;
 	position: fixed;
@@ -65,4 +60,7 @@ mat-icon.active {
 .active-button {
 	background-color: #FF9500;
 	transition: 0.4s;
+	mat-icon {
+		color: #3E3E3E
+	}
 }
