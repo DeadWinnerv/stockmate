@@ -1,6 +1,6 @@
 <div class="wrapper">
-  <app-side-menu></app-side-menu>
-  <main>
+  <app-side-menu *ngIf="showMenu"></app-side-menu>
+  <main [ngClass]="showMenu ? 'margin-class' : null">
     <router-outlet>
     </router-outlet>
 
