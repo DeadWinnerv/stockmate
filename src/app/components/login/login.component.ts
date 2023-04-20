@@ -1,5 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth.service';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -14,4 +18,36 @@ import { trigger, transition, style, animate } from '@angular/animations';
     ]),
   ],
 })
-export class LoginComponent {}
+export class LoginComponent implements OnInit, OnDestroy {
+  loginForm: FormGroup;
+  aSub: Subscription;
+  constructor(private auth: AuthService, private router: Router) {}
+  submitLogin() {
+    this.loginForm.disable();
+    this.aSub = this.auth.login(this.loginForm.value).subscribe({
+      next: () => {
+          this.router.navigate(['']);
+      },
+      error: error => {
+          console.warn(error);
+          this.loginForm.enable();
+      }
+  });
+  }
+  ngOnInit(): void {
+    this.loginForm = new FormGroup({
+      login: new FormControl('', [Validators.required]),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.pattern(
+          '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\\d$@$!%*?&].{8,}'
+        ),
+      ]),
+    });
+  }
+  ngOnDestroy(): void {
+    if(this.aSub){
+      this.aSub.unsubscribe();
+    }
+  }
+}

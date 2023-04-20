@@ -10,7 +10,7 @@
         [ngClass]="activeButton === 'profile' ? 'active-button' : null"
         ><mat-icon>portrait</mat-icon>Профиль</a>
       </li>
-      <li>
+      <li (click)="auth.logout()">
         <a href="/"><mat-icon>logout</mat-icon>Выход</a>
       </li>
     </ul>
@@ -18,7 +18,7 @@
   <div class="side-menu__block side-menu__navbar">
     <ul>
       <li>
-        <a 
+        <a
         routerLink="/dashboard"
         [ngClass]="activeButton === 'dashboard' ? 'active-button' : null"
         ><mat-icon>dashboard</mat-icon>Главная</a
