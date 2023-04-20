@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgChartsModule } from 'ng2-charts';
+import {MatDialogModule} from '@angular/material/dialog';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -44,7 +45,8 @@ import { RegisterComponent } from './components/register/register.component';
     MatIconModule,
     MatTableModule,
     MatPaginatorModule,
-    NgChartsModule
+    NgChartsModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent],
