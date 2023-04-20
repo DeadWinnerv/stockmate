@@ -9,7 +9,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
+  {path: '**', redirectTo: '/dashboard', pathMatch: 'full'},
   {path: 'dashboard', component: DashboardComponent, data: {activeButton: 'dashboard'}},
   {path: 'inventory', component: InventoryComponent, data: {activeButton: 'inventory'}},
   {path: 'storages', component: StoragesComponent, data: {activeButton: 'storages'}},
