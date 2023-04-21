@@ -9,8 +9,6 @@ import {tap} from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
-  private token: string = '';
-
 
   constructor(private route: Router, private http: HttpClient) { }
 
@@ -19,7 +17,7 @@ export class AuthService {
       .pipe(
         tap(({token}) => {
           localStorage.setItem('token', token);
-          this.setToken(token);
+          console.log('success!');
         })
       )
   }
@@ -28,22 +26,14 @@ export class AuthService {
       .pipe(
         tap(({token}) => {
           localStorage.setItem('token', token);
-          this.setToken(token);
         })
       )
   }
-  setToken(token: string) {
-    this.token = token;
-  }
-  getToken(): string{
-    return this.token;
-  }
   isAuth(): boolean{
-    return !!this.token;
+    return !!localStorage.getItem("token");
   }
   logout() {
-    this.setToken('');
-    localStorage.clear();
+    localStorage.removeItem("token");
   }
 
 }

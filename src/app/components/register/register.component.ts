@@ -48,7 +48,6 @@ export class RegisterComponent {
       ]),
       phone: new FormControl('', [
         Validators.required,
-        Validators.pattern('[0-9]'),
       ]),
       email: new FormControl('', [
         Validators.required,
