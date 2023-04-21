@@ -43,6 +43,9 @@
 			background-color: #ff9500;
 			color: #fff;
 			transition: 0.4s;
+      &:disabled{
+        background-color: #343332;
+      }
 		}
 		button:hover {
 			transition: 0.4s;
@@ -63,6 +66,9 @@
 		border-radius: 12px;
 		transition: 0.4s;
 	}
+}
+.input-warning{
+  color: #ff006e;
 }
 
 .slide-in {
