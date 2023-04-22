@@ -10,4 +10,5 @@ export interface IRegisterUser {
   company: String;
   phone?: Number;
   email?: String;
+  _id: String;
 }
