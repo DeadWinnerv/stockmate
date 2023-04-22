@@ -3,7 +3,7 @@
     class="profile__avatar"
     (mouseenter)="changeAvatarButton='active'"
     (mouseleave)="changeAvatarButton = null"
-		
+
   >
     <img
       src="https://i.iheart.com/v3/url/aHR0cHM6Ly9hc3NldHMucG9kb21hdGljLm5ldC90cy9kNS82My9hMi9jb2Rlbm5pa2Jha2h0MS8zMDAweDMwMDBfMTU2ODk4NDguanBn"
@@ -23,7 +23,7 @@
         <span>{{ user.firstName }}</span>
       </li>
       <li>
-        <span>{{ user.secondName }}</span>
+        <span>{{ user.lastName }}</span>
       </li>
       <li>
         Телефон: <span>{{ user.phone ? user.phone : "не указано" }}</span>
