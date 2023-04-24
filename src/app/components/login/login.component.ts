@@ -38,9 +38,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       },
     });
   }
-  handleCloseError(): void{
-    this.isErrorDisplay = false;
-  }
   ngOnInit(): void {
     this.loginForm = new FormGroup({
       login: new FormControl('', [Validators.required]),
