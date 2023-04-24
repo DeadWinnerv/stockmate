@@ -7,20 +7,51 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { OrdersComponent } from './components/orders/orders.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { AuthGuard } from './classes/auth.guard';
 
 const routes: Routes = [
-  {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
-  {path: 'dashboard', component: DashboardComponent},
-  {path: 'inventory', component: InventoryComponent},
-  {path: 'storages', component: StoragesComponent},
-  {path: 'profile', component: ProfileComponent},
-  {path: 'orders', component: OrdersComponent},
-  {path: 'login', component: LoginComponent, data: {hideMenu: true}},
-  {path: 'register', component: RegisterComponent, data: {hideMenu: true}}
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [AuthGuard],
+    data: { activeButton: 'dashboard' },
+  },
+  {
+    path: 'inventory',
+    component: InventoryComponent,
+    canActivate: [AuthGuard],
+    data: { activeButton: 'inventory' },
+  },
+  {
+    path: 'storages',
+    component: StoragesComponent,
+    canActivate: [AuthGuard],
+    data: { activeButton: 'storages' },
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    canActivate: [AuthGuard],
+    data: { activeButton: 'profile' },
+  },
+  {
+    path: 'orders',
+    component: OrdersComponent,
+    canActivate: [AuthGuard],
+    data: { activeButton: 'orders' },
+  },
+  { path: 'login', component: LoginComponent, data: { hideMenu: true } },
+  { path: 'register', component: RegisterComponent, data: { hideMenu: true } },
+  {
+    path: '**',
+    redirectTo: '/dashboard',
+    pathMatch: 'full',
+    data: { activeButton: 'dashboard' },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

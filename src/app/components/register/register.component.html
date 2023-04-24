@@ -1,19 +1,84 @@
 <div class="register-page">
-	<div class="register" [@slideIn]>
-		<div class="logo">
-			<mat-icon>inventory_2</mat-icon>
-			<span>Stockmate</span>
-		</div>
-		<input type="text" placeholder="Логин">
-		<input type="password" placeholder="Пароль">
-		<input type="password" placeholder="Повторите пароль">
-		<br>
-		<input type="text" placeholder="Имя">
-		<input type="text" placeholder="Фамилия">
-		<input type="text" placeholder="Компания">
-		<input type="phone" [placeholder]="+79009999999">
-		<input type="email" placeholder="email">
-		<button>Зарегестрироваться</button>
-		<span>Уже есть аккаунт? <a routerLink="/login">Войти</a></span>
-	</div>
+  <form
+    class="register"
+    [@slideIn]
+    [formGroup]="regForm"
+    (ngSubmit)="submitRegister()"
+  >
+    <div class="logo">
+      <mat-icon>inventory_2</mat-icon>
+      <span>Stockmate</span>
+    </div>
+    <div *ngIf="isErrorDisplay" class="register-error">{{registerError}} <mat-icon class="error-close" (click)="this.isErrorDisplay = false">close</mat-icon></div>
+    <input formControlName="login" type="login" placeholder="Логин*" />
+    <p
+      *ngIf="
+        this.regForm.get('login')?.invalid && this.regForm.get('login')?.touched
+      "
+      class="input-warning"
+    >
+    Укажите логин (без цифр)
+    </p>
+    <input formControlName="password" type="password" placeholder="Пароль*" />
+    <p
+      *ngIf="
+        this.regForm.get('password')?.invalid &&
+        this.regForm.get('password')?.touched
+      "
+      class="input-warning"
+    >
+      Укажите пароль(8 символов, минимум 1 заглавная, 1 строчная, 1 число, 1
+      спец. символ)
+    </p>
+    <br />
+    <input formControlName="firstName" type="text" placeholder="Имя*" />
+    <p
+      *ngIf="
+        this.regForm.get('firstName')?.invalid && this.regForm.get('firstName')?.touched
+      "
+      class="input-warning"
+    >
+      Укажите имя
+    </p>
+    <input formControlName="lastName" type="text" placeholder="Фамилия*" />
+    <p
+      *ngIf="
+        this.regForm.get('lastName')?.invalid && this.regForm.get('lastName')?.touched
+      "
+      class="input-warning"
+    >
+      Укажите Фамилию
+    </p>
+    <input formControlName="company" type="text" placeholder="Компания*" />
+    <p
+      *ngIf="
+        this.regForm.get('company')?.invalid && this.regForm.get('company')?.touched
+      "
+      class="input-warning"
+    >
+      Укажите компанию
+    </p>
+    <input formControlName="phone" type="phone" placeholder="Телефон" />
+    <p
+      *ngIf="
+        this.regForm.get('phone')?.invalid && this.regForm.get('phone')?.touched
+      "
+      class="input-warning"
+    >
+      Укажите номер телефона
+    </p>
+    <input formControlName="email" type="email" placeholder="Почта" />
+    <p
+      *ngIf="
+        this.regForm.get('email')?.invalid && this.regForm.get('email')?.touched
+      "
+      class="input-warning"
+    >
+      Укажите почту правильно
+    </p>
+    <button type="submit" [disabled]="regForm.invalid || regForm.disabled">
+      Зарегистрироваться
+    </button>
+    <span>Уже есть аккаунт? <a routerLink="/login">Войти</a></span>
+  </form>
 </div>

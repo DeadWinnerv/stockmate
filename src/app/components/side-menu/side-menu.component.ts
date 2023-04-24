@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router'
+import { AuthService } from 'src/app/services/auth.service';
+
+type TButton = 'profile' | 'dashboard' | 'inventory' | 'orders' | 'storages'
 
 @Component({
   selector: 'app-side-menu',
@@ -7,19 +10,14 @@ import { Router, NavigationEnd } from '@angular/router'
   styleUrls: ['./side-menu.component.scss']
 })
 export class SideMenuComponent {
-  showMenu: boolean = true
+  activeButton: TButton
 
-  constructor(private router: Router) {
+  constructor(private router: Router, public auth: AuthService) {
     router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
         const currentRoute = router.routerState.snapshot.root.firstChild?.routeConfig;
-        this.showMenu = !currentRoute?.data?.hideMenu;
+        this.activeButton = currentRoute?.data?.activeButton
       }
     });
-  }
-
-  buttonValue: 'profile' | 'dashboard' | 'inventory' | 'orders' | 'storages'  = 'dashboard'
-  setButtonValue(value: 'profile' | 'dashboard' | 'inventory' | 'orders' | 'storages'):void {
-    this.buttonValue = value
   }
 }

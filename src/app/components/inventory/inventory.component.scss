@@ -1,0 +1,17 @@
+.inventory {
+	padding: 1rem;
+	min-height: 100vh;
+	.title {
+		font-size: 24px;
+		margin: 1rem;
+		color: #FF9500;
+	}
+	.inventory-table {
+		min-height: 100%;
+	}
+	.inventory-paginator {
+		min-width: 100%;
+		position: relative;
+		bottom: 0;
+	}
+}
