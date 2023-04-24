@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -23,13 +23,12 @@ export class ProfileComponent implements OnInit{
   changeAvatarButton: TchangeAvatarButton = null
   user: USER;
   aSub: Subscription;
-  constructor(private auth: AuthService) {
-
-  }
+  
+  private authService = inject(AuthService)
   ngOnInit(): void{
-    this.aSub = this.auth.getMe().subscribe({
+    this.aSub = this.authService.getMe().subscribe({
       next: () => {
-          this.user = this.auth.user;
+          this.user = this.authService.user;
       },
       error: (err: any) => {
         console.log(err);
