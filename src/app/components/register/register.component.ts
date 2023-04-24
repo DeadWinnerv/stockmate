@@ -12,6 +12,8 @@ import { Subscription } from 'rxjs';
 export class RegisterComponent {
   regForm: FormGroup;
   aSub: Subscription;
+  registerError: any;
+  isErrorDisplay: boolean = false;
   constructor(private auth: AuthService, private router: Router) {}
   submitRegister() {
     this.regForm.disable();
@@ -20,6 +22,8 @@ export class RegisterComponent {
           this.router.navigate(['']);
       },
       error: error => {
+        this.isErrorDisplay = true;
+        this.registerError = error.error[0].msg;
           console.warn(error);
           this.regForm.enable();
       }

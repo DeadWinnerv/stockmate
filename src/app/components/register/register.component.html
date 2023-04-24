@@ -9,6 +9,7 @@
       <mat-icon>inventory_2</mat-icon>
       <span>Stockmate</span>
     </div>
+    <div *ngIf="isErrorDisplay" class="register-error">{{registerError}} <mat-icon class="error-close" (click)="this.isErrorDisplay = false">close</mat-icon></div>
     <input formControlName="login" type="login" placeholder="Логин*" />
     <p
       *ngIf="
@@ -16,7 +17,7 @@
       "
       class="input-warning"
     >
-    Укажите логин
+    Укажите логин (без цифр)
     </p>
     <input formControlName="password" type="password" placeholder="Пароль*" />
     <p
