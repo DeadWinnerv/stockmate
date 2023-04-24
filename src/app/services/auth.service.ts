@@ -28,7 +28,7 @@ export class AuthService {
   register(user: IRegisterUser): Observable<{ token: string }> {
     return this.http
       .post<{ token: string }>(
-        'http://localhost:4444/auth/register',
+        'https://stockmate-back.onrender.com/auth/register',
         user
       )
       .pipe(
