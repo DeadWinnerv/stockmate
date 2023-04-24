@@ -21,18 +21,25 @@ import { Subscription } from 'rxjs';
 export class LoginComponent implements OnInit, OnDestroy {
   loginForm: FormGroup;
   aSub: Subscription;
+  loginError: any;
+  isErrorDisplay: boolean = false;
   constructor(private auth: AuthService, private router: Router) {}
   submitLogin() {
     this.loginForm.disable();
     this.aSub = this.auth.login(this.loginForm.value).subscribe({
       next: () => {
-          this.router.navigate(['']);
+        this.router.navigate(['']);
       },
-      error: error => {
-          console.warn(error);
-          this.loginForm.enable();
-      }
-  });
+      error: (error) => {
+        this.isErrorDisplay = true;
+        this.loginError = error.error.message;
+        console.warn(error);
+        this.loginForm.enable();
+      },
+    });
+  }
+  handleCloseError(): void{
+    this.isErrorDisplay = false;
   }
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -46,7 +53,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
   }
   ngOnDestroy(): void {
-    if(this.aSub){
+    if (this.aSub) {
       this.aSub.unsubscribe();
     }
   }
