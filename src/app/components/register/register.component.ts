@@ -33,7 +33,7 @@ export class RegisterComponent {
     this.regForm = new FormGroup({
       login: new FormControl('', [
         Validators.required,
-        Validators.pattern(/^[a-zA-Z]+$/),
+        Validators.pattern('^[a-zA-Z][a-zA-Z0-9-_\.]{1,20}$'),
       ]),
       password: new FormControl('', [
         Validators.required,
