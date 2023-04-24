@@ -3,12 +3,12 @@ export interface ILoginUser {
   password: String;
 }
 export interface IRegisterUser {
-  login: String;
-  password: String;
   firstName: String;
   lastName: String;
-  company: String;
   phone?: Number;
+  login: String;
+  password: String;
+  company: String;
   email?: String;
   _id: String;
 }
