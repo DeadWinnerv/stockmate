@@ -1,17 +1,20 @@
-<div class="side-menu">
-  <a href="/" class="side-menu__logo">
-    <mat-icon>inventory_2</mat-icon>
-    <span href="/home">Stockmate</span>
-  </a>
+<div class="side-menu" [class]="hiddenMenu ? 'hidden' : null">
+  <div class="side-menu__logo">
+    <a routerLink="/dashboard">
+      <mat-icon>inventory_2</mat-icon>
+      <span href="/home">Stockmate</span>
+    </a>
+    <mat-icon (click)="changeMenuState()">menu</mat-icon>
+  </div>
   <div class="side-menu__block side-menu__profile">
     <ul>
       <li>
         <a routerLink="/profile"
         [ngClass]="activeButton === 'profile' ? 'active-button' : null"
-        ><mat-icon>portrait</mat-icon>Профиль</a>
+        ><mat-icon>portrait</mat-icon><span>Профиль</span></a>
       </li>
       <li (click)="auth.logout()">
-        <a href="/"><mat-icon>logout</mat-icon>Выход</a>
+        <a href="/"><mat-icon>logout</mat-icon><span>Выход</span></a>
       </li>
     </ul>
   </div>
@@ -21,23 +24,23 @@
         <a
         routerLink="/dashboard"
         [ngClass]="activeButton === 'dashboard' ? 'active-button' : null"
-        ><mat-icon>dashboard</mat-icon>Главная</a
+        ><mat-icon>dashboard</mat-icon><span>Главная</span></a
         >
       </li>
       <li>
         <a routerLink="/inventory"
         [ngClass]="activeButton === 'inventory' ? 'active-button' : null"
-        ><mat-icon>list_alt</mat-icon>Инвентарь</a>
+        ><mat-icon>list_alt</mat-icon><span>Инвентарь</span></a>
       </li>
       <li>
         <a routerLink="/orders"
         [ngClass]="activeButton === 'orders' ? 'active-button' : null"
-        ><mat-icon>grading</mat-icon>Заявки</a>
+        ><mat-icon>grading</mat-icon><span>Заявки</span></a>
       </li>
       <li>
         <a routerLink="/storages"
         [ngClass]="activeButton === 'storages' ? 'active-button' : null"
-        ><mat-icon>other_houses</mat-icon>Склады</a>
+        ><mat-icon>other_houses</mat-icon><span>Склады</span></a>
       </li>
     </ul>
   </div>

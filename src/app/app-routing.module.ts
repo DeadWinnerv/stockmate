@@ -40,8 +40,8 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: { activeButton: 'orders' },
   },
-  { path: 'login', component: LoginComponent, data: { hideMenu: true } },
-  { path: 'register', component: RegisterComponent, data: { hideMenu: true } },
+  { path: 'login', component: LoginComponent, data: { shownMenu: true } },
+  { path: 'register', component: RegisterComponent, data: { shownMenu: true } },
   {
     path: '**',
     redirectTo: '/dashboard',

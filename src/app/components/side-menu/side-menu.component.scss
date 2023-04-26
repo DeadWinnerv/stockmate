@@ -9,7 +9,7 @@ mat-icon {
 	position: fixed;
 	top: 0;
 	left: 0;
-	width: 16vw;
+	width: 18vw;
 	height: 100vh;
 	background-color: #3E3E3E;
 	display: flex;
@@ -17,13 +17,18 @@ mat-icon {
 	gap: 3rem;
 	&__logo {
 		display: flex;
-		justify-content: center;
+		justify-content: space-between;
 		align-items: center;
-		gap: 0.5rem;
 		padding: 1rem;
-		span {
-			font-size: 28px;
-			color: #FF9500;
+		a {
+		gap: 0.5rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+			span {
+				font-size: 28px;
+				color: #FF9500;
+			}
 		}
 	}
 	.side-menu__block {
@@ -33,15 +38,17 @@ mat-icon {
 		ul {
 			width: 100%;
 			li {
-				margin: 0.1rem;
+				margin-top: 0.3rem;
 				a {
 					border-radius: 6px;
 					display: flex;
 					gap: 2rem;
 					padding: 1rem;
-					font-size: 18px;
 					transition: 0.4s;
-					color: #fff;
+					span {
+						color: #fff;
+						font-size: 18px;
+					}
 				}
 				a:hover {
 					border-radius: 12px;
@@ -62,5 +69,19 @@ mat-icon {
 	transition: 0.4s;
 	mat-icon {
 		color: #3E3E3E
+	}
+}
+
+.hidden {
+	max-width: 5vw;
+	span {
+		display: none;
+		margin: 0;
+		padding: 0;
+	}
+	.side-menu__logo {
+		display: flex;
+		flex-direction: column-reverse;
+		gap: 0.5rem;
 	}
 }

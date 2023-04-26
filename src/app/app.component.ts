@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+import { SideMenuComponent } from './components/side-menu/side-menu.component';
 
 @Component({
   selector: 'app-root',
@@ -7,13 +8,18 @@ import { Router, NavigationEnd } from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  showMenu: boolean = true;
+  shownMenu: boolean = true;
+  hiddenMenu: boolean = false;
   constructor(private router: Router) {
     router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
         const currentRoute = router.routerState.snapshot.root.firstChild?.routeConfig;
-        this.showMenu = !currentRoute?.data?.hideMenu;
+        this.shownMenu = !currentRoute?.data?.shownMenu;
       }
     });
+  }
+
+  handleMenuStateChange(): void {
+    this.hiddenMenu = !this.hiddenMenu
   }
 }
