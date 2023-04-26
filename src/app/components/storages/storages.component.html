@@ -1,1 +1,54 @@
-<p>storages works!</p>
+<div class="storages">
+  <p class="storages__header">Список складов</p>
+  <ul class="storages__list">
+    <li
+      class="storages__list__item"
+      *ngFor="let item of storages; let i = index"
+    >
+      <mat-accordion>
+        <mat-expansion-panel
+          (opened)="panelOpenState = true"
+          (closed)="panelOpenState = false"
+        >
+          <mat-expansion-panel-header>
+            <mat-panel-title> {{ item.name }} </mat-panel-title>
+            <mat-panel-description>
+              {{ item.adress }}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <p *ngIf="item.email">email: {{ item.email }}</p>
+          <p *ngIf="item.phone">phone: {{ item.phone }}</p>
+          <p>
+            Расписание: {{ item.schedule === "full-time" ? "пн-вс" : "пн-пт" }}
+          </p>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </li>
+  </ul>
+  <div class="add_storage">
+    <button
+      class="add_storage__button"
+      (click)="addStorageWindowOpen = !addStorageWindowOpen"
+    >
+      Добавить склад
+    </button>
+    <div class="add_storage__window" *ngIf="addStorageWindowOpen">
+      <input type="text" placeholder="Имя*" required />
+      <input type="text" placeholder="Адресс*" required />
+      <mat-form-field>
+        <mat-label>График работы</mat-label>
+        <mat-select required>
+          <mat-option value="full-time">пн-вс</mat-option>
+          <mat-option value="weekdays">пн-пт</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <p>Контактная информация</p>
+      <input type="text" placeholder="Телефон" />
+      <input type="text" placeholder="email" />
+      <div class="add_storage__window__submit_group">
+        <mat-icon>done</mat-icon>
+				<mat-icon (click)="addStorageWindowOpen = false">close</mat-icon>
+      </div>
+    </div>
+  </div>
+</div>

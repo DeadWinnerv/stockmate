@@ -1,0 +1,56 @@
+.storages {
+	padding: 1rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	&__header {
+		font-size: 28px;
+		color: #ff9500;
+	}
+	&__list {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+	.add_storage {
+		display: flex;
+		flex-direction: column;
+		max-width: 40%;
+		&__button {
+			padding: 0.5rem;
+			margin: 0.1rem;
+			background-color: #ff9500;
+			color: #3E3E3E;
+			font-size: 22px;
+			border-radius: 6px;
+		}
+		&__window {
+			width: 100%;
+			background-color: #3E3E3E;
+			border-radius: 6px;
+			padding: 0.5rem;
+			display: flex;
+			flex-direction: column;
+			gap: 0.2rem;
+			input {
+				width: 100%;
+				padding: 0.5rem;
+				border-radius: 6px;
+			}
+			p {
+				color: #ff9500;
+				padding: 0;
+			}
+			&__submit_group {
+				display: flex;
+				justify-content: flex-end;
+				gap: 2rem;
+				mat-icon {
+					font-size: 28px;
+					margin: 0.4rem;
+					color: #ff9500;
+				}
+			}
+		}
+	}
+}
