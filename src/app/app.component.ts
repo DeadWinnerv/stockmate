@@ -9,7 +9,6 @@ import { SideMenuComponent } from './components/side-menu/side-menu.component';
 })
 export class AppComponent {
   shownMenu: boolean = true;
-  hiddenMenu: boolean = false;
   constructor(private router: Router) {
     router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
@@ -17,9 +16,5 @@ export class AppComponent {
         this.shownMenu = !currentRoute?.data?.shownMenu;
       }
     });
-  }
-
-  handleMenuStateChange(): void {
-    this.hiddenMenu = !this.hiddenMenu
   }
 }

@@ -1,12 +1,6 @@
 <div class="wrapper">
-  <app-side-menu *ngIf="shownMenu"
-    (hiddenMenuStateChange)="handleMenuStateChange()"
-  ></app-side-menu>
-  <main
-    [class]="shownMenu ? 'margin-class' : null"
-    [style]="hiddenMenu ? 'margin-left: 5vw' : null"
-    
-    >
+  <app-side-menu *ngIf="shownMenu"></app-side-menu>
+  <main [class]="shownMenu ? 'margin-class' : null">
     <router-outlet></router-outlet>
   </main>
 </div>
