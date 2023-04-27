@@ -68,8 +68,6 @@ export class ProfileComponent implements OnInit {
         this.user.avatar
         ? this.avatarPath = 'https://stockmate-back.onrender.com' + this.user.avatar
         : this.avatarPath = `https://placehold.co/180x180/FF9500/3E3E3E/?text=${this.user.firstName[0] + '+' + this.user.lastName[0]}&font=Montserrat`
-        console.log(this.avatarPath);
-        
       },
       error: (err: any) => {
         console.log(err);
