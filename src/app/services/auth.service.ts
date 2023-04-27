@@ -62,7 +62,6 @@ export class AuthService {
       .pipe(
         tap((user) => {
           this.user = user;
-          console.log(user);
         })
       );
   }

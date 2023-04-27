@@ -5,7 +5,7 @@
     (mouseleave)="changeAvatarButton = null"
   >
   <img
-  [src]="'https://stockmate-back.onrender.com' + user.avatar || 'https://i.iheart.com/v3/url/aHR0cHM6Ly9hc3NldHMucG9kb21hdGljLm5ldC90cy9kNS82My9hMi9jb2Rlbm5pa2Jha2h0MS8zMDAweDMwMDBfMTU2ODk4NDguanBn'"
+  [src]="avatarPath"
   alt="avatar"
   />
   <input type="file" class="dn" #input (change)="onFileUpload($event)"/>
