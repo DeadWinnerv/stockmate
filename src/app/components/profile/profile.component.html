@@ -4,34 +4,59 @@
     (mouseenter)="changeAvatarButton = 'active'"
     (mouseleave)="changeAvatarButton = null"
   >
-  <img
-  [src]="avatarPath"
-  alt="avatar"
-  />
-  <input type="file" class="dn" #input (change)="onFileUpload($event)"/>
-  <button
-  (click)="handleClickAvatar()"
-  class="profile__avatar__change-avatar-button"
-  [ngClass]="changeAvatarButton"
-  >
-  <mat-icon>add</mat-icon>
-</button>
-</div>
-<div class="pofile__info">
-    <div *ngIf="isErrorDisplay" class="upload-error">{{uploadError}} <mat-icon class="error-close" (click)="this.isErrorDisplay = false">close</mat-icon></div>
-    <p class="profile__info__company-name">{{ user.company }}</p>
+    <img [src]="avatarPath" alt="avatar" />
+    <input type="file" class="dn" #input (change)="onFileUpload($event)" />
+    <button
+      (click)="handleClickAvatar()"
+      class="profile__avatar__change-avatar-button"
+      [ngClass]="changeAvatarButton"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+  <div class="pofile__info">
+    <div *ngIf="isErrorDisplay" class="upload-error">
+      {{ uploadError }}
+      <mat-icon class="error-close" (click)="this.isErrorDisplay = false"
+        >close</mat-icon
+      >
+    </div>
+    <p class="profile__info__company-name"
+    *ngIf="!isEditingProfile; else editingCompanyNameInput">
+      {{ user.company }}
+      <mat-icon class="edit-button"
+        [class]="isEditingProfile ? 'active-button' : null"
+        (click)="editProfile()"
+      >edit</mat-icon>
+    </p>
+    <ng-template #editingCompanyNameInput>
+      <input class="company-name_input" type="text">
+    </ng-template>
     <ul class="profile__info__details">
       <li>
-        <span>{{ user.firstName }}</span>
+        <span 
+        *ngIf="!isEditingProfile; else editingInput">{{ user.firstName }}</span>
+        <ng-template #editingInput>
+          <input type="text">
+        </ng-template>
       </li>
       <li>
-        <span>{{ user.lastName }}</span>
+        <span
+        *ngIf="!isEditingProfile; else editingInput">{{ user.lastName }}</span>
       </li>
       <li>
-        Телефон: <span>{{ user.phone ? user.phone : "не указано" }}</span>
+        <span
+        *ngIf="!isEditingProfile; else editingInput">Телефон: {{ user.phone ? user.phone : "не указано" }}</span>
       </li>
       <li>
-        email: <span>{{ user.email ? user.email : "не указано" }}</span>
+        <span
+        *ngIf="!isEditingProfile; else editingInput">email: {{ user.email ? user.email : "не указано" }}</span>
+      </li>
+      <li *ngIf="isEditingProfile">
+        <mat-icon>done</mat-icon>
+        <mat-icon
+        (click)="editProfile()"
+        >close</mat-icon>
       </li>
     </ul>
   </div>

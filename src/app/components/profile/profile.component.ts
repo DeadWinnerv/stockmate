@@ -26,9 +26,10 @@ export class ProfileComponent implements OnInit {
   user: USER;
   aSub: Subscription;
   avatar: File;
-  avatarPath: string | undefined
+  avatarPath: string | undefined;
   uploadError: any;
   isErrorDisplay: boolean = false;
+  isEditingProfile: boolean = false;
   constructor(private auth: AuthService) {}
   checkExtension(): boolean {
     let ext: any = this.avatar.name.split('.').pop();
@@ -48,7 +49,8 @@ export class ProfileComponent implements OnInit {
       obs$.subscribe({
         next: (res) => {
           this.user.avatar = res.avatar;
-          this.avatarPath = 'https://stockmate-back.onrender.com' + this.user.avatar
+          this.avatarPath =
+            'https://stockmate-back.onrender.com' + this.user.avatar;
         },
         error: (err: any) => {
           this.uploadError = err.error.message;
@@ -57,7 +59,7 @@ export class ProfileComponent implements OnInit {
       });
     }
   }
-  
+
   handleClickAvatar(): void {
     this.inputRef.nativeElement.click();
   }
@@ -66,12 +68,18 @@ export class ProfileComponent implements OnInit {
       next: () => {
         this.user = this.auth.user;
         this.user.avatar
-        ? this.avatarPath = 'https://stockmate-back.onrender.com' + this.user.avatar
-        : this.avatarPath = `https://placehold.co/180x180/FF9500/3E3E3E/?text=${this.user.firstName[0] + '+' + this.user.lastName[0]}&font=Montserrat`
+          ? (this.avatarPath =
+              'https://stockmate-back.onrender.com' + this.user.avatar)
+          : (this.avatarPath = `https://placehold.co/180x180/FF9500/3E3E3E/?text=${
+              this.user.firstName[0] + '+' + this.user.lastName[0]
+            }&font=Montserrat`);
       },
       error: (err: any) => {
         console.log(err);
       },
     });
+  }
+  editProfile(): void {
+    this.isEditingProfile = !this.isEditingProfile
   }
 }
