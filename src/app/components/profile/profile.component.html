@@ -1,7 +1,7 @@
 <div class="preloader" *ngIf="isLoading">
   <mat-spinner></mat-spinner>
 </div>
-<div class="profile">
+<div class="profile" *ngIf="!isLoading">
   <div
     class="profile__avatar"
     (mouseenter)="changeAvatarButton = 'active'"
@@ -17,50 +17,60 @@
       <mat-icon>add</mat-icon>
     </button>
   </div>
-  <div class="pofile__info">
+  <div class="pofile__info" *ngIf="!isEditingProfile; else editingWindow">
     <div *ngIf="isErrorDisplay" class="upload-error">
       {{ uploadError }}
       <mat-icon class="error-close" (click)="this.isErrorDisplay = false"
         >close</mat-icon
       >
     </div>
-    <p class="profile__info__company-name"
-    *ngIf="!isEditingProfile; else editingCompanyNameInput">
+    <p class="profile__info__company-name">
       {{ user.company }}
-      <mat-icon class="edit-button"
+      <mat-icon
+        class="edit-button"
         [class]="isEditingProfile ? 'active-button' : null"
         (click)="editProfile()"
-      >edit</mat-icon>
+        >edit</mat-icon
+      >
     </p>
-    <ng-template #editingCompanyNameInput>
-      <input class="company-name_input" type="text">
-    </ng-template>
     <ul class="profile__info__details">
       <li>
-        <span 
-        *ngIf="!isEditingProfile; else editingInput">{{ user.firstName }}</span>
-        <ng-template #editingInput>
-          <input type="text">
-        </ng-template>
+        <span>{{ user.firstName }}</span>
       </li>
       <li>
-        <span
-        *ngIf="!isEditingProfile; else editingInput">{{ user.lastName }}</span>
+        <span>{{ user.lastName }}</span>
       </li>
       <li>
-        <span
-        *ngIf="!isEditingProfile; else editingInput">Телефон: {{ user.phone ? user.phone : "не указано" }}</span>
+        <span>Телефон: {{ user.phone ? user.phone : "не указано" }}</span>
       </li>
       <li>
-        <span
-        *ngIf="!isEditingProfile; else editingInput">email: {{ user.email ? user.email : "не указано" }}</span>
-      </li>
-      <li *ngIf="isEditingProfile">
-        <mat-icon>done</mat-icon>
-        <mat-icon
-        (click)="editProfile()"
-        >close</mat-icon>
+        <span>email: {{ user.email ? user.email : "не указано" }}</span>
       </li>
     </ul>
   </div>
+  <ng-template #editingWindow>
+     <div class="profile__editing_window">
+        <ul class="profile__editing_window__details">
+          <li>
+            <input type="text" class="company_name_input" placeholder="Название компании">
+          </li>
+          <li>
+            <input type="text" placeholder="Имя">
+          </li>
+          <li>
+            <input type="text" placeholder="Фамилия">
+          </li>
+          <li>
+            <input type="phone" placeholder="Номер телефона">
+          </li>
+          <li>
+            <input type="email" placeholder="email">
+          </li>
+          <li>
+            <mat-icon>done</mat-icon>
+            <mat-icon (click)="isEditingProfile = false">close</mat-icon>
+          </li>
+        </ul>
+     </div>
+  </ng-template>
 </div>
