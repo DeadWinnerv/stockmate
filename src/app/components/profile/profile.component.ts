@@ -30,6 +30,7 @@ export class ProfileComponent implements OnInit {
   uploadError: any;
   isErrorDisplay: boolean = false;
   isEditingProfile: boolean = false;
+  isLoading: boolean = true;
   constructor(private auth: AuthService) {}
   checkExtension(): boolean {
     let ext: any = this.avatar.name.split('.').pop();
@@ -70,9 +71,11 @@ export class ProfileComponent implements OnInit {
         this.user.avatar
           ? (this.avatarPath =
               'https://stockmate-back.onrender.com' + this.user.avatar)
+              
           : (this.avatarPath = `https://placehold.co/180x180/FF9500/3E3E3E/?text=${
               this.user.firstName[0] + '+' + this.user.lastName[0]
             }&font=Montserrat`);
+        this.isLoading = false;
       },
       error: (err: any) => {
         console.log(err);

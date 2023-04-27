@@ -99,3 +99,14 @@
 	color: #ff9500;
 	transition: 0.2s;
 }
+
+.preloader {
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 82vw;
+	height: 100vh;
+	background-color:rgba(255,255,255,0.8);
+	backdrop-filter: blur();
+}
