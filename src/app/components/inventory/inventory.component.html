@@ -1,20 +1,19 @@
 <div class="inventory">
   <p class="title">Остатки</p>
-  <table
-    mat-table
-    [dataSource]="dataSource"
-    class="inventory-table"
-    matSort
-    (matSortChange)="announceSortChange($event)"
-  >
+  <table mat-table [dataSource]="dataSource" class="inventory-table">
     <ng-container matColumnDef="id">
       <th
         mat-header-cell
         *matHeaderCellDef
-        mat-sort-header
-        sortActionDescription="Sort by id"
+        class="table-header"
+        (click)="handleSortChange('id')"
       >
         ID
+        <mat-icon
+          *ngIf="sortingColumn?.column === displayedColumns[0]"
+          [class]="sortingColumn!.direction === 'desc' ? 'reversed' : null"
+          >keyboard_arrow_up</mat-icon
+        >
       </th>
       <td mat-cell *matCellDef="let item">{{ item.id }}</td>
     </ng-container>
@@ -22,24 +21,29 @@
       <th
         mat-header-cell
         *matHeaderCellDef
-        mat-sort-header
-        sortActionDescription="Sort by name"
+        class="table-header"
+        (click)="handleSortChange('name')"
       >
         Название
+        <mat-icon
+          [class]="sortingColumn!.direction === 'desc' ? 'reversed' : null"
+          *ngIf="sortingColumn?.column === displayedColumns[1]"
+          >keyboard_arrow_up</mat-icon
+        >
       </th>
       <td mat-cell *matCellDef="let item">{{ item.name }}</td>
     </ng-container>
     <ng-container matColumnDef="storage">
       <th mat-header-cell *matHeaderCellDef>
-					<mat-select 
-					[(value)]="storageFilter"
-					(valueChange)="handleStorageFilterChange()"
-					>
-						<mat-option value="all">Все склады</mat-option>
-						<mat-option value="Хоругвино">Хоругвино</mat-option>
-						<mat-option value="Тверь">Тверь</mat-option>
-						<mat-option value="Воронеж">Воронеж</mat-option>
-					</mat-select>
+        <mat-select
+          [(value)]="storageFilter"
+          (valueChange)="handleStorageFilterChange()"
+        >
+          <mat-option value="all">Все склады</mat-option>
+          <mat-option value="Хоругвино">Хоругвино</mat-option>
+          <mat-option value="Тверь">Тверь</mat-option>
+          <mat-option value="Воронеж">Воронеж</mat-option>
+        </mat-select>
       </th>
       <td mat-cell *matCellDef="let item">{{ item.storage }}</td>
     </ng-container>
@@ -47,21 +51,38 @@
       <th
         mat-header-cell
         *matHeaderCellDef
-        mat-sort-header
-        sortActionDescription="Sort by price"
+        class="table-header"
+        class="table-header"
+        (click)="handleSortChange('price')"
       >
         Цена
+        <mat-icon
+          [class]="sortingColumn!.direction === 'desc' ? 'reversed' : null"
+          *ngIf="sortingColumn?.column === displayedColumns[3]"
+          >keyboard_arrow_up</mat-icon
+        >
       </th>
-      <td mat-cell *matCellDef="let item">{{ item.price | currency : "₽" }}</td>
+      <td
+        mat-cell
+        [class]="sortingColumn!.direction === 'desc' ? 'reversed' : null"
+        *matCellDef="let item"
+      >
+        {{ item.price | currency : "₽" }}
+      </td>
     </ng-container>
     <ng-container matColumnDef="stock">
       <th
         mat-header-cell
         *matHeaderCellDef
-        mat-sort-header
-        sortActionDescription="Sort by stock"
+        class="table-header"
+        (click)="handleSortChange('stock')"
       >
         Остаток
+        <mat-icon
+          [class]="sortingColumn!.direction === 'desc' ? 'reversed' : null"
+          *ngIf="sortingColumn?.column === displayedColumns[4]"
+          >keyboard_arrow_up</mat-icon
+        >
       </th>
       <td mat-cell *matCellDef="let item">{{ item.stock }}</td>
     </ng-container>

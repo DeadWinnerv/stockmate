@@ -10,6 +10,26 @@
 	.inventory-table {
 		min-height: 100%;
 		min-width: 100%;
+		.table-header {
+		-webkit-touch-callout: none; /* iOS Safari */
+			-webkit-user-select: none; /* Safari */
+			 -khtml-user-select: none; /* Konqueror HTML */
+				 -moz-user-select: none; /* Old versions of Firefox */
+					-ms-user-select: none; /* Internet Explorer/Edge */
+							user-select: none; /* for people */
+			cursor: pointer;
+			mat-icon {
+				position: absolute;
+				vertical-align: -webkit-baseline-middle;
+				vertical-align: middle;
+				transition: 0.2s;
+			}
+			mat-icon.reversed {
+				transition: 0.2s;
+				rotate: (180deg);
+				opacity: 1;
+			}
+		}
 	}
 	.inventory-paginator {
 		min-width: 100%;
