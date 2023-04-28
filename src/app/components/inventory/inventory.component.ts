@@ -84,9 +84,6 @@ export class InventoryComponent implements AfterViewInit {
   private sortData(columnName: TColumnName): void {
     
     this.sortedData = this.filteredTable;
-    console.log('inventory: \n', this.filteredTable);
-    
-    console.log('before sorting: \n', this.sortedData);
     
     switch (columnName) {
       case 'id':
@@ -138,7 +135,6 @@ export class InventoryComponent implements AfterViewInit {
         this.sortedData = this.filteredTable
         break;
     }
-    console.log('after sorting: \n',this.sortedData);
     
     this.dataSource = new MatTableDataSource<inventoryData>(this.sortedData)
     this.dataSource.paginator = this.paginator
@@ -157,4 +153,6 @@ export class InventoryComponent implements AfterViewInit {
     }
     this.sortData(columnName);
   }
+
+  
 }
