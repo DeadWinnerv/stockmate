@@ -64,4 +64,5 @@ export class InventoryComponent implements AfterViewInit {
       this._liveAnnouncer.announce(`Soring cleared`)
     }
   }
+  sortByStorageSelected: string = 'all'
 }
