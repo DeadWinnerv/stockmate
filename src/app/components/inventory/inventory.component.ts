@@ -1,6 +1,6 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator'
-import { MatTableDataSource } from '@angular/material/table'
+import { MatTable, MatTableDataSource } from '@angular/material/table'
 import { MatSort, Sort } from '@angular/material/sort'
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 
@@ -64,5 +64,15 @@ export class InventoryComponent implements AfterViewInit {
       this._liveAnnouncer.announce(`Soring cleared`)
     }
   }
-  sortByStorageSelected: string = 'all'
+  sortedTable: inventoryData[] = INVENTORY
+  filterByStorageSelected: string = 'all'
+  handleFilterByStorageChange(): void {
+    this.sortedTable = INVENTORY
+    this.filterByStorageSelected !== 'all' 
+    ?
+    this.sortedTable = this.sortedTable.filter((item: inventoryData) => item.storage === this.filterByStorageSelected)
+    : 
+    this.sortedTable = INVENTORY
+    this.dataSource = new MatTableDataSource<inventoryData>(this.sortedTable)
+  }
 }
