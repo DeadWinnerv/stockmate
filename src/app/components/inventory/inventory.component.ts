@@ -71,5 +71,10 @@ export class InventoryComponent implements AfterViewInit {
       this.storageFilter !== 'all' ? item.storage === this.storageFilter : item
     );
     this.dataSource = new MatTableDataSource<inventoryData>(this.sortedTable);
+    this.dataSource.paginator = this.paginator
+  }
+
+  public sortData(): void {
+    
   }
 }
