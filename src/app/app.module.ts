@@ -27,6 +27,7 @@ import { StocksChartComponent } from './components/dashboard/stocks-chart/stocks
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { TokenInterceptor } from './services/token-interceptor.service';
+import { PreloaderComponent } from './components/ui/preloader/preloader.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { TokenInterceptor } from './services/token-interceptor.service';
     StocksChartComponent,
     LoginComponent,
     RegisterComponent,
+    PreloaderComponent
   ],
   imports: [
     BrowserModule,
