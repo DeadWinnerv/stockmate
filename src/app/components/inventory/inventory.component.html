@@ -1,9 +1,5 @@
 <div class="inventory">
   <p class="title">Остатки</p>
-	<div class="filter-area">
-		<span>ID: <input type="text" class="filter-area__ID-input" maxlength="5"></span>
-		<span>Название: <input type="text"></span>
-	</div>
   <table mat-table [dataSource]="dataSource" class="inventory-table">
     <ng-container matColumnDef="id">
       <th
@@ -95,7 +91,7 @@
   </table>
 
   <mat-paginator
-    [pageSizeOptions]="[10, 20]"
+    [pageSizeOptions]="[10, 20, 50, 100]"
     showFirstLastButtons
     aria-label="Select page of periodic elements"
     class="inventory-paginator"
