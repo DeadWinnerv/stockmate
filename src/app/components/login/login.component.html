@@ -1,4 +1,5 @@
-<div class="login-page">
+<app-preloader *ngIf="isLoading" style="min-width: 100vw;"></app-preloader>
+<div *ngIf="!isLoading" class="login-page">
 	<form [formGroup]="loginForm" (ngSubmit)="submitLogin()" class="login" [@slideIn]>
 		<div class="logo">
 			<mat-icon>inventory_2</mat-icon>

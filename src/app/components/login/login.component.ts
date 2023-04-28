@@ -19,6 +19,7 @@ import { Subscription } from 'rxjs';
   ],
 })
 export class LoginComponent implements OnInit, OnDestroy {
+  isLoading: boolean = false;
   loginForm: FormGroup;
   aSub: Subscription;
   loginError: any;
@@ -26,6 +27,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(private auth: AuthService, private router: Router) {}
   submitLogin() {
     this.loginForm.disable();
+    this.isLoading = true;
     this.aSub = this.auth.login(this.loginForm.value).subscribe({
       next: () => {
         this.router.navigate(['']);
