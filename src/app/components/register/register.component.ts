@@ -23,7 +23,7 @@ export class RegisterComponent {
       },
       error: error => {
         this.isErrorDisplay = true;
-        this.registerError = error.error[0].msg;
+        this.registerError = error.error.msg;
           console.warn(error);
           this.regForm.enable();
       }

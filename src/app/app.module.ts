@@ -28,6 +28,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { TokenInterceptor } from './services/token-interceptor.service';
 import { PreloaderComponent } from './components/ui/preloader/preloader.component';
+import { RetryInterceptor } from './interceptors/retry.interceptor';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { PreloaderComponent } from './components/ui/preloader/preloader.componen
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: RetryInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })

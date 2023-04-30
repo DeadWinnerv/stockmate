@@ -54,7 +54,7 @@ export class ProfileComponent implements OnInit {
             'https://stockmate-back.onrender.com' + this.user.avatar;
         },
         error: (err: any) => {
-          this.uploadError = err.error.message;
+          this.uploadError = err.error.msg;
           this.isErrorDisplay = true;
         },
       });
@@ -71,7 +71,7 @@ export class ProfileComponent implements OnInit {
         this.user.avatar
           ? (this.avatarPath =
               'https://stockmate-back.onrender.com' + this.user.avatar)
-              
+
           : (this.avatarPath = `https://placehold.co/180x180/FF9500/3E3E3E/?text=${
               this.user.firstName[0] + '+' + this.user.lastName[0]
             }&font=Montserrat`);
