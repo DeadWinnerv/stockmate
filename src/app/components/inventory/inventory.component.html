@@ -7,11 +7,21 @@
         *matHeaderCellDef
         class="table-header"
         (click)="handleSortChange('id')"
+        (mouseenter)="shownColumn = 'id'"
+        (mouseleave)="shownColumn = ''"
       >
         ID
         <mat-icon
-          *ngIf="sortingColumn?.column === displayedColumns[0]"
-          [class]="sortingColumn!.direction === 'desc' ? 'reversed' : null"
+          [style.rotate]="sortingColumn!.direction === 'desc' ? '180deg' : null"
+          [style.opacity]="
+            shownColumn === displayedColumns[0] &&
+            sortingColumn.column !== displayedColumns[0]
+              ? 0.5
+              : null
+          "
+          [class]="
+            sortingColumn.column === displayedColumns[0] ? 'shown' : 'hidden'
+          "
           >keyboard_arrow_up</mat-icon
         >
       </th>
@@ -23,11 +33,21 @@
         *matHeaderCellDef
         class="table-header"
         (click)="handleSortChange('name')"
+        (mouseenter)="shownColumn = 'name'"
+        (mouseleave)="shownColumn = ''"
       >
         Название
         <mat-icon
-          [class]="sortingColumn!.direction === 'desc' ? 'reversed' : null"
-          *ngIf="sortingColumn?.column === displayedColumns[1]"
+          [style.rotate]="sortingColumn!.direction === 'desc' ? '180deg' : null"
+          [style.opacity]="
+            shownColumn === displayedColumns[1] &&
+            sortingColumn.column !== displayedColumns[1]
+              ? 0.5
+              : null
+          "
+          [class]="
+            sortingColumn.column === displayedColumns[1] ? 'shown' : 'hidden'
+          "
           >keyboard_arrow_up</mat-icon
         >
       </th>
@@ -54,11 +74,21 @@
         class="table-header"
         class="table-header"
         (click)="handleSortChange('price')"
+        (mouseenter)="shownColumn = 'price'"
+        (mouseleave)="shownColumn = ''"
       >
         Цена
         <mat-icon
-          [class]="sortingColumn!.direction === 'desc' ? 'reversed' : null"
-          *ngIf="sortingColumn?.column === displayedColumns[3]"
+          [style.rotate]="sortingColumn!.direction === 'desc' ? '180deg' : null"
+          [style.opacity]="
+            shownColumn === displayedColumns[3] &&
+            sortingColumn.column !== displayedColumns[3]
+              ? 0.5
+              : null
+          "
+          [class]="
+            sortingColumn.column === displayedColumns[3] ? 'shown' : 'hidden'
+          "
           >keyboard_arrow_up</mat-icon
         >
       </th>
@@ -76,11 +106,21 @@
         *matHeaderCellDef
         class="table-header"
         (click)="handleSortChange('stock')"
+        (mouseenter)="shownColumn = 'stock'"
+        (mouseleave)="shownColumn = ''"
       >
         Остаток
         <mat-icon
-          [class]="sortingColumn!.direction === 'desc' ? 'reversed' : null"
-          *ngIf="sortingColumn?.column === displayedColumns[4]"
+          [style.rotate]="sortingColumn!.direction === 'desc' ? '180deg' : null"
+          [style.opacity]="
+            shownColumn === displayedColumns[4] &&
+            sortingColumn.column !== displayedColumns[4]
+              ? 0.5
+              : null
+          "
+          [class]="
+            sortingColumn.column === displayedColumns[4] ? 'shown' : 'hidden'
+          "
           >keyboard_arrow_up</mat-icon
         >
       </th>

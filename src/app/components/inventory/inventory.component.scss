@@ -16,7 +16,7 @@
 			 -khtml-user-select: none; /* Konqueror HTML */
 				 -moz-user-select: none; /* Old versions of Firefox */
 					-ms-user-select: none; /* Internet Explorer/Edge */
-							user-select: none; /* for people */
+							user-select: none; /* for human beings */
 			cursor: pointer;
 			mat-icon {
 				position: absolute;
@@ -24,10 +24,12 @@
 				vertical-align: middle;
 				transition: 0.2s;
 			}
-			mat-icon.reversed {
+			mat-icon.shown {
 				transition: 0.2s;
-				rotate: (180deg);
 				opacity: 1;
+			}
+			mat-icon.hidden {
+				opacity: 0;
 			}
 		}
 	}
