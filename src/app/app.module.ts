@@ -29,6 +29,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { TokenInterceptor } from './services/token-interceptor.service';
 import { PreloaderComponent } from './components/ui/preloader/preloader.component';
 import { RetryInterceptor } from './interceptors/retry.interceptor';
+import { ProductsComponent } from './components/products/products.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { RetryInterceptor } from './interceptors/retry.interceptor';
     StocksChartComponent,
     LoginComponent,
     RegisterComponent,
-    PreloaderComponent
+    PreloaderComponent,
+    ProductsComponent
   ],
   imports: [
     BrowserModule,

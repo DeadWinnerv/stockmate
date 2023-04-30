@@ -3,7 +3,7 @@ import { Component, Output, EventEmitter, HostBinding } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
-type TButton = 'profile' | 'dashboard' | 'inventory' | 'orders' | 'storages';
+type TButton = 'profile' | 'dashboard' | 'inventory' | 'orders' | 'storages' | 'products';
 
 @Component({
   selector: 'app-side-menu',

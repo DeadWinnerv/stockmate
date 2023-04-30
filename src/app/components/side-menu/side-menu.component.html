@@ -42,6 +42,13 @@
       </li>
       <li>
         <a
+          routerLink="/products"
+          [ngClass]="activeButton === 'products' ? 'active-button' : null"
+          ><mat-icon>local_mall</mat-icon><span >Товары</span></a
+        >
+      </li>
+      <li>
+        <a
           routerLink="/orders"
           [ngClass]="activeButton === 'orders' ? 'active-button' : null"
           ><mat-icon>grading</mat-icon><span >Заявки</span></a
