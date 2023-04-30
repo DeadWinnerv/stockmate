@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       },
       error: (error) => {
         this.isErrorDisplay = true;
-        this.loginError = error.error.message;
+        this.loginError = error.error.msg;
         console.warn(error);
         this.loginForm.enable();
       },
