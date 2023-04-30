@@ -10,7 +10,7 @@ export interface inventoryData {
   stock: number;
 }
 
-type TColumnName = 'id' | 'name' | 'storage' | 'price' | 'stock';
+type TColumnName = 'id' | 'name' | 'storage' | 'price' | 'stock' | '';
 
 type TSortingColumn = {
   column?: TColumnName;
@@ -758,7 +758,6 @@ export class InventoryComponent implements AfterViewInit {
   }
 
   private sortData(columnName: TColumnName): void {
-    this.sortedTable = []
     this.sortedTable = [...this.filteredTable]
     const compareFn = (a: inventoryData, b: inventoryData): number => {
       const direction = this.sortingColumn.direction === 'asc' ? 1 : -1;
@@ -775,11 +774,10 @@ export class InventoryComponent implements AfterViewInit {
           return 0;
       }
     };
-
-    this.sortedTable.sort(compareFn);
-    if (!columnName) {
-      this.sortedTable = [...this.filteredTable];
-    }
+    
+    !this.sortingColumn.direction
+    ? this.sortedTable = [...this.filteredTable]
+    : this.sortedTable.sort(compareFn)
 
     this.dataSource = new MatTableDataSource<inventoryData>(this.sortedTable);
     this.dataSource.paginator = this.paginator;
