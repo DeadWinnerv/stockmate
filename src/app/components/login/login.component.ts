@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { trigger, transition, style, animate } from '@angular/animations';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
@@ -8,15 +7,7 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
-  animations: [
-    trigger('slideIn', [
-      transition(':enter', [
-        style({ transform: 'translate(-50%,200%)' }),
-        animate('0.8s ease-out', style({ transform: 'translate(-50%,-50%)' })),
-      ]),
-    ]),
-  ],
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;

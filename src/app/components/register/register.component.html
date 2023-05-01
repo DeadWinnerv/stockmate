@@ -1,78 +1,81 @@
 <div class="register-page">
   <form
-    class="register"
+    class="register-fields"
     [@slideIn]
     [formGroup]="regForm"
     (ngSubmit)="submitRegister()"
   >
-    <div class="logo">
-      <mat-icon>inventory_2</mat-icon>
-      <span>Stockmate</span>
-    </div>
+    <p class="register-header">Зарегистрировать профиль</p>
     <div *ngIf="isErrorDisplay" class="register-error">{{registerError}} <mat-icon class="error-close" (click)="this.isErrorDisplay = false">close</mat-icon></div>
     <input formControlName="login" type="login" placeholder="Логин*" />
     <p
-      *ngIf="
+      [class]="
         this.regForm.get('login')?.invalid && this.regForm.get('login')?.touched
+        ? 'input-warning shown'
+        : 'input-warning'
       "
-      class="input-warning"
     >
     Укажите логин (без спец символов)
     </p>
     <input formControlName="password" type="password" placeholder="Пароль*" />
     <p
-      *ngIf="
+      [class]="
         this.regForm.get('password')?.invalid &&
         this.regForm.get('password')?.touched
+        ? 'input-warning shown'
+        : 'input-warning'
       "
-      class="input-warning"
     >
-      Укажите пароль(8 символов, минимум 1 заглавная, 1 строчная, 1 число, 1
-      спец. символ)
+      Создайте пароль из 8 символов, включая заглавные, строчные буквы, цифры и специальные символы.
     </p>
     <br />
     <input formControlName="firstName" type="text" placeholder="Имя*" />
     <p
-      *ngIf="
+      [class]="
         this.regForm.get('firstName')?.invalid && this.regForm.get('firstName')?.touched
+        ? 'input-warning shown'
+        :'input-warning'
       "
-      class="input-warning"
     >
       Укажите имя
     </p>
     <input formControlName="lastName" type="text" placeholder="Фамилия*" />
     <p
-      *ngIf="
+      [class]="
         this.regForm.get('lastName')?.invalid && this.regForm.get('lastName')?.touched
+        ? 'input-warning shown'
+        : 'input-warning'
       "
-      class="input-warning"
     >
       Укажите Фамилию
     </p>
     <input formControlName="company" type="text" placeholder="Компания*" />
     <p
-      *ngIf="
+      [class]="
         this.regForm.get('company')?.invalid && this.regForm.get('company')?.touched
+        ? 'input-warning shown'
+        : 'input-warning'
       "
-      class="input-warning"
     >
       Укажите компанию
     </p>
     <input formControlName="phone" type="phone" placeholder="Телефон" />
     <p
-      *ngIf="
+      [class]="
         this.regForm.get('phone')?.invalid && this.regForm.get('phone')?.touched
+        ? 'input-warning shown'
+        : 'input-warning'
       "
-      class="input-warning"
     >
       Укажите номер телефона
     </p>
     <input formControlName="email" type="email" placeholder="Почта" />
     <p
-      *ngIf="
+      [class]="
         this.regForm.get('email')?.invalid && this.regForm.get('email')?.touched
+        ? 'input-warning shown'
+        : 'input-warning'
       "
-      class="input-warning"
     >
       Укажите почту правильно
     </p>
@@ -81,4 +84,11 @@
     </button>
     <span>Уже есть аккаунт? <a routerLink="/login">Войти</a></span>
   </form>
+  <div class="stockmate-info">
+		<div class="stockmate-info__logo">
+			<mat-icon>inventory_2</mat-icon>
+			<p>Stockmate</p>
+		</div>
+		<p class="motto">Управляйте своим инвентарем проще, чем когда-либо.</p>
+	</div>
 </div>

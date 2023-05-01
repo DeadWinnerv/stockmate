@@ -1,16 +1,20 @@
 <app-preloader *ngIf="isLoading" style="min-width: 100vw;"></app-preloader>
 <div *ngIf="!isLoading" class="login-page">
-	<form [formGroup]="loginForm" (ngSubmit)="submitLogin()" class="login" [@slideIn]>
-		<div class="logo">
-			<mat-icon>inventory_2</mat-icon>
-			<span>Stockmate</span>
-		</div>
+	<form [formGroup]="loginForm" (ngSubmit)="submitLogin()" class="login-fields">
+		<p class="sign-in-header">Войти в профиль</p>
     <div *ngIf="isErrorDisplay" class="login-error">{{loginError}} <mat-icon class="error-close" (click)="this.isErrorDisplay = false">close</mat-icon></div>
 		<input formControlName="login" type="text" placeholder="Логин">
-    <p *ngIf="this.loginForm.get('login')?.invalid && this.loginForm.get('login')?.touched" class="input-warning">Введите логин</p>
+    <p [class]="this.loginForm.get('login')?.invalid && this.loginForm.get('login')?.touched ? 'input-warning shown' : 'input-warning'" class="input-warning">Введите логин</p>
 		<input formControlName="password" type="password" placeholder="Пароль">
-    <p *ngIf="this.loginForm.get('password')?.invalid && this.loginForm.get('password')?.touched" class="input-warning">Введите пароль</p>
+    <p [class]="this.loginForm.get('password')?.invalid && this.loginForm.get('password')?.touched ? 'input-warning shown' : 'input-warning'" class="input-warning">Введите пароль</p>
 		<button type="submit" [disabled]="loginForm.invalid || loginForm.disabled">Войти</button>
 		<span>Нет аккаунта? <a routerLink="/register">Зарегистрироваться</a></span>
 	</form>
+	<div class="stockmate-info">
+		<div class="stockmate-info__logo">
+			<mat-icon>inventory_2</mat-icon>
+			<p>Stockmate</p>
+		</div>
+		<p class="motto">Управляйте своим инвентарем проще, чем когда-либо.</p>
+	</div>
 </div>
