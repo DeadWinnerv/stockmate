@@ -1,18 +1,17 @@
 .dashboard {
 	display: flex;
 	flex-direction: column;
-	align-items: start;
+	align-items: flex-start;
 	.tabs-menu {
-		min-width: 100%;
+		max-width: 40%;
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
-		background-color: #3e3e3e;
 		button {
 			cursor: pointer;
 			padding: 1rem;
-			font-size: 18px;
+			font-size: 20px;
 			background-color: rgba(0,0,0,0);
-			color: #fff;
+			color: #3e3e3e;
 			transition: 0.5s;
 		}
 		button:hover {
@@ -20,11 +19,8 @@
 			color: #ff9500;
 		}
 		button.active {
-			background-color: #ff9500;
-		}
-		button.active:hover {
-			transition: 0.5s;
-			color: #fff;
+			border-bottom: #ff9500 solid 1px;
+			color: #ff9500;
 		}
 	}
 	.content {

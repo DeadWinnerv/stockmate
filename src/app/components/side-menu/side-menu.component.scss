@@ -7,28 +7,33 @@ mat-icon {
 .side-menu {
 	padding: 0.6rem;
 	position: fixed;
+	z-index: 1;
 	top: 0;
 	left: 0;
-	max-width: 18vw;
-	height: 100vh;
+	bottom: 0;
+	max-width: fit-content;
+	height: 100%;
 	background-color: #3E3E3E;
 	display: flex;
 	flex-direction: column;
-	gap: 3rem;
+	justify-content: space-around;
 	&__logo {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		padding: 1rem;
+		gap: 0.5rem;
 		a {
 		gap: 0.5rem;
 		display: flex;
 		align-items: center;
-		justify-content: center;
 			span {
-				font-size: 28px;
+				font-size: 26px;
 				color: #FF9500;
 			}
+		}
+		:last-child {
+			font-size: 28px;
 		}
 	}
 	.side-menu__block {
@@ -48,6 +53,7 @@ mat-icon {
 					span {
 						color: #fff;
 						font-size: 18px;
+						transition: 0.2s;
 					}
 				}
 				a:hover {
@@ -62,6 +68,11 @@ mat-icon {
 			}
 		}
 	}
+	.lock-menu {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
 }
 
 .active-button {
@@ -73,15 +84,13 @@ mat-icon {
 }
 
 .hidden {
-	max-width: 5vw;
+	max-width: fit-content;
 	span {
-		display: none;
+		max-width: 0;
+		overflow: hidden;
+		position: absolute;
 		margin: 0;
 		padding: 0;
-	}
-	.side-menu__logo {
-		display: flex;
-		flex-direction: column-reverse;
-		gap: 0.5rem;
+		transition: 0.2s;
 	}
 }
