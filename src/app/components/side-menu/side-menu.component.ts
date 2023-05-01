@@ -33,7 +33,7 @@ type TButton = 'profile' | 'dashboard' | 'inventory' | 'orders' | 'storages' | '
 export class SideMenuComponent implements OnInit {
   activeButton: TButton;
   hiddenMenu: boolean = true;
-  isLocked: boolean = false;
+  isLocked: boolean = true;
   screenWidth: number;
   
   constructor(private router: Router, public auth: AuthService) {

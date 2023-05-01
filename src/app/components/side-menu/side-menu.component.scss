@@ -71,8 +71,11 @@ mat-icon {
 	}
 	.lock-menu {
 		display: flex;
-		justify-content: center;
+		justify-content: flex-start;
 		align-items: center;
+		mat-icon {
+			margin: 1rem;
+		}
 	}
 }
 
