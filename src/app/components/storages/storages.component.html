@@ -1,33 +1,37 @@
 <div class="storages">
-  <p class="storages__header">Список складов</p>
-    <div class="storages__list">
-      <div class="storages__list__item">
-        <input type="text" placeholder="id" />
-        <input type="text" placeholder="Название" />
-        <mat-icon>add_circle_outline</mat-icon>
+  <div class="storages__list">
+    <p class="storages__list__header">Ваши склады</p>
+    <div class="storages__list__filter">
+      <input type="text" />
+      <input type="text" />
+    </div>
+    <div class="storages__list__item" *ngFor="let item of storages">
+      <div
+        *ngIf="!activeStorage"
+        class="storages__list__item__info"
+        (click)="handleClick(item.id)"
+      >
+        <p class="id">{{ item.id }}</p>
+        <p class="name">{{ item.name }}</p>
       </div>
       <div
-        class="storages__list__item"
-        *ngFor="let item of storages"
-        [ngClass]="activeStorage === item.id ? 'active' : null"
-        (click)="activeStorage=item.id"
+        *ngIf="activeStorage && item.id === activeStorage"
+        class="storages__list__item__details"
       >
-        <span>{{ item.id }}</span>
-        <span>{{ item.name }}</span>
-        <div class="storages__list__item__details" *ngIf="activeStorage===item.id">
-          <p class="deteils-header">
-            Информация о складе
-            <span> {{item.name}}</span>
-          </p>
-          <p>Адрес: {{item.adress}}</p>
-          <p>Расписание: {{item.schedule}}</p>
-          <p>Телефон: {{item.phone ?? 'не указан'}}</p>
-          <p>email: {{item.email ?? ' не указан'}}</p>
+        <p class="storages__list__item__details__header">
+          Информация о складе {{ item.name }}
+          <mat-icon (click)="handleClick(null)">close</mat-icon>
+        </p>
+        <p class="storages__list__item__details__adress">
+          Адрес: {{ item.adress }}
+        </p>
+        <div class="storages__list__item__details__schedule">
+          <p>{{ item.schedule }}</p>
         </div>
+        <p>Телефон: {{ item.phone ?? "не указан" }}</p>
+        <p>email: {{ item.email ?? "не указан" }}</p>
       </div>
     </div>
-    <div class="storages__active_storage_not_chosen" *ngIf="!activeStorage">
-      <mat-icon>search</mat-icon>
-      <p>Выберите склад</p>
-    </div>
+  </div>
+  <div class="storages__map"></div>
 </div>

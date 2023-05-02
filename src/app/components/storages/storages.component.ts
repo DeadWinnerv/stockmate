@@ -7,7 +7,7 @@ import { Storage } from 'src/app/models/storage';
 })
 export class StoragesComponent {
 
-  activeStorage: number | undefined = undefined
+  activeStorage: number | null = null
 
   storages: Storage[] = [
     {
@@ -53,4 +53,10 @@ export class StoragesComponent {
       email: 'email@mail.com'
     }
   ];
+
+  handleClick(id: number | null): void {
+    !this.activeStorage
+    ? this.activeStorage = id
+    : this.activeStorage = null
+  }
 }
