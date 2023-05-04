@@ -1,8 +1,10 @@
+export type TSchedule = true | false;
 export interface Storage {
 	id: number,
 	name: string,
 	adress: string,
 	phone?: string,
 	email?: string,
-	schedule: 'full-time' | 'weekdays'
+	schedule: TSchedule[],
+	isActive: boolean
 }

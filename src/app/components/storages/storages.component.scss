@@ -1,0 +1,139 @@
+mat-icon {
+	width: fit-content;
+	height: fit-content;
+	color: #3e3e3e;
+}
+
+.storages {
+	margin: 1rem;
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	.header {
+		background-color: #3e3e3e;
+		padding: 1rem;
+		border-radius: 4px;
+		display: flex;
+		align-items: center;
+		gap: 2rem;
+		span {
+			color: #ff9500;
+			font-size: 26px;
+			font-weight: 400;
+		}
+		input {
+			padding: 0.3rem;
+			background-color: #d3d3d3;
+			border-bottom: #ff9500 solid 1px;
+		}
+		mat-icon {
+			color: #ff9500;
+			font-size: 26px;
+			border-radius: 6px;
+			padding: 2px;
+		}
+	}
+	.dialogue {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		position: absolute;
+		background-color: rgba(255, 255, 255, 0.5);
+		backdrop-filter: blur(2px);
+		min-width: 100%;
+		min-height: 100vh;
+		z-index: 1;
+		.dialogue-content {
+			min-width: 40%;
+			display: flex;
+			flex-direction: column;
+			gap: 1rem;
+			background-color: #3e3e3e;
+			padding: 1rem;
+			padding-top: 0;
+			border-radius: 8px;
+			.dialogue-title {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 2rem;
+				h1 {
+					color: #ff9500;
+					font-weight: 400;
+				}
+				mat-icon {
+					color: #ff9500;
+				}
+			}
+			input {
+				padding: 1rem;
+				background-color: #d3d3d3;
+				border-bottom: #ff9500 1px solid;
+			}
+			.dialogue-schedule-header {
+				color:#fff;
+			}
+			.schedule {
+				min-width: 50%;
+			}
+			.toolbar {
+				button {
+					background-color: #3e3e3e;
+					mat-icon {
+						color: #ff9500;
+					}
+				}
+			}
+		}
+	}
+	mat-expansion-panel {
+		mat-expansion-panel-header {
+			mat-panel-title {
+				display: flex;
+				gap: 1rem;
+			}
+		}
+	}
+}
+
+.toolbar {
+	display: flex;
+	gap: 1rem;
+	margin-top: 1rem;
+	button {
+		background-color: #fff;
+		mat-icon {
+			padding: 4px;
+			border-radius: 4px;
+		}
+		.active {
+			background-color: #3e3e3e;
+			color: #d3d3d3;
+		}
+	}
+}
+
+.schedule {
+	display: grid;
+	width: fit-content;
+	grid-template-columns: repeat(7, 1fr);
+	grid-template-rows: 1fr 1fr;
+	gap: 0.2rem;
+	background-color: #d3d3d3;
+	padding: 0.3rem;
+	border-radius: 6px;
+	.schedule-item {
+		position: relative;
+		height: 22px;
+		width: 22px;
+		border-radius: 4px;
+		z-index: 1;
+		background-color: #3e3e3e;
+	}
+	.schedule-item.active {
+		background-color: #ff9500;
+	}
+	.schedule-item.unactive {
+		background-color: #3e3e3e;
+	}
+}

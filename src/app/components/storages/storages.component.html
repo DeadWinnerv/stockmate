@@ -1,37 +1,87 @@
 <div class="storages">
-  <div class="storages__list">
-    <p class="storages__list__header">Ваши склады</p>
-    <div class="storages__list__filter">
-      <input type="text" />
-      <input type="text" />
-    </div>
-    <div class="storages__list__item" *ngFor="let item of storages">
-      <div
-        *ngIf="!activeStorage"
-        class="storages__list__item__info"
-        (click)="handleClick(item.id)"
-      >
-        <p class="id">{{ item.id }}</p>
-        <p class="name">{{ item.name }}</p>
+  <h1 class="header">
+    <span>Список складов</span>
+    <input type="text" placeholder="id">
+    <input type="text" placeholder="Название">
+    <mat-icon (click)="openDialogue()">add</mat-icon>
+  </h1>
+  <div class="dialogue" *ngIf="isDialogueOpen">
+    <div class="dialogue-content">
+      <div class="dialogue-title">
+        <h1>Добавить новый склад</h1>
+        <mat-icon (click)="openDialogue()">close</mat-icon>
       </div>
-      <div
-        *ngIf="activeStorage && item.id === activeStorage"
-        class="storages__list__item__details"
-      >
-        <p class="storages__list__item__details__header">
-          Информация о складе {{ item.name }}
-          <mat-icon (click)="handleClick(null)">close</mat-icon>
-        </p>
-        <p class="storages__list__item__details__adress">
-          Адрес: {{ item.adress }}
-        </p>
-        <div class="storages__list__item__details__schedule">
-          <p>{{ item.schedule }}</p>
-        </div>
-        <p>Телефон: {{ item.phone ?? "не указан" }}</p>
-        <p>email: {{ item.email ?? "не указан" }}</p>
+      <input type="text" placeholder="Название*" required>
+      <input type="text" placeholder="Адресс*" required>
+      <input type="text" placeholder="Телефон">
+      <input type="text" placeholder="email">
+      <span class="dialogue-schedule-header">Расписание: </span>
+      <div class="schedule">
+        <span>Пн</span>
+        <span>Вт</span>
+        <span>Ср</span>
+        <span>Чт</span>
+        <span>Пт</span>
+        <span>Сб</span>
+        <span>Вс</span>
+        <input type="checkbox" name="" id="" class="schedule-item">
+        <input type="checkbox" name="" id="" class="schedule-item">
+        <input type="checkbox" name="" id="" class="schedule-item">
+        <input type="checkbox" name="" id="" class="schedule-item">
+        <input type="checkbox" name="" id="" class="schedule-item">
+        <input type="checkbox" name="" id="" class="schedule-item">
+        <input type="checkbox" name="" id="" class="schedule-item">
+      </div>
+      <div class="toolbar">
+        <button>
+          <mat-icon>save</mat-icon>
+        </button>
+        <button>
+          <mat-icon>cancel</mat-icon>
+        </button>
       </div>
     </div>
   </div>
-  <div class="storages__map"></div>
+  <mat-expansion-panel hideToggle *ngFor="let item of storages">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-icon>{{ item.isActive ? "warehouse" : "ac_unit" }}</mat-icon>
+        {{ item.name | titlecase }}
+      </mat-panel-title>
+      <mat-panel-description>
+        {{ item.adress }}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <p>id: {{ item.id }}</p>
+    <p *ngIf="item.phone">phone: {{ item.phone }}</p>
+    <p *ngIf="item.email">phone: {{ item.email }}</p>
+    <p>Расписание:</p>
+    <div class="schedule">
+      <span>Пн</span>
+      <span>Вт</span>
+      <span>Ср</span>
+      <span>Чт</span>
+      <span>Пт</span>
+      <span>Сб</span>
+      <span>Вс</span>
+      <span
+        class="schedule-item"
+        *ngFor="let scheduleItem of item.schedule"
+        [ngClass]="scheduleItem ? 'active' : 'unactive'"
+      ></span>
+    </div>
+    <div class="toolbar">
+      <button>
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button (click)="item.isActive = !item.isActive">
+        <mat-icon [ngClass]="!item.isActive ? 'active' : 'unactive'"
+          >ac_unit</mat-icon
+        >
+      </button>
+      <button>
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </mat-expansion-panel>
 </div>
