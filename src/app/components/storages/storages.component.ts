@@ -10,7 +10,7 @@ import {MatDialog} from '@angular/material/dialog';
 export class StoragesComponent {
 
   activeStorage: number | null = null
-  isDialogueOpen: boolean = true
+  isDialogueOpen: boolean = false
   storages: Storage[] = [
     {
       id: 16352,
