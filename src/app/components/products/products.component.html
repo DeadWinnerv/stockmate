@@ -1,1 +1,32 @@
-<p>products works!</p>
+<div class="products">
+	<div class="header">
+		Шаблоны товаров
+	</div>
+	<div class="toolbar">
+		<div class="toolbar-tabs">
+			<button class="tab-btn" [ngClass]="activeTab==='addNew' ? 'active' : null" (click)="handleTabChange('addNew')">Создать новый товар</button>
+			<button class="tab-btn" [ngClass]="activeTab==='filter' ? 'active' : null" (click)="handleTabChange('filter')">Фильтры</button>
+		</div>
+		<div class="add-new-tab tab" *ngIf="activeTab==='addNew'">
+			<input type="text" placeholder="Название">
+			<input type="text" placeholder="Цена">
+			<mat-icon>add</mat-icon>
+		</div>
+		<div class="add-new-tab tab" *ngIf="activeTab==='filter'">
+			<input type="text" placeholder="ID">
+			<input type="text" placeholder="Название">
+		</div>
+	</div>
+	<div class="products-table">
+		<div class="table-headers table-row">
+			<span>id</span>
+			<span>Название</span>
+			<span>Цена</span>
+		</div>
+		<div class="table-row" *ngFor="let item of products">
+			<span>{{item.id}}</span>
+			<span>{{item.name}}</span>
+			<span>{{item.price}}</span>
+		</div>
+	</div>
+</div>

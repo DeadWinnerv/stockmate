@@ -1,0 +1,52 @@
+.products {
+	margin: 1rem;
+	.header {
+		color: #ff9500;
+		font-size: 28px;
+	}
+	.toolbar {
+		.toolbar-tabs {
+			display: flex;
+			gap: 0.5rem;
+			.tab-btn {
+				padding: 0.5rem;
+				transition: 0.3s;
+				background-color: #fff;
+			}
+			.tab-btn:hover{
+				color: #ff9500;
+				transition: 0.3s;
+			}
+			.tab-btn.active {
+				color: #ff9500;
+				border-bottom: #ff9500 solid 1px;
+			}
+		}
+		.tab {
+			display: flex;
+			padding: 0.5rem;
+			gap: 4px;
+			input {
+				padding: 0.3rem;
+				border-bottom: #ff9500 solid 1px;
+			}
+		}
+	}
+
+	.products-table {
+		display: grid;
+		grid-template-rows: 1fr;
+		gap: 1rem;
+		.table-headers{
+			font-weight: 700;
+		}
+		.table-row {
+			display: grid;
+			grid-template-columns: 1fr 4fr 1fr;
+			border-bottom: 1px solid #d3d3d3;
+			span {
+				padding: 0.2rem;
+			}
+		}
+	}
+}
