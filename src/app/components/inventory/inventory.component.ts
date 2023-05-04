@@ -1,7 +1,11 @@
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, OnInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { INVENTORY as inventoryData } from 'src/app/constants/INVENTORY';
+import { FormControl } from '@angular/forms';
+import { STORAGES } from 'src/app/constants/STORAGES';
+import { Observable } from 'rxjs/internal/Observable';
+import { map, startWith } from 'rxjs/operators';
 
 export interface inventoryData {
   id: number;
@@ -26,7 +30,7 @@ type TShownColumn = 'id' | 'name' | 'storage' | 'price' | 'stock' | ''
   templateUrl: './inventory.component.html',
   styleUrls: ['./inventory.component.scss'],
 })
-export class InventoryComponent implements AfterViewInit {
+export class InventoryComponent implements AfterViewInit, OnInit {
   public displayedColumns: string[] = [
     'id',
     'name',
@@ -40,11 +44,32 @@ export class InventoryComponent implements AfterViewInit {
   public storageFilter = 'all';
   public sortingColumn: TSortingColumn = {};
   public shownColumn: string = ''
+  protected chooseStorageForm = new FormControl('')
+  protected storageOptions: string[] = STORAGES.map(item => item.name)
+  protected filteredStorageOptions: Observable<string[]>
+  protected toolBarActiveTab: 'filter' | 'add' = 'filter'
+
+  ngOnInit(): void {
+    this.filteredStorageOptions = this.chooseStorageForm.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value || '')),
+    );
+  }
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.storageOptions.filter(option => option.toLowerCase().includes(filterValue));
+  }
+
+  changeTab(tabName: 'filter' | 'add'):void {
+    this.toolBarActiveTab = tabName
   }
 
   handleStorageFilterChange(): void {

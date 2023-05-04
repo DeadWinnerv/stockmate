@@ -1,5 +1,27 @@
 <div class="inventory">
   <p class="title">Остатки</p>
+  <div class="toolbar">
+    <button (click)="changeTab('add')" class="btn" [ngClass]="toolBarActiveTab==='add' ? 'active' : null">Провести новый продукт</button>
+    <button (click)="changeTab('filter')" class="btn" [ngClass]="toolBarActiveTab==='filter' ? 'active' : null">Поиск по инвентарю</button>
+  </div>
+  <div *ngIf="toolBarActiveTab==='add'" class="inventory-add-new-block tab">
+    <input type="text" placeholder="Продукт" />
+    <input type="text" placeholder="Склад" 
+      [formControl]="chooseStorageForm"
+      [matAutocomplete]="storageAutoComplete"
+    />
+    <mat-autocomplete #storageAutoComplete="matAutocomplete">
+      <mat-option *ngFor="let option of filteredStorageOptions | async" [value]="option">
+        {{ option }}
+      </mat-option>
+    </mat-autocomplete>
+    <input type="text" placeholder="Остаток" />
+    <mat-icon>add</mat-icon>
+  </div>
+  <div *ngIf="toolBarActiveTab==='filter'" class="filter-inventory-block tab">
+    <input type="text" placeholder="id">
+    <input type="text" placeholder="Название">
+  </div>
   <table mat-table [dataSource]="dataSource" class="inventory-table">
     <ng-container matColumnDef="id">
       <th
@@ -126,10 +148,10 @@
       </th>
       <td mat-cell *matCellDef="let item">{{ item.stock }}</td>
     </ng-container>
+
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
-
   <mat-paginator
     [pageSizeOptions]="[10, 20, 50, 100]"
     showFirstLastButtons

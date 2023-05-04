@@ -5,18 +5,42 @@
 	.title {
 		font-size: 24px;
 		margin: 1rem;
-		color: #FF9500;
+		color: #ff9500;
+	}
+	.toolbar {
+		display: flex;
+		gap: 0.4rem;
+		align-items: center;
+		margin-bottom: 1rem;
+		.btn {
+			font-size: 18px;
+			background-color: #fff;
+			padding: 1rem;
+		}
+		.btn.active {
+			border-bottom: #ff9500 1px solid;
+		}
+	}
+	.tab {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		max-width: 50%;
+		input {
+			border-bottom: 1px #d3d3d3 solid;
+			padding: 0.5rem;
+		}
 	}
 	.inventory-table {
 		min-height: 100%;
 		min-width: 100%;
 		.table-header {
-		-webkit-touch-callout: none; /* iOS Safari */
+			-webkit-touch-callout: none; /* iOS Safari */
 			-webkit-user-select: none; /* Safari */
-			 -khtml-user-select: none; /* Konqueror HTML */
-				 -moz-user-select: none; /* Old versions of Firefox */
-					-ms-user-select: none; /* Internet Explorer/Edge */
-							user-select: none; /* for human beings */
+			-khtml-user-select: none; /* Konqueror HTML */
+			-moz-user-select: none; /* Old versions of Firefox */
+			-ms-user-select: none; /* Internet Explorer/Edge */
+			user-select: none; /* for human beings */
 			cursor: pointer;
 			mat-icon {
 				position: absolute;
