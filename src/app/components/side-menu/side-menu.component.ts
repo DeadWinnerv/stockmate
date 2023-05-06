@@ -31,7 +31,7 @@ type TButton = 'profile' | 'dashboard' | 'inventory' | 'orders' | 'storages' | '
   ]
 })
 export class SideMenuComponent implements OnInit {
-  activeButton: TButton;
+  activeButton: TButton = 'dashboard';
   hiddenMenu: boolean = true;
   isLocked: boolean = true;
   screenWidth: number;
@@ -41,7 +41,7 @@ export class SideMenuComponent implements OnInit {
       if (event instanceof NavigationEnd) {
         const currentRoute =
         router.routerState.snapshot.root.firstChild?.routeConfig;
-        this.activeButton = currentRoute?.data?.activeButton;
+        this.activeButton = currentRoute?.data?.activeButton
       }
     });
   }
