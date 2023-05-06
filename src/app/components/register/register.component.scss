@@ -82,3 +82,18 @@ span, p, a, button {
     }
   }
 }
+.request-error{
+  display: flex;
+  width: 300px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border: 2px solid #472228;
+  border-radius: 15px;
+  padding: 1rem;
+  color: white;
+  background-color: #25171c;
+}
+.error-close{
+  color: white
+}

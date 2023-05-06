@@ -2,7 +2,7 @@
 <div *ngIf="!isLoading" class="login-page">
 	<form [formGroup]="loginForm" (ngSubmit)="submitLogin()" class="login-fields">
 		<p class="sign-in-header">Войти в профиль</p>
-    <div *ngIf="isErrorDisplay" class="login-error">{{loginError}} <mat-icon class="error-close" (click)="this.isErrorDisplay = false">close</mat-icon></div>
+    <div *ngIf="isErrorDisplay" class="request-error">{{loginError}} <mat-icon class="error-close" (click)="this.isErrorDisplay = false">close</mat-icon></div>
 		<input formControlName="login" type="text" placeholder="Логин">
     <p [class]="this.loginForm.get('login')?.invalid && this.loginForm.get('login')?.touched ? 'input-warning shown' : 'input-warning'" class="input-warning">Введите логин</p>
 		<input formControlName="password" type="password" placeholder="Пароль">

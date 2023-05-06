@@ -6,7 +6,7 @@
     (ngSubmit)="submitRegister()"
   >
     <p class="register-header">Зарегистрировать профиль</p>
-    <div *ngIf="isErrorDisplay" class="register-error">{{registerError}} <mat-icon class="error-close" (click)="this.isErrorDisplay = false">close</mat-icon></div>
+    <div *ngIf="isErrorDisplay" class="request-error">{{registerError}} <mat-icon class="error-close" (click)="this.isErrorDisplay = false">close</mat-icon></div>
     <input formControlName="login" type="login" placeholder="Логин*" />
     <p
       [class]="

@@ -52,10 +52,11 @@ export class RegisterComponent {
       ]),
       phone: new FormControl('', [
         Validators.required,
+        Validators.pattern(/^\+?(\d{1,3})?[- .]?\(?(?:\d{2,3})\)?[- .]?\d\d\d[- .]?\d\d\d\d$/)
       ]),
       email: new FormControl('', [
         Validators.required,
-        Validators.pattern(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/),
+        Validators.pattern(/^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i),
       ]),
     });
   }

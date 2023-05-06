@@ -137,3 +137,18 @@ mat-icon {
 		background-color: #3e3e3e;
 	}
 }
+.request-error{
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border: 2px solid #472228;
+  border-radius: 15px;
+  padding: 1rem;
+  color: white;
+  background-color: #25171c;
+}
+.error-close{
+  color: white
+}
