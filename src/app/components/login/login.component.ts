@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { MainService } from 'src/app/services/main.service';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +17,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   loginError: any;
   isErrorDisplay: boolean = false;
   constructor(private auth: AuthService, private router: Router) {}
+  finished(err: any) {
+    console.log(err);
+  }
   submitLogin() {
     this.loginForm.disable();
     this.isLoading = true;

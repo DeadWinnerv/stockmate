@@ -7,11 +7,11 @@
 			<button class="tab-btn" [ngClass]="activeTab==='addNew' ? 'active' : null" (click)="handleTabChange('addNew')">Создать новый товар</button>
 			<button class="tab-btn" [ngClass]="activeTab==='filter' ? 'active' : null" (click)="handleTabChange('filter')">Фильтры</button>
 		</div>
-		<div class="add-new-tab tab" *ngIf="activeTab==='addNew'">
-			<input type="text" placeholder="Название">
-			<input type="text" placeholder="Цена">
-			<mat-icon>add</mat-icon>
-		</div>
+		<form [formGroup]="productForm" (ngSubmit)="addProduct()" class="add-new-tab tab" *ngIf="activeTab==='addNew'">
+			<input formControlName="name" type="text" placeholder="Название">
+			<input formControlName="price" type="text" placeholder="Цена">
+			<button type="submit" [disabled]="productForm.invalid || productForm.disabled"><mat-icon>add</mat-icon></button>
+		</form>
 		<div class="add-new-tab tab" *ngIf="activeTab==='filter'">
 			<input type="text" placeholder="ID">
 			<input type="text" placeholder="Название">
@@ -24,7 +24,7 @@
 			<span>Цена</span>
 		</div>
 		<div class="table-row" *ngFor="let item of products">
-			<span>{{item.id}}</span>
+			<span>{{item._id}}</span>
 			<span>{{item.name}}</span>
 			<span>{{item.price}}</span>
 		</div>

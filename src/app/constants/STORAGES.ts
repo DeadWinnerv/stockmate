@@ -1,6 +1,6 @@
-import { Storage } from "../models/storage";
+import { IStorage } from "../models/storage";
 
-export const STORAGES: Storage[] = [
+export const STORAGES: IStorage[] = [
 	{
 		_id: "16352",
 		name: 'Склад 1',

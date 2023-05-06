@@ -1,26 +1,119 @@
 <div class="inventory">
   <p class="title">Остатки</p>
   <div class="toolbar">
-    <button (click)="changeTab('add')" class="btn" [ngClass]="toolBarActiveTab==='add' ? 'active' : null">Провести новый продукт</button>
-    <button (click)="changeTab('filter')" class="btn" [ngClass]="toolBarActiveTab==='filter' ? 'active' : null">Поиск по инвентарю</button>
+    <button
+      (click)="changeTab('add')"
+      class="btn"
+      [ngClass]="toolBarActiveTab === 'add' ? 'active' : null"
+    >
+      Провести новый продукт
+    </button>
+    <button
+      (click)="changeTab('filter')"
+      class="btn"
+      [ngClass]="toolBarActiveTab === 'filter' ? 'active' : null"
+    >
+      Поиск по инвентарю
+    </button>
   </div>
-  <div *ngIf="toolBarActiveTab==='add'" class="inventory-add-new-block tab">
-    <input type="text" placeholder="Продукт" />
-    <input type="text" placeholder="Склад" 
-      [formControl]="chooseStorageForm"
-      [matAutocomplete]="storageAutoComplete"
-    />
-    <mat-autocomplete #storageAutoComplete="matAutocomplete">
-      <mat-option *ngFor="let option of filteredStorageOptions | async" [value]="option">
+  <form
+    [formGroup]="inventoryForm"
+    (ngSubmit)="addInventory()"
+    *ngIf="toolBarActiveTab === 'add'"
+    class="inventory-add-new-block tab"
+  >
+    <div>
+      <input
+        formControlName="productId"
+        type="text"
+        placeholder="Продукт"
+        [formControl]="chooseProductForm"
+        [matAutocomplete]="productAutoComplete"
+      />
+      <p
+        *ngIf="this.chooseProductForm.invalid && this.chooseProductForm.touched"
+        [class]="
+          this.chooseProductForm.invalid && this.chooseProductForm.touched
+            ? 'input-warning shown'
+            : 'input-warning'
+        "
+      >
+        Укажите товар
+      </p>
+    </div>
+    <mat-autocomplete #productAutoComplete="matAutocomplete">
+      <mat-option
+        *ngFor="let option of filteredProductOptions | async"
+        [value]="option"
+      >
         {{ option }}
       </mat-option>
     </mat-autocomplete>
-    <input type="text" placeholder="Остаток" />
-    <mat-icon>add</mat-icon>
+    <div>
+      <input
+        formControlName="storageId"
+        type="text"
+        placeholder="Склад"
+        [formControl]="chooseStorageForm"
+        [matAutocomplete]="storageAutoComplete"
+      />
+      <p
+        *ngIf="this.chooseStorageForm.invalid && this.chooseStorageForm.touched"
+        [class]="
+          this.chooseStorageForm.invalid && this.chooseStorageForm.touched
+            ? 'input-warning shown'
+            : 'input-warning'
+        "
+      >
+        Укажите склад
+      </p>
+    </div>
+    <mat-autocomplete #storageAutoComplete="matAutocomplete">
+      <mat-option
+        *ngFor="let option of filteredStorageOptions | async"
+        [value]="option"
+      >
+        {{ option }}
+      </mat-option>
+    </mat-autocomplete>
+    <div>
+      <input formControlName="stock" type="text" placeholder="Остаток" />
+      <p
+        *ngIf="
+          this.inventoryForm.get('stock')?.invalid &&
+          this.inventoryForm.get('stock')?.touched
+        "
+        [class]="
+          this.inventoryForm.get('stock')?.invalid &&
+          this.inventoryForm.get('stock')?.touched
+            ? 'input-warning shown'
+            : 'input-warning'
+        "
+      >
+        Укажите остаток(числом)
+      </p>
+    </div>
+    <button
+      type="submit"
+      [disabled]="
+        this.inventoryForm.get('stock')?.invalid ||
+        this.chooseStorageForm.invalid ||
+        this.chooseProductForm.invalid ||
+        inventoryForm.disabled
+      "
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+  </form>
+  <div *ngIf="toolBarActiveTab === 'filter'" class="filter-inventory-block tab">
+    <input type="text" placeholder="id" />
+    <input type="text" placeholder="Название" />
   </div>
-  <div *ngIf="toolBarActiveTab==='filter'" class="filter-inventory-block tab">
-    <input type="text" placeholder="id">
-    <input type="text" placeholder="Название">
+  <div *ngIf="isErrorDisplay" class="request-error">
+    {{ requestError }}
+    <mat-icon class="error-close" (click)="this.isErrorDisplay = false"
+      >close</mat-icon
+    >
   </div>
   <table mat-table [dataSource]="dataSource" class="inventory-table">
     <ng-container matColumnDef="id">
@@ -47,7 +140,7 @@
           >keyboard_arrow_up</mat-icon
         >
       </th>
-      <td mat-cell *matCellDef="let item">{{ item.id }}</td>
+      <td mat-cell *matCellDef="let item">{{ item._id }}</td>
     </ng-container>
     <ng-container matColumnDef="name">
       <th
@@ -73,7 +166,7 @@
           >keyboard_arrow_up</mat-icon
         >
       </th>
-      <td mat-cell *matCellDef="let item">{{ item.name }}</td>
+      <td mat-cell *matCellDef="let item">{{ item.productName }}</td>
     </ng-container>
     <ng-container matColumnDef="storage">
       <th mat-header-cell *matHeaderCellDef>
@@ -82,12 +175,12 @@
           (valueChange)="handleStorageFilterChange()"
         >
           <mat-option value="all">Все склады</mat-option>
-          <mat-option value="Хоругвино">Хоругвино</mat-option>
-          <mat-option value="Тверь">Тверь</mat-option>
-          <mat-option value="Воронеж">Воронеж</mat-option>
+          <mat-option *ngFor="let item of storages" [value]="item.name">{{
+            item.name
+          }}</mat-option>
         </mat-select>
       </th>
-      <td mat-cell *matCellDef="let item">{{ item.storage }}</td>
+      <td mat-cell *matCellDef="let item">{{ item.storageName }}</td>
     </ng-container>
     <ng-container matColumnDef="price">
       <th
@@ -119,7 +212,7 @@
         [class]="sortingColumn!.direction === 'desc' ? 'reversed' : null"
         *matCellDef="let item"
       >
-        {{ item.price | currency : "₽" }}
+        {{ item.productPrice | currency : "₽" }}
       </td>
     </ng-container>
     <ng-container matColumnDef="stock">

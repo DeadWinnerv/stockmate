@@ -1,5 +1,5 @@
 export type TSchedule = true | false;
-export interface Storage {
+export interface IStorage {
 	_id: string ,
 	name: string,
 	adress: string,

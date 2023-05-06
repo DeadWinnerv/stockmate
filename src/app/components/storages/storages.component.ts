@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Storage, TSchedule } from 'src/app/models/storage';
+import { IStorage, TSchedule } from 'src/app/models/storage';
 import { MatDialog } from '@angular/material/dialog';
 import { MainService } from 'src/app/services/main.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./storages.component.scss'],
 })
 export class StoragesComponent implements OnInit {
-  registerError: any;
+  requestError: any;
   isErrorDisplay: boolean = false;
 
   storageForm: FormGroup;
@@ -33,12 +33,13 @@ export class StoragesComponent implements OnInit {
     console.log(this.storageForm.value);
     this.aSub = this.service.addStorage(this.storageForm.value).subscribe({
       next: () => {
+        this.storageForm.enable();
         this.loadStorages();
         this.openDialogue();
       },
       error: (error) => {
         this.isErrorDisplay = true;
-        this.registerError = error.error.msg;
+        this.requestError = error.error.msg;
           console.warn(error);
           this.storageForm.enable();
       },
@@ -63,18 +64,18 @@ export class StoragesComponent implements OnInit {
   ngOnInit(): void {
     this.loadStorages();
     this.storageForm = new FormGroup({
-      name: new FormControl('Иваново', [
+      name: new FormControl('', [
         Validators.required,
         Validators.pattern(/^[а-яa-z ,.'-{1,20}$]+$/i),
       ]),
-      address: new FormControl('Пушкина 7', [
+      address: new FormControl('', [
         Validators.required,
         Validators.pattern(/^[а-я ,.'-{1,20}$]+$/i),
       ]),
-      phone: new FormControl('89521081098', [
+      phone: new FormControl('', [
         Validators.pattern(/(?:\+|\d)[\d\-\(\) ]{9,}\d/g),
       ]),
-      email: new FormControl('diga@sd.ru', [
+      email: new FormControl('', [
         Validators.pattern(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/),
       ]),
       schedule: new FormControl(this.schedule, [Validators.required]),

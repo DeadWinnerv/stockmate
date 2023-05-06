@@ -152,3 +152,12 @@ mat-icon {
 .error-close{
   color: white
 }
+.input-warning {
+  height: 16px;
+  font-size: 14px;
+  opacity: 0;
+  color: #ff006e;
+}
+.input-warning.shown {
+  opacity: 1;
+}

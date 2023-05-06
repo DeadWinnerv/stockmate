@@ -1,20 +1,90 @@
 <div class="storages">
   <h1 class="header">
     <span>Список складов</span>
-    <input type="text" placeholder="id">
-    <input type="text" placeholder="Название">
+    <input type="text" placeholder="id" />
+    <input type="text" placeholder="Название" />
     <mat-icon (click)="openDialogue()">add</mat-icon>
   </h1>
   <div class="dialogue" *ngIf="isDialogueOpen">
-    <form [formGroup]="storageForm" (ngSubmit)="submitAdd()" class="dialogue-content">
+    <form
+      [formGroup]="storageForm"
+      (ngSubmit)="submitAdd()"
+      class="dialogue-content"
+    >
       <div class="dialogue-title">
         <h1>Добавить новый склад</h1>
         <mat-icon (click)="openDialogue()">close</mat-icon>
       </div>
-      <input formControlName="name" type="text" placeholder="Название*" required>
-      <input formControlName="address" type="text" placeholder="Адресс*" required>
-      <input formControlName="phone" type="text" placeholder="Телефон*">
-      <input formControlName="email" type="text" placeholder="email*">
+      <input
+        formControlName="name"
+        type="text"
+        placeholder="Название*"
+        required
+      />
+      <p
+        *ngIf="
+          this.storageForm.get('name')?.invalid &&
+          this.storageForm.get('name')?.touched
+        "
+        [class]="
+          this.storageForm.get('name')?.invalid &&
+          this.storageForm.get('name')?.touched
+            ? 'input-warning shown'
+            : 'input-warning'
+        "
+      >
+        Укажите имя склада (без спец символов)
+      </p>
+      <input
+        formControlName="address"
+        type="text"
+        placeholder="Адресс*"
+        required
+      />
+      <p
+        *ngIf="
+          this.storageForm.get('address')?.invalid &&
+          this.storageForm.get('address')?.touched
+        "
+        [class]="
+          this.storageForm.get('address')?.invalid &&
+          this.storageForm.get('address')?.touched
+            ? 'input-warning shown'
+            : 'input-warning'
+        "
+      >
+        Укажите адрес склада
+      </p>
+      <input formControlName="phone" type="text" placeholder="Телефон*" />
+      <p
+        *ngIf="
+          this.storageForm.get('phone')?.invalid &&
+          this.storageForm.get('phone')?.touched
+        "
+        [class]="
+          this.storageForm.get('phone')?.invalid &&
+          this.storageForm.get('phone')?.touched
+            ? 'input-warning shown'
+            : 'input-warning'
+        "
+      >
+        Телефон указан некорректно
+      </p>
+      <input formControlName="email" type="text" placeholder="email*" />
+      <p
+        *ngIf="
+          this.storageForm.get('email')?.invalid &&
+          this.storageForm.get('email')?.touched
+        "
+        [class]="
+          this.storageForm.get('email')?.invalid &&
+          this.storageForm.get('email')?.touched
+            ? 'input-warning shown'
+            : 'input-warning'
+        "
+      >
+        Почта указана некорректно
+      </p>
       <span class="dialogue-schedule-header">Расписание: </span>
       <div class="schedule">
         <span>Пн</span>
@@ -24,17 +94,67 @@
         <span>Пт</span>
         <span>Сб</span>
         <span>Вс</span>
-        <input type="checkbox" name="1" (click)="handleSchedule(0)" id="" class="schedule-item">
-        <input type="checkbox" name="2" (click)="handleSchedule(1)" id="" class="schedule-item">
-        <input type="checkbox" name="3" (click)="handleSchedule(2)" id="" class="schedule-item">
-        <input type="checkbox" name="4" (click)="handleSchedule(3)" id="" class="schedule-item">
-        <input type="checkbox" name="5" (click)="handleSchedule(4)" id="" class="schedule-item">
-        <input type="checkbox" name="6" (click)="handleSchedule(5)" id="" class="schedule-item">
-        <input type="checkbox" name="7" (click)="handleSchedule(6)" id="" class="schedule-item">
+        <input
+          type="checkbox"
+          name="1"
+          (click)="handleSchedule(0)"
+          id=""
+          class="schedule-item"
+        />
+        <input
+          type="checkbox"
+          name="2"
+          (click)="handleSchedule(1)"
+          id=""
+          class="schedule-item"
+        />
+        <input
+          type="checkbox"
+          name="3"
+          (click)="handleSchedule(2)"
+          id=""
+          class="schedule-item"
+        />
+        <input
+          type="checkbox"
+          name="4"
+          (click)="handleSchedule(3)"
+          id=""
+          class="schedule-item"
+        />
+        <input
+          type="checkbox"
+          name="5"
+          (click)="handleSchedule(4)"
+          id=""
+          class="schedule-item"
+        />
+        <input
+          type="checkbox"
+          name="6"
+          (click)="handleSchedule(5)"
+          id=""
+          class="schedule-item"
+        />
+        <input
+          type="checkbox"
+          name="7"
+          (click)="handleSchedule(6)"
+          id=""
+          class="schedule-item"
+        />
       </div>
-      <div *ngIf="isErrorDisplay" class="request-error">{{registerError}} <mat-icon class="error-close" (click)="this.isErrorDisplay = false">close</mat-icon></div>
+      <div *ngIf="isErrorDisplay" class="request-error">
+        {{ requestError }}
+        <mat-icon class="error-close" (click)="this.isErrorDisplay = false"
+          >close</mat-icon
+        >
+      </div>
       <div class="toolbar">
-        <button type="submit" [disabled]="storageForm.invalid || storageForm.disabled">
+        <button
+          type="submit"
+          [disabled]="storageForm.invalid || storageForm.disabled"
+        >
           <mat-icon>save</mat-icon>
         </button>
         <button>
