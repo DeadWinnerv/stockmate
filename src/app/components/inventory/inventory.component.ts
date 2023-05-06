@@ -72,7 +72,6 @@ export class InventoryComponent implements AfterViewInit, OnInit {
           startWith(''),
           map((value) => this._filterStorages(value || ''))
         );
-        console.log(storages);
       },
       error: (err) => {
         console.log(err);
@@ -86,7 +85,6 @@ export class InventoryComponent implements AfterViewInit, OnInit {
           startWith(''),
           map((value) => this._filterProducts(value || ''))
         );
-        console.log(products);
       },
       error: (err) => {
         console.log(err);
@@ -98,7 +96,6 @@ export class InventoryComponent implements AfterViewInit, OnInit {
         this.dataSource = new MatTableDataSource<IInventory>(this.INVENTORY);
         this.sortedTable = [...this.INVENTORY];
         this.filteredTable = [...this.INVENTORY];
-        console.log(this.INVENTORY);
       },
       error: (err) => {
         console.log(err);
@@ -113,8 +110,7 @@ export class InventoryComponent implements AfterViewInit, OnInit {
     this.inventoryForm.value.productId = this.products.find(
       (item) => item.name == this.chooseProductForm.value
     )?._id;
-    console.log(this.inventoryForm.value.storageId);
-    console.log(this.inventoryForm.value);
+
     this.service.addInventory(this.inventoryForm.value).subscribe({
       next: () => {
         this.inventoryForm.reset();

@@ -17,9 +17,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   loginError: any;
   isErrorDisplay: boolean = false;
   constructor(private auth: AuthService, private router: Router) {}
-  finished(err: any) {
-    console.log(err);
-  }
   submitLogin() {
     this.loginForm.disable();
     this.isLoading = true;

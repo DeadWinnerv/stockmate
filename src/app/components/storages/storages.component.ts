@@ -30,7 +30,6 @@ export class StoragesComponent implements OnInit {
   }
   submitAdd() {
     this.storageForm.disable();
-    console.log(this.storageForm.value);
     this.aSub = this.service.addStorage(this.storageForm.value).subscribe({
       next: () => {
         this.storageForm.enable();

@@ -46,7 +46,6 @@ export class AuthService {
     this.http.get('https://stockmate-back.onrender.com/auth/me').subscribe(user => {
       this.authUser = user;
     })
-    // console.log(this.authUser);
     return (!!this.authUser || !!localStorage.getItem('token'));
   }
   logout() {

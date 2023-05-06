@@ -50,7 +50,6 @@ export class ProductsComponent {
   }
   addProduct() {
     this.productForm.disable();
-    console.log(this.productForm.value);
     this.aSub = this.service.addProduct(this.productForm.value).subscribe({
       next: () => {
         this.productForm.enable();
