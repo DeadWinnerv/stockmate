@@ -23,26 +23,36 @@ export class StoragesComponent implements OnInit {
   schedule: TSchedule[] = [false, false, false, false, false, false, false];
   aSub: Subscription;
   constructor(private service: MainService) {}
-
+  formReset() {
+    this.storageForm.get('name')?.reset('');
+    this.storageForm.get('address')?.reset('');
+    this.storageForm.get('email')?.reset('');
+    this.storageForm.get('phone')?.reset('');
+    this.schedule = [false, false, false, false, false, false, false];
+    this.storageForm.value.schedule = this.schedule;
+    this.storageForm.value.isActive = true;
+  }
   openDialogue() {
     this.isDialogueOpen = !this.isDialogueOpen;
   }
   handleSchedule(index: any) {
     this.schedule[index] = !this.schedule[index];
   }
+  log(obj: object) {
+    console.log(obj);
+  }
   submitAdd() {
-    this.storageForm.disable();
     this.aSub = this.service.addStorage(this.storageForm.value).subscribe({
       next: () => {
-        this.storageForm.enable();
         this.loadStorages();
         this.openDialogue();
+        this.formReset();
+        console.log(this.storageForm.value);
       },
       error: (error) => {
         this.isErrorDisplay = true;
         this.requestError = error.error.msg;
-          console.warn(error);
-          this.storageForm.enable();
+        console.warn(error);
       },
     });
   }
@@ -65,9 +75,9 @@ export class StoragesComponent implements OnInit {
         this.isLoading = false;
       },
       error: (err) => {
-        console.log(err)
+        console.log(err);
         this.isLoading = false;
-      }
+      },
     });
   }
   ngOnInit(): void {
@@ -79,7 +89,7 @@ export class StoragesComponent implements OnInit {
       ]),
       address: new FormControl('', [
         Validators.required,
-        Validators.pattern(/^[а-я ,.'-{1,20}$]+$/i),
+        Validators.pattern(/^[а-я ё ,.'-{1,20}$]+$/i),
       ]),
       phone: new FormControl('', [
         Validators.pattern(/(?:\+|\d)[\d\-\(\) ]{9,}\d/g),

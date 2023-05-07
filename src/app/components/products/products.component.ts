@@ -58,6 +58,7 @@ export class ProductsComponent {
     this.aSub = this.service.addProduct(this.productForm.value).subscribe({
       next: () => {
         this.productForm.enable();
+        this.productForm.reset();
         this.loadProducts();
       },
       error: (error) => {
