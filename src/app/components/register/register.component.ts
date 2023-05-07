@@ -52,7 +52,7 @@ export class RegisterComponent {
       ]),
       phone: new FormControl('', [
         Validators.required,
-        Validators.pattern(/^\+?(\d{1,3})?[- .]?\(?(?:\d{2,3})\)?[- .]?\d\d\d[- .]?\d\d\d\d$/)
+        Validators.pattern(/(?:\+|\d)[\d\-\(\) ]{9,}\d/g)
       ]),
       email: new FormControl('', [
         Validators.required,
