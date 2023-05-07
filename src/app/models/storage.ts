@@ -2,7 +2,7 @@ export type TSchedule = true | false;
 export interface IStorage {
 	_id: string ,
 	name: string,
-	adress: string,
+	address: string,
 	phone?: string,
 	email?: string,
 	schedule: TSchedule[],
