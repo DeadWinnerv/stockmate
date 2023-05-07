@@ -38,9 +38,6 @@ export class StoragesComponent implements OnInit {
   handleSchedule(index: any) {
     this.schedule[index] = !this.schedule[index];
   }
-  log(obj: object) {
-    console.log(obj);
-  }
   submitAdd() {
     this.aSub = this.service.addStorage(this.storageForm.value).subscribe({
       next: () => {
