@@ -51,11 +51,9 @@ export class RegisterComponent {
         Validators.required,
       ]),
       phone: new FormControl('', [
-        Validators.required,
         Validators.pattern(/(?:\+|\d)[\d\-\(\) ]{9,}\d/g)
       ]),
       email: new FormControl('', [
-        Validators.required,
         Validators.pattern(/^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i),
       ]),
     });
