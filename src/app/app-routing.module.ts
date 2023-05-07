@@ -8,6 +8,7 @@ import { OrdersComponent } from './components/orders/orders.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AuthGuard } from './classes/auth.guard';
+import { ProductsComponent } from './components/products/products.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,12 @@ const routes: Routes = [
     component: InventoryComponent,
     canActivate: [AuthGuard],
     data: { activeButton: 'inventory' },
+  },
+  {
+    path: 'products',
+    component: ProductsComponent,
+    canActivate: [AuthGuard],
+    data: { activeButton: 'products' },
   },
   {
     path: 'storages',
@@ -40,8 +47,8 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: { activeButton: 'orders' },
   },
-  { path: 'login', component: LoginComponent, data: { hideMenu: true } },
-  { path: 'register', component: RegisterComponent, data: { hideMenu: true } },
+  { path: 'login', component: LoginComponent, data: { shownMenu: true } },
+  { path: 'register', component: RegisterComponent, data: { shownMenu: true } },
   {
     path: '**',
     redirectTo: '/dashboard',

@@ -7,23 +7,34 @@ mat-icon {
 .side-menu {
 	padding: 0.6rem;
 	position: fixed;
+	z-index: 1;
 	top: 0;
 	left: 0;
-	width: 16vw;
-	height: 100vh;
+	bottom: 0;
+	max-width: fit-content;
+	height: 100%;
 	background-color: #3E3E3E;
 	display: flex;
 	flex-direction: column;
-	gap: 3rem;
+	justify-content: space-around;
 	&__logo {
 		display: flex;
-		justify-content: center;
+		justify-content: space-between;
 		align-items: center;
-		gap: 0.5rem;
 		padding: 1rem;
-		span {
+		gap: 0.5rem;
+		a {
+			height: 1.5rem;
+			gap: 0.5rem;
+			display: flex;
+			align-items: center;
+			span {
+				font-size: 26px;
+				color: #FF9500;
+			}
+		}
+		:last-child {
 			font-size: 28px;
-			color: #FF9500;
 		}
 	}
 	.side-menu__block {
@@ -33,15 +44,18 @@ mat-icon {
 		ul {
 			width: 100%;
 			li {
-				margin: 0.1rem;
+				margin-top: 0.3rem;
 				a {
 					border-radius: 6px;
 					display: flex;
 					gap: 2rem;
 					padding: 1rem;
-					font-size: 18px;
 					transition: 0.4s;
-					color: #fff;
+					span {
+						color: #fff;
+						font-size: 18px;
+						transition: 0.2s;
+					}
 				}
 				a:hover {
 					border-radius: 12px;
@@ -55,6 +69,14 @@ mat-icon {
 			}
 		}
 	}
+	.lock-menu {
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		mat-icon {
+			margin: 1rem;
+		}
+	}
 }
 
 .active-button {
@@ -62,5 +84,17 @@ mat-icon {
 	transition: 0.4s;
 	mat-icon {
 		color: #3E3E3E
+	}
+}
+
+.hidden {
+	max-width: fit-content;
+	span {
+		max-width: 0;
+		overflow: hidden;
+		position: absolute;
+		margin: 0;
+		padding: 0;
+		transition: 0.2s;
 	}
 }

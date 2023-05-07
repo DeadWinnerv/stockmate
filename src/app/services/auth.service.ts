@@ -5,6 +5,10 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
+interface IResponse {
+  avatar: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -42,7 +46,6 @@ export class AuthService {
     this.http.get('https://stockmate-back.onrender.com/auth/me').subscribe(user => {
       this.authUser = user;
     })
-    // console.log(this.authUser)
     return (!!this.authUser || !!localStorage.getItem('token'));
   }
   logout() {
@@ -60,5 +63,10 @@ export class AuthService {
           this.user = user;
         })
       );
+  }
+  uploadAvatar(image: File): Observable<IResponse>{
+    const fd = new FormData();
+    fd.append('image', image, image.name);
+    return this.http.post<IResponse>('https://stockmate-back.onrender.com/auth/avatar', fd)
   }
 }

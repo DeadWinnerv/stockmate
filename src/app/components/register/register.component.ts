@@ -23,7 +23,7 @@ export class RegisterComponent {
       },
       error: error => {
         this.isErrorDisplay = true;
-        this.registerError = error.error[0].msg;
+        this.registerError = error.error.msg;
           console.warn(error);
           this.regForm.enable();
       }
@@ -33,7 +33,7 @@ export class RegisterComponent {
     this.regForm = new FormGroup({
       login: new FormControl('', [
         Validators.required,
-        Validators.pattern(/^[a-zA-Z]+$/),
+        Validators.pattern('^[a-zA-Z][a-zA-Z0-9-_\.]{1,20}$'),
       ]),
       password: new FormControl('', [
         Validators.required,
@@ -51,11 +51,10 @@ export class RegisterComponent {
         Validators.required,
       ]),
       phone: new FormControl('', [
-        Validators.required,
+        Validators.pattern(/(?:\+|\d)[\d\-\(\) ]{9,}\d/g)
       ]),
       email: new FormControl('', [
-        Validators.required,
-        Validators.pattern(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/),
+        Validators.pattern(/^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i),
       ]),
     });
   }

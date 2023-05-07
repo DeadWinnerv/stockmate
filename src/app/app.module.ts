@@ -7,6 +7,11 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgChartsModule } from 'ng2-charts';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatSelectModule } from '@angular/material/select';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSortModule } from '@angular/material/sort';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,6 +28,9 @@ import { StocksChartComponent } from './components/dashboard/stocks-chart/stocks
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { TokenInterceptor } from './services/token-interceptor.service';
+import { PreloaderComponent } from './components/ui/preloader/preloader.component';
+import { RetryInterceptor } from './interceptors/retry.interceptor';
+import { ProductsComponent } from './components/products/products.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +46,8 @@ import { TokenInterceptor } from './services/token-interceptor.service';
     StocksChartComponent,
     LoginComponent,
     RegisterComponent,
+    PreloaderComponent,
+    ProductsComponent
   ],
   imports: [
     BrowserModule,
@@ -52,8 +62,16 @@ import { TokenInterceptor } from './services/token-interceptor.service';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    MatExpansionModule,
+    MatSelectModule,
+    MatProgressSpinnerModule,
+    MatSortModule,
+    MatAutocompleteModule
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: RetryInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

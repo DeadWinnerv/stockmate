@@ -1,24 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { trigger, transition, style, animate } from '@angular/animations';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { MainService } from 'src/app/services/main.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
-  animations: [
-    trigger('slideIn', [
-      transition(':enter', [
-        style({ transform: 'translate(-50%,200%)' }),
-        animate('0.8s ease-out', style({ transform: 'translate(-50%,-50%)' })),
-      ]),
-    ]),
-  ],
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit, OnDestroy {
+  isLoading: boolean = false;
   loginForm: FormGroup;
   aSub: Subscription;
   loginError: any;
@@ -26,20 +19,19 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(private auth: AuthService, private router: Router) {}
   submitLogin() {
     this.loginForm.disable();
+    this.isLoading = true;
     this.aSub = this.auth.login(this.loginForm.value).subscribe({
       next: () => {
         this.router.navigate(['']);
       },
       error: (error) => {
+        this.isLoading = false;
         this.isErrorDisplay = true;
-        this.loginError = error.error.message;
+        this.loginError = error.error.msg;
         console.warn(error);
         this.loginForm.enable();
       },
     });
-  }
-  handleCloseError(): void{
-    this.isErrorDisplay = false;
   }
   ngOnInit(): void {
     this.loginForm = new FormGroup({

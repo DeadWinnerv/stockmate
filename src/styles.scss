@@ -28,4 +28,11 @@ $stockmate-front-theme: mat.define-light-theme((
 html, body { 
 	height: 100%;
 	max-width: 100%;
+	overflow-x: hidden;
+ }
+
+ mat-icon {
+	height: fit-content;
+	width: fit-content;
+	color: #3e3e3e;
  }

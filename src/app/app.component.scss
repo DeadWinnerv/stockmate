@@ -1,11 +1,10 @@
 .wrapper {
 	position: relative;
 	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 main {
+	margin-left: 6vw;
 	flex: 1;
-}
-
-main.margin-class {
-	margin-left: 16vw;
 }

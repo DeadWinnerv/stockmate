@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+import { SideMenuComponent } from './components/side-menu/side-menu.component';
+import { MainService } from './services/main.service';
 
 @Component({
   selector: 'app-root',
@@ -7,12 +9,12 @@ import { Router, NavigationEnd } from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  showMenu: boolean = true;
-  constructor(private router: Router) {
+  shownMenu: boolean = true;
+  constructor(private router: Router, private service: MainService) {
     router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
         const currentRoute = router.routerState.snapshot.root.firstChild?.routeConfig;
-        this.showMenu = !currentRoute?.data?.hideMenu;
+        this.shownMenu = !currentRoute?.data?.shownMenu;
       }
     });
   }

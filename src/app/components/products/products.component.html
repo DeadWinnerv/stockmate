@@ -1,0 +1,33 @@
+<div class="products">
+	<div class="header">
+		Шаблоны товаров
+	</div>
+	<div class="toolbar">
+		<div class="toolbar-tabs">
+			<button class="tab-btn" [ngClass]="activeTab==='addNew' ? 'active' : null" (click)="handleTabChange('addNew')">Создать новый товар</button>
+			<button class="tab-btn" [ngClass]="activeTab==='filter' ? 'active' : null" (click)="handleTabChange('filter')">Фильтры</button>
+		</div>
+		<form [formGroup]="productForm" (ngSubmit)="addProduct()" class="add-new-tab tab" *ngIf="activeTab==='addNew'">
+			<input formControlName="name" type="text" placeholder="Название">
+			<input formControlName="price" type="text" placeholder="Цена">
+			<button type="submit" [disabled]="productForm.invalid || productForm.disabled"><mat-icon>add</mat-icon></button>
+		</form>
+		<div class="add-new-tab tab" *ngIf="activeTab==='filter'">
+			<input type="text" placeholder="ID">
+			<input type="text" placeholder="Название">
+		</div>
+	</div>
+  <app-preloader *ngIf="isLoading"></app-preloader>
+	<div *ngIf="!isLoading" class="products-table">
+		<div class="table-headers table-row">
+			<span>id</span>
+			<span>Название</span>
+			<span>Цена</span>
+		</div>
+		<div class="table-row" *ngFor="let item of products">
+			<span>{{item._id}}</span>
+			<span>{{item.name}}</span>
+			<span>{{item.price}}</span>
+		</div>
+	</div>
+</div>

@@ -1,17 +1,26 @@
-<div class="side-menu">
-  <a href="/" class="side-menu__logo">
-    <mat-icon>inventory_2</mat-icon>
-    <span href="/home">Stockmate</span>
-  </a>
+<div
+  class="side-menu"
+  [class]="hiddenMenu ? 'hidden' : null"
+  (mouseenter)="handleMenuSize()" (mouseleave)="handleMenuSize()"
+  [@openCloseMenu]="state"
+>
+  <div class="side-menu__logo">
+    <a routerLink="/dashboard">
+      <mat-icon>inventory_2</mat-icon>
+      <span href="/home">Stockmate</span>
+    </a>
+  </div>
   <div class="side-menu__block side-menu__profile">
     <ul>
       <li>
-        <a routerLink="/profile"
-        [ngClass]="activeButton === 'profile' ? 'active-button' : null"
-        ><mat-icon>portrait</mat-icon>Профиль</a>
+        <a
+          routerLink="/profile"
+          [ngClass]="activeButton === 'profile' ? 'active-button' : null"
+          ><mat-icon>portrait</mat-icon><span >Профиль</span></a
+        >
       </li>
       <li (click)="auth.logout()">
-        <a href="/"><mat-icon>logout</mat-icon>Выход</a>
+        <a href="/"><mat-icon>logout</mat-icon><span >Выход</span></a>
       </li>
     </ul>
   </div>
@@ -19,26 +28,45 @@
     <ul>
       <li>
         <a
-        routerLink="/dashboard"
-        [ngClass]="activeButton === 'dashboard' ? 'active-button' : null"
-        ><mat-icon>dashboard</mat-icon>Главная</a
+          routerLink="/dashboard"
+          [ngClass]="activeButton === 'dashboard' ? 'active-button' : null"
+          ><mat-icon>dashboard</mat-icon><span >Главная</span></a
         >
       </li>
       <li>
-        <a routerLink="/inventory"
-        [ngClass]="activeButton === 'inventory' ? 'active-button' : null"
-        ><mat-icon>list_alt</mat-icon>Инвентарь</a>
+        <a
+          routerLink="/inventory"
+          [ngClass]="activeButton === 'inventory' ? 'active-button' : null"
+          ><mat-icon>list_alt</mat-icon><span >Инвентарь</span></a
+        >
       </li>
       <li>
-        <a routerLink="/orders"
-        [ngClass]="activeButton === 'orders' ? 'active-button' : null"
-        ><mat-icon>grading</mat-icon>Заявки</a>
+        <a
+          routerLink="/products"
+          [ngClass]="activeButton === 'products' ? 'active-button' : null"
+          ><mat-icon>local_mall</mat-icon><span >Товары</span></a
+        >
       </li>
       <li>
-        <a routerLink="/storages"
-        [ngClass]="activeButton === 'storages' ? 'active-button' : null"
-        ><mat-icon>other_houses</mat-icon>Склады</a>
+        <a
+          routerLink="/orders"
+          [ngClass]="activeButton === 'orders' ? 'active-button' : null"
+          ><mat-icon>grading</mat-icon><span >Заявки</span></a
+        >
+      </li>
+      <li>
+        <a
+          routerLink="/storages"
+          [ngClass]="activeButton === 'storages' ? 'active-button' : null"
+          ><mat-icon>other_houses</mat-icon><span >Склады</span></a
+        >
       </li>
     </ul>
+  </div>
+  <div class="lock-menu">
+    <mat-icon *ngIf="isLocked; else notLocked" (click)="isLocked=false">lock</mat-icon>
+    <ng-template #notLocked>
+      <mat-icon (click)="isLocked=true">lock_open</mat-icon>
+    </ng-template>
   </div>
 </div>
