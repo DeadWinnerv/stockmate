@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { PRODUCTS } from 'src/app/constants/PRODUCTS';
 import { IProduct } from 'src/app/models/product';
 import { MainService } from 'src/app/services/main.service';
 
