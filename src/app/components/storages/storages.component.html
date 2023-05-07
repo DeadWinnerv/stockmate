@@ -5,6 +5,7 @@
     <input type="text" placeholder="Название" />
     <mat-icon (click)="openDialogue()">add</mat-icon>
   </h1>
+  <app-preloader *ngIf="isLoading"></app-preloader>
   <div class="dialogue" *ngIf="isDialogueOpen">
     <form
       [formGroup]="storageForm"
@@ -163,46 +164,48 @@
       </div>
     </form>
   </div>
-  <mat-expansion-panel hideToggle *ngFor="let item of storages">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        <mat-icon>{{ item.isActive ? "warehouse" : "ac_unit" }}</mat-icon>
-        {{ item.name | titlecase }}
-      </mat-panel-title>
-      <mat-panel-description>
-        {{ item.adress }}
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <p>id: {{ item._id }}</p>
-    <p *ngIf="item.phone">phone: {{ item.phone }}</p>
-    <p *ngIf="item.email">email: {{ item.email }}</p>
-    <p>Расписание:</p>
-    <div class="schedule">
-      <span>Пн</span>
-      <span>Вт</span>
-      <span>Ср</span>
-      <span>Чт</span>
-      <span>Пт</span>
-      <span>Сб</span>
-      <span>Вс</span>
-      <span
-        class="schedule-item"
-        *ngFor="let scheduleItem of item.schedule"
-        [ngClass]="scheduleItem ? 'active' : 'unactive'"
-      ></span>
-    </div>
-    <div class="toolbar">
-      <button>
-        <mat-icon>edit</mat-icon>
-      </button>
-      <button (click)="item.isActive = !item.isActive">
-        <mat-icon [ngClass]="!item.isActive ? 'active' : 'unactive'"
-          >ac_unit</mat-icon
-        >
-      </button>
-      <button (click)="removeStorage(item._id)">
-        <mat-icon>delete</mat-icon>
-      </button>
-    </div>
-  </mat-expansion-panel>
+  <div *ngIf="!isLoading">
+    <mat-expansion-panel hideToggle *ngFor="let item of storages" style="margin-bottom: 10px;">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon>{{ item.isActive ? "warehouse" : "ac_unit" }}</mat-icon>
+          {{ item.name | titlecase }}
+        </mat-panel-title>
+        <mat-panel-description>
+          {{ item.adress }}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <p>id: {{ item._id }}</p>
+      <p *ngIf="item.phone">phone: {{ item.phone }}</p>
+      <p *ngIf="item.email">email: {{ item.email }}</p>
+      <p>Расписание:</p>
+      <div class="schedule">
+        <span>Пн</span>
+        <span>Вт</span>
+        <span>Ср</span>
+        <span>Чт</span>
+        <span>Пт</span>
+        <span>Сб</span>
+        <span>Вс</span>
+        <span
+          class="schedule-item"
+          *ngFor="let scheduleItem of item.schedule"
+          [ngClass]="scheduleItem ? 'active' : 'unactive'"
+        ></span>
+      </div>
+      <div class="toolbar">
+        <button>
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button (click)="item.isActive = !item.isActive">
+          <mat-icon [ngClass]="!item.isActive ? 'active' : 'unactive'"
+            >ac_unit</mat-icon
+          >
+        </button>
+        <button (click)="removeStorage(item._id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </mat-expansion-panel>
+  </div>
 </div>

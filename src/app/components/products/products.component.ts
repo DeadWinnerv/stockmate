@@ -17,6 +17,8 @@ export class ProductsComponent {
   constructor(private service: MainService){
 
   }
+  isLoading: boolean = true;
+
   products: IProduct[] = [];
   aSub: Subscription;
   productForm: FormGroup;
@@ -39,12 +41,15 @@ export class ProductsComponent {
     this.activeTab = tabName
   }
   loadProducts() {
+    this.isLoading = true;
     this.service.getProducts().subscribe({
       next: (res: any) => {
         this.products = res;
+        this.isLoading = false;
       },
       error: (err) => {
         console.log(err)
+        this.isLoading = false;
       }
     })
   }

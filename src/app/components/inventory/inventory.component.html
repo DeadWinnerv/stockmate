@@ -115,7 +115,8 @@
       >close</mat-icon
     >
   </div>
-  <table mat-table [dataSource]="dataSource" class="inventory-table">
+  <app-preloader *ngIf="isLoading"></app-preloader>
+  <table *ngIf="!isLoading" mat-table [dataSource]="dataSource" class="inventory-table">
     <ng-container matColumnDef="id">
       <th
         mat-header-cell

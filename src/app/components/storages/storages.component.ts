@@ -14,10 +14,12 @@ export class StoragesComponent implements OnInit {
   requestError: any;
   isErrorDisplay: boolean = false;
 
+  isLoading: boolean = true;
+
   storageForm: FormGroup;
   activeStorage: number | null = null;
   isDialogueOpen: boolean = false;
-  storages: Storage[] = [];
+  storages: IStorage[] = [];
   schedule: TSchedule[] = [false, false, false, false, false, false, false];
   aSub: Subscription;
   constructor(private service: MainService) {}
@@ -56,8 +58,16 @@ export class StoragesComponent implements OnInit {
     });
   }
   loadStorages() {
-    this.service.getStorages().subscribe((res: any) => {
-      this.storages = res;
+    this.isLoading = true;
+    this.service.getStorages().subscribe({
+      next: (res) => {
+        this.storages = res;
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.log(err)
+        this.isLoading = false;
+      }
     });
   }
   ngOnInit(): void {

@@ -17,7 +17,8 @@
 			<input type="text" placeholder="Название">
 		</div>
 	</div>
-	<div class="products-table">
+  <app-preloader *ngIf="isLoading"></app-preloader>
+	<div *ngIf="!isLoading" class="products-table">
 		<div class="table-headers table-row">
 			<span>id</span>
 			<span>Название</span>

@@ -33,6 +33,8 @@ export class InventoryComponent implements AfterViewInit, OnInit {
   requestError: any;
   isErrorDisplay: boolean = false;
 
+  isLoading: boolean = true;
+
   INVENTORY: IInventory[] = [];
   storages: IStorage[];
   products: IProduct[];
@@ -64,6 +66,7 @@ export class InventoryComponent implements AfterViewInit, OnInit {
     this.loadInventory();
   }
   loadInventory() {
+    this.isLoading = true;
     this.service.getStorages().subscribe({
       next: (storages) => {
         this.storages = storages;
@@ -75,6 +78,7 @@ export class InventoryComponent implements AfterViewInit, OnInit {
       },
       error: (err) => {
         console.log(err);
+        this.isLoading = false;
       },
     });
     this.service.getProducts().subscribe({
@@ -88,6 +92,7 @@ export class InventoryComponent implements AfterViewInit, OnInit {
       },
       error: (err) => {
         console.log(err);
+        this.isLoading = false;
       },
     });
     this.service.getInventory().subscribe({
@@ -96,9 +101,11 @@ export class InventoryComponent implements AfterViewInit, OnInit {
         this.dataSource = new MatTableDataSource<IInventory>(this.INVENTORY);
         this.sortedTable = [...this.INVENTORY];
         this.filteredTable = [...this.INVENTORY];
+        this.isLoading = false;
       },
       error: (err) => {
         console.log(err);
+        this.isLoading = false;
       },
     });
   }
