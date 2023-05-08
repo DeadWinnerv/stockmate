@@ -5,9 +5,12 @@ import { IInventory } from 'src/app/models/inventory';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/internal/Observable';
 import { map, startWith } from 'rxjs/operators';
-import { MainService } from 'src/app/services/main.service';
 import { IStorage } from 'src/app/models/storage';
 import { IProduct } from 'src/app/models/product';
+import { InventoryService } from 'src/app/services/inventory.service';
+import { StorageService } from 'src/app/services/storage.service';
+import { ProductService } from 'src/app/services/product.service';
+import { Toast } from '../ui/preloader/Toasts/Toast';
 
 type TColumnName = 'id' | 'name' | 'storage' | 'price' | 'stock' | '';
 
@@ -34,7 +37,6 @@ export class InventoryComponent implements AfterViewInit, OnInit {
   isErrorDisplay: boolean = false;
 
   isLoading: boolean = true;
-
   INVENTORY: IInventory[] = [];
   storages: IStorage[];
   products: IProduct[];
@@ -52,7 +54,7 @@ export class InventoryComponent implements AfterViewInit, OnInit {
   protected filteredStorageOptions: Observable<string[]>;
   protected filteredProductOptions: Observable<string[]>;
   protected toolBarActiveTab: 'filter' | 'add' = 'filter';
-  constructor(private service: MainService) {}
+  constructor(private InventoryService: InventoryService, private StorageService: StorageService, private ProductService: ProductService) {}
 
   ngOnInit(): void {
     this.inventoryForm = new FormGroup({
@@ -67,7 +69,7 @@ export class InventoryComponent implements AfterViewInit, OnInit {
   }
   loadInventory() {
     this.isLoading = true;
-    this.service.getStorages().subscribe({
+    this.StorageService.getStorages().subscribe({
       next: (storages) => {
         this.storages = storages;
         this.storageOptions = this.storages.map((item) => item.name);
@@ -81,7 +83,7 @@ export class InventoryComponent implements AfterViewInit, OnInit {
         this.isLoading = false;
       },
     });
-    this.service.getProducts().subscribe({
+    this.ProductService.getProducts().subscribe({
       next: (products) => {
         this.products = products;
         this.productOptions = this.products.map((item) => item.name);
@@ -95,7 +97,7 @@ export class InventoryComponent implements AfterViewInit, OnInit {
         this.isLoading = false;
       },
     });
-    this.service.getInventory().subscribe({
+    this.InventoryService.getInventory().subscribe({
       next: (res) => {
         this.INVENTORY = res;
         this.dataSource = new MatTableDataSource<IInventory>(this.INVENTORY);
@@ -118,13 +120,17 @@ export class InventoryComponent implements AfterViewInit, OnInit {
       (item) => item.name == this.chooseProductForm.value
     )?._id;
 
-    this.service.addInventory(this.inventoryForm.value).subscribe({
+    this.InventoryService.addInventory(this.inventoryForm.value).subscribe({
       next: () => {
         this.inventoryForm.reset();
         this.chooseProductForm.reset();
         this.chooseStorageForm.reset();
         this.inventoryForm.enable();
         this.loadInventory();
+        Toast.fire({
+          icon: 'success',
+          title: 'Товар успешно проведён',
+        })
       },
       error: (error) => {
         this.isErrorDisplay = true;

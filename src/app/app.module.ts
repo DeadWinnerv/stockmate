@@ -31,6 +31,7 @@ import { TokenInterceptor } from './services/token-interceptor.service';
 import { PreloaderComponent } from './components/ui/preloader/preloader.component';
 import { RetryInterceptor } from './interceptors/retry.interceptor';
 import { ProductsComponent } from './components/products/products.component';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { ProductsComponent } from './components/products/products.component';
     MatSelectModule,
     MatProgressSpinnerModule,
     MatSortModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    SweetAlert2Module
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },

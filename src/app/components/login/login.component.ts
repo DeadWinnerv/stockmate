@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { MainService } from 'src/app/services/main.service';
+import { Toast } from '../ui/preloader/Toasts/Toast';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +21,11 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.loginForm.disable();
     this.isLoading = true;
     this.aSub = this.auth.login(this.loginForm.value).subscribe({
-      next: () => {
+      next: (user) => {
+        Toast.fire({
+          title: `Добро пожаловать, ${user.firstName}`,
+          position: 'top-end'
+        });
         this.router.navigate(['']);
       },
       error: (error) => {
