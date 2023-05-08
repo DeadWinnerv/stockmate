@@ -1,8 +1,4 @@
-export interface ILoginUser {
-  login: String;
-  password: String;
-}
-export interface IRegisterUser {
+export interface IUser {
   firstName: String;
   lastName: String;
   phone?: Number;
@@ -11,4 +7,5 @@ export interface IRegisterUser {
   company: String;
   email?: String;
   _id: String;
+  token: string;
 }

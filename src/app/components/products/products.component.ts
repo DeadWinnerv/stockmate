@@ -3,7 +3,8 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { IProduct } from 'src/app/models/product';
-import { MainService } from 'src/app/services/main.service';
+import { ProductService } from 'src/app/services/product.service';
+import { Toast } from '../ui/preloader/Toasts/Toast';
 
 @Component({
   selector: 'app-products',
@@ -13,7 +14,7 @@ import { MainService } from 'src/app/services/main.service';
 export class ProductsComponent {
   requestError: any;
   isErrorDisplay: boolean = false;
-  constructor(private service: MainService){
+  constructor(private service: ProductService){
 
   }
   isLoading: boolean = true;
@@ -59,6 +60,10 @@ export class ProductsComponent {
         this.productForm.enable();
         this.productForm.reset();
         this.loadProducts();
+        Toast.fire({
+          icon: 'success',
+          title: 'Товар успешно добавлен',
+        })
       },
       error: (error) => {
         this.isErrorDisplay = true;

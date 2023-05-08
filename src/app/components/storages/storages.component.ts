@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { IStorage, TSchedule } from 'src/app/models/storage';
 import { MatDialog } from '@angular/material/dialog';
-import { MainService } from 'src/app/services/main.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { StorageService } from 'src/app/services/storage.service';
+import { Toast } from '../ui/preloader/Toasts/Toast';
 
 @Component({
   selector: 'app-storages',
@@ -22,7 +23,7 @@ export class StoragesComponent implements OnInit {
   storages: IStorage[] = [];
   schedule: TSchedule[] = [false, false, false, false, false, false, false];
   aSub: Subscription;
-  constructor(private service: MainService) {}
+  constructor(private service: StorageService) {}
   formReset() {
     this.storageForm.get('name')?.reset('');
     this.storageForm.get('address')?.reset('');
@@ -44,7 +45,10 @@ export class StoragesComponent implements OnInit {
         this.loadStorages();
         this.openDialogue();
         this.formReset();
-        console.log(this.storageForm.value);
+        Toast.fire({
+          icon: 'success',
+          title: 'Товар успешно добавлен',
+        });
       },
       error: (error) => {
         this.isErrorDisplay = true;
