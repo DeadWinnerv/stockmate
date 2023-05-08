@@ -25,7 +25,7 @@ type TShownColumn = 'id' | 'name' | 'storage' | 'price' | 'stock' | '';
   templateUrl: './inventory.component.html',
   styleUrls: ['./inventory.component.scss'],
 })
-export class InventoryComponent implements AfterViewInit, OnInit {
+export class InventoryComponent implements OnInit {
   public displayedColumns: string[] = [
     'id',
     'name',
@@ -101,6 +101,7 @@ export class InventoryComponent implements AfterViewInit, OnInit {
       next: (res) => {
         this.INVENTORY = res;
         this.dataSource = new MatTableDataSource<IInventory>(this.INVENTORY);
+        this.dataSource.paginator = this.paginator;
         this.sortedTable = [...this.INVENTORY];
         this.filteredTable = [...this.INVENTORY];
         this.isLoading = false;
@@ -141,10 +142,6 @@ export class InventoryComponent implements AfterViewInit, OnInit {
     });
   }
   @ViewChild(MatPaginator) paginator: MatPaginator;
-
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
-  }
 
   private _filterStorages(value: string): string[] {
     const filterValue = value.toLowerCase();
