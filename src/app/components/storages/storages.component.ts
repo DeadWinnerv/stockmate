@@ -47,7 +47,7 @@ export class StoragesComponent implements OnInit {
         this.formReset();
         Toast.fire({
           icon: 'success',
-          title: 'Товар успешно добавлен',
+          title: 'Склад успешно добавлен',
         });
       },
       error: (error) => {
