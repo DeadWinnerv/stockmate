@@ -4,7 +4,6 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { NgChartsModule } from 'ng2-charts';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -58,7 +57,6 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     MatIconModule,
     MatTableModule,
     MatPaginatorModule,
-    NgChartsModule,
     MatDialogModule,
     FormsModule,
     ReactiveFormsModule,
