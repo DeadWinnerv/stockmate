@@ -11,6 +11,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSortModule } from '@angular/material/sort';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { NgxChartsModule }from '@swimlane/ngx-charts';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -66,7 +67,8 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     MatProgressSpinnerModule,
     MatSortModule,
     MatAutocompleteModule,
-    SweetAlert2Module
+    SweetAlert2Module,
+    NgxChartsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
