@@ -2,7 +2,6 @@
   class="side-menu"
   [class]="hiddenMenu ? 'hidden' : null"
   (mouseenter)="handleMenuSize()" (mouseleave)="handleMenuSize()"
-  [@openCloseMenu]="state"
 >
   <div class="side-menu__logo">
     <a routerLink="/dashboard">
