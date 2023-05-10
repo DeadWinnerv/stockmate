@@ -4,14 +4,14 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { NgChartsModule } from 'ng2-charts';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSortModule } from '@angular/material/sort';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -32,6 +32,7 @@ import { PreloaderComponent } from './components/ui/preloader/preloader.componen
 import { RetryInterceptor } from './interceptors/retry.interceptor';
 import { ProductsComponent } from './components/products/products.component';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import Swal from 'sweetalert2';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     LoginComponent,
     RegisterComponent,
     PreloaderComponent,
-    ProductsComponent
+    ProductsComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,7 +59,6 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     MatIconModule,
     MatTableModule,
     MatPaginatorModule,
-    NgChartsModule,
     MatDialogModule,
     FormsModule,
     ReactiveFormsModule,
@@ -68,7 +68,10 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     MatProgressSpinnerModule,
     MatSortModule,
     MatAutocompleteModule,
-    SweetAlert2Module
+    SweetAlert2Module.forRoot({
+      provideSwal: Swal
+    }),
+    NgxChartsModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
