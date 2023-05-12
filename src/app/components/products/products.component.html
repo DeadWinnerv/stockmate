@@ -25,7 +25,18 @@
 			<span>Цена</span>
 		</div>
 		<div class="table__row" *ngFor="let item of products">
-			<span>{{item._id}}</span>
+				<qrcode
+					[qrdata]="item._id"
+					[allowEmptyString]="true"
+					[cssClass]="'center'"
+					[colorDark]="'#000000ff'"
+					[colorLight]="'#ffffffff'"
+					[elementType]="'svg'"
+					[errorCorrectionLevel]="'L'"
+					[scale]="1"
+					[title]="'A custom title attribute'"
+					[width]="60"
+				></qrcode>
 			<span>{{item.name}}</span>
 			<span>{{item.price}}</span>
 			<mat-icon>edit</mat-icon>
