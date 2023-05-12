@@ -21,6 +21,7 @@ import { StorageService } from 'src/app/services/storage.service';
 export class StocksChartComponent
   implements OnInit, AfterViewInit, AfterViewChecked
 {
+  isLoading: boolean = true;
   stocksData: number[] = [];
   productsLabels: string[] = [];
   totalProducts: number = 0;
@@ -60,13 +61,18 @@ export class StocksChartComponent
     data: {
       labels: this.barChartData.map(item => item.storageName),
       datasets: [
-        { data: this.barChartData.map(item => item.stock) }
+        { data: this.barChartData.map(item => item.stock), label: '' }
       ]
     },
     options: {
       maintainAspectRatio: false,
       animation: false,
-      responsive: true
+      responsive: true,
+      plugins: {
+        legend: {
+          display: false
+        }
+      }
     }
   }
 
@@ -109,6 +115,7 @@ export class StocksChartComponent
           this.barChartData.find(storage => item.storageName === storage.storageName)!.stock += item.stock
         })
       });
+      this.isLoading = false
     }
     );
     
@@ -122,10 +129,9 @@ export class StocksChartComponent
   }
   ngAfterViewChecked() {
     if (this.charts?.length>0) {
+      this.barChartCfg.data.datasets[0].data = this.barChartData.map(item => item.stock)
+      this.barChartCfg.data.labels = this.barChartData.map(item => item.storageName)
       this.charts.forEach((item) => item.update())
-      this.charts[1].update()
-      console.log(this.barChartData);
-      
     }
     
   }
