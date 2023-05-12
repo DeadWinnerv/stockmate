@@ -2,11 +2,6 @@
 	display: flex;
 	flex-direction: column;
 	margin: 1rem;
-	&__title {
-		font-size: 28px;
-		color: #ff9500;
-		margin-bottom: 1rem;
-	}
 	&__content {
 		display: grid;
 		grid-template-columns: 1fr 1fr;

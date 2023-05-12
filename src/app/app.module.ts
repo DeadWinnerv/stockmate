@@ -13,7 +13,6 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { NgChartsModule } from 'ng2-charts'
 import { QRCodeModule } from 'angularx-qrcode';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
@@ -34,7 +33,7 @@ import { RetryInterceptor } from './interceptors/retry.interceptor';
 import { ProductsComponent } from './components/products/products.component';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import Swal from 'sweetalert2';
-
+import { PageHeaderDirective } from 'src/directives/pageHeader.directive';
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,7 +49,8 @@ import Swal from 'sweetalert2';
     LoginComponent,
     RegisterComponent,
     PreloaderComponent,
-    ProductsComponent
+    ProductsComponent,
+    PageHeaderDirective
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,6 @@
 <app-preloader *ngIf="isLoading"></app-preloader>
 <div *ngIf="!isLoading" class="inventory">
-  <p class="title">Остатки</p>
+  <p class="title" appPageHeader>Остатки</p>
   <div class="toolbar">
     <button
       (click)="changeTab('add')"
