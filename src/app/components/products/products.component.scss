@@ -1,52 +1,63 @@
 .products {
 	margin: 1rem;
-	.header {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	&__header {
+		font-size: 26px;
 		color: #ff9500;
-		font-size: 28px;
 	}
 	.toolbar {
-		.toolbar-tabs {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		&__buttons {
 			display: flex;
 			gap: 0.5rem;
 			.tab-btn {
-				padding: 0.5rem;
-				transition: 0.3s;
 				background-color: #fff;
+				padding: 0.5rem;
+				font-size: 18px;
+				cursor: pointer;
 			}
-			.tab-btn:hover{
+			.tab-btn:hover {
 				color: #ff9500;
-				transition: 0.3s;
 			}
 			.tab-btn.active {
+				border-bottom: #ff9500 1px solid;
 				color: #ff9500;
-				border-bottom: #ff9500 solid 1px;
 			}
 		}
-		.tab {
+		&__tab {
 			display: flex;
-			padding: 0.5rem;
-			gap: 4px;
-			input {
-				padding: 0.3rem;
-				border-bottom: #ff9500 solid 1px;
-			}
+			align-items: center;
+			justify-content: flex-start;
+			padding: 1rem;
+			border-radius: 12px;
+			border: #ff9500 1px solid;
+			max-width: fit-content;
+			min-height: 65px;
 		}
 	}
-
-	.products-table {
+	.table {
 		display: grid;
 		grid-template-rows: 1fr;
-		gap: 1rem;
-		.table-headers{
-			font-weight: 700;
-		}
-		.table-row {
+		gap: 0.5rem;
+		min-width: 100%;
+		&__row {
 			display: grid;
-			grid-template-columns: 1fr 4fr 1fr;
-			border-bottom: 1px solid #d3d3d3;
-			span {
-				padding: 0.2rem;
+			grid-template-columns: 3fr 12fr 9fr 1fr 1fr;
+			min-width: 100%;
+			padding: 0.5rem;
+			border-radius: 12px;
+			box-shadow: #3e3e3e5f 1px 1px 1px 1px;
+			:first-child {
+				overflow: hidden;
+				text-overflow: ellipsis;
 			}
+		}
+		&__headers {
+			box-shadow: none;
 		}
 	}
 }
