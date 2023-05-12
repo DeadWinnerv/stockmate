@@ -14,13 +14,13 @@
 		.chart-block {
 			padding: 0.2rem;
 			box-shadow: #00000043 5px 5px 5px 5px;
-			max-height: 500px;
+			max-height: max-content;
 			mat-form-field {
 				width: 100%;
 			}
 			&__chart {
 				max-width: 100%;
-				max-height: 300px;
+				max-height: 480px;
 				margin: 1rem;
 			}
 		}

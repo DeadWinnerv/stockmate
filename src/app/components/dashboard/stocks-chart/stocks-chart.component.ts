@@ -1,5 +1,14 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
-import { ChartConfiguration, Chart} from 'chart.js';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
+  AfterViewChecked,
+  QueryList,
+  ViewChildren,
+} from '@angular/core';
+import { ChartConfiguration, Chart } from 'chart.js';
 import { IInventory } from 'src/app/models/inventory';
 import { InventoryService } from 'src/app/services/inventory.service';
 import { StorageService } from 'src/app/services/storage.service';
@@ -9,14 +18,21 @@ import { StorageService } from 'src/app/services/storage.service';
   templateUrl: './stocks-chart.component.html',
   styleUrls: ['./stocks-chart.component.scss'],
 })
-export class StocksChartComponent implements OnInit, AfterViewInit, AfterViewChecked {
-  cfg: ChartConfiguration<'doughnut'> = {
+export class StocksChartComponent
+  implements OnInit, AfterViewInit, AfterViewChecked
+{
+  stocksData: number[] = [];
+  productsLabels: string[] = [];
+  totalProducts: number = 0;
+  doughnutCfg: ChartConfiguration<'doughnut'> = {
     type: 'doughnut',
     data: {
-      labels: [],
-      datasets: [{
-        data: []
-      }],
+      labels: this.productsLabels,
+      datasets: [
+        {
+          data: this.stocksData,
+        },
+      ],
     },
     options: {
       maintainAspectRatio: false,
@@ -24,40 +40,93 @@ export class StocksChartComponent implements OnInit, AfterViewInit, AfterViewChe
       plugins: {
         legend: {
           display: true,
-          position: 'chartArea'
-        }
-      }
+          position: 'left',
+          title: {
+            display: true,
+            text: `Всего позиций: ${this.totalProducts}`,
+            font: {
+              family: 'Montserrat',
+              size: 16,
+            },
+          },
+        },
+      },
+    },
+  };
+  storagesList: string[] = [];
+  barChartData: { storageName: string, stock: number }[] = []
+  barChartCfg: ChartConfiguration<'bar'> = {
+    type: 'bar',
+    data: {
+      labels: this.barChartData.map(item => item.storageName),
+      datasets: [
+        { data: this.barChartData.map(item => item.stock) }
+      ]
+    },
+    options: {
+      maintainAspectRatio: false,
+      animation: false,
+      responsive: true
     }
   }
-  storagesList: string[]
-  @ViewChild('stocksChart') stocksChartRef: ElementRef<any>
-  chart: Chart<'doughnut'>
 
-  constructor(private inventoryService: InventoryService, private storagesService: StorageService) { }
-  
+  @ViewChildren('stocksChart') stocksChartList: QueryList<ElementRef>;
+  stocksChartRefs: ElementRef[];
+  charts: Chart<any>[] = [];
+
+  constructor(
+    private inventoryService: InventoryService,
+    private storagesService: StorageService
+  ) {}
+
   ngOnInit(): void {
-    this.inventoryService.getInventory().subscribe((res: IInventory[]) => {
+    this.storagesService.getStorages().subscribe(
+      (res) => {
+      this.storagesList = res.sort((a,b) => a.name.localeCompare(b.name)).map((item) => item.name);
       res.forEach(item => {
-        if (this.cfg.data.labels?.includes(item.productName)) {
-          this.cfg.data.datasets[0].data[this.cfg.data.labels.indexOf(item.productName)] += item.stock
-        } else {
-          this.cfg.data.datasets[0].data.push(item.stock)
-          this.cfg.data.labels?.push(item.productName)
-        }
+        this.barChartData.push({
+          storageName: item.name,
+          stock: 0
+        })
       })
-    })
-    this.storagesService.getStorages().subscribe(res => {
-      this.storagesList = res.map(item => item.name)
-    })
+    },
+    (error) => {
+      console.log(error);
+    },
+    () => {
+      this.inventoryService.getInventory().subscribe(
+        (res: IInventory[]) => {
+        res.forEach((item) => {
+          if (this.productsLabels.includes(item.productName)) {
+            this.stocksData[this.productsLabels.indexOf(item.productName)] += item.stock;
+          } else {
+            this.stocksData.push(item.stock);
+            this.productsLabels.push(item.productName);
+          }
+          this.totalProducts += item.stock;
+        });
+        res.map(item => {
+          this.barChartData.find(storage => item.storageName === storage.storageName)!.stock += item.stock
+        })
+      });
+    }
+    );
+    
   }
-  
+
   ngAfterViewInit(): void {
-    this.chart = new Chart(this.stocksChartRef.nativeElement, this.cfg)
-    this.chart.update()
-    console.log(this.chart);
+    this.stocksChartRefs = this.stocksChartList.toArray();
+    this.charts[0] = new Chart(this.stocksChartRefs[0].nativeElement, this.doughnutCfg);
+    this.charts[1] = new Chart(this.stocksChartRefs[1].nativeElement, this.barChartCfg)
     
   }
   ngAfterViewChecked() {
-    this.chart.update()
+    if (this.charts?.length>0) {
+      this.charts.forEach((item) => item.update())
+      this.charts[1].update()
+      console.log(this.barChartData);
+      
+    }
+    
   }
 }
