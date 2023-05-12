@@ -1,14 +1,32 @@
-<div class="stocks-block">
-  <p>Статистика по остаткам</p>
-  <div class="stocks-charts">
-		<div class="stocks-charts__stocks-by-storage">
-			<span>Больше всего позиций</span>
-			<select name="" id="">
-				<option value="">Все</option>
-				<option value="">Хоругвино</option>
-				<option value="">Тверь</option>
-				<option value="">Воронеж</option>
-			</select>
+<div class="stocks-chart">
+	<div class="stocks-chart__title">
+		Статистика по остаткам
+	</div>
+	<div class="stocks-chart__content">
+		<div class="chart-block">
+			<mat-form-field>
+				<mat-label>Склад</mat-label>
+				<mat-select value="">
+					<mat-option value="">Все</mat-option>
+					<mat-option *ngFor="let storage of storagesList" [value]="storage"> {{ storage }} </mat-option>
+				</mat-select>
+			</mat-form-field>
+			<canvas class="chart-block__chart"
+			baseChart
+				#stocksChart
+			></canvas>
 		</div>
-  </div>
+		<div class="chart-block">
+			<mat-form-field>
+				<mat-label>Склад</mat-label>
+				<mat-select value="">
+					<mat-option value="">Все</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<canvas class="chart-block__chart"
+			baseChart
+			#stocksChart
+				></canvas>
+	</div>
+	</div>
 </div>

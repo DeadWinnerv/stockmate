@@ -11,6 +11,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSortModule } from '@angular/material/sort';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { NgChartsModule } from 'ng2-charts'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -48,7 +49,7 @@ import Swal from 'sweetalert2';
     LoginComponent,
     RegisterComponent,
     PreloaderComponent,
-    ProductsComponent,
+    ProductsComponent
   ],
   imports: [
     BrowserModule,
@@ -69,7 +70,8 @@ import Swal from 'sweetalert2';
     MatAutocompleteModule,
     SweetAlert2Module.forRoot({
       provideSwal: Swal
-    })
+    }),
+    NgChartsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
