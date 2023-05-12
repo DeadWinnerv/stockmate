@@ -1,11 +1,11 @@
-<div class="storages">
+<app-preloader *ngIf="isLoading"></app-preloader>
+<div *ngIf="!isLoading" class="storages">
   <h1 class="header">
     <span>Список складов</span>
     <input type="text" placeholder="id" />
     <input type="text" placeholder="Название" />
     <mat-icon (click)="openDialogue()">add</mat-icon>
   </h1>
-  <app-preloader *ngIf="isLoading"></app-preloader>
   <div class="dialogue" *ngIf="isDialogueOpen">
     <form
       [formGroup]="storageForm"
@@ -164,7 +164,7 @@
       </div>
     </form>
   </div>
-  <div *ngIf="!isLoading">
+  <div>
     <mat-expansion-panel hideToggle *ngFor="let item of storages" style="margin-bottom: 10px;">
       <mat-expansion-panel-header>
         <mat-panel-title>

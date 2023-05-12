@@ -1,4 +1,5 @@
-<div class="products">
+<app-preloader *ngIf="isLoading"></app-preloader>
+<div class="products" *ngIf="!isLoading">
 	<div class="header">
 		Шаблоны товаров
 	</div>
@@ -17,8 +18,7 @@
 			<input type="text" placeholder="Название">
 		</div>
 	</div>
-  <app-preloader *ngIf="isLoading"></app-preloader>
-	<div *ngIf="!isLoading" class="products-table">
+	<div class="products-table">
 		<div class="table-headers table-row">
 			<span>id</span>
 			<span>Название</span>

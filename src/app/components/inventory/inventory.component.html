@@ -1,4 +1,5 @@
-<div class="inventory">
+<app-preloader *ngIf="isLoading"></app-preloader>
+<div *ngIf="!isLoading" class="inventory">
   <p class="title">Остатки</p>
   <div class="toolbar">
     <button
@@ -99,8 +100,7 @@
         this.inventoryForm.get('stock')?.invalid ||
         this.chooseStorageForm.invalid ||
         this.chooseProductForm.invalid ||
-        inventoryForm.disabled
-      "
+        inventoryForm.disabled"
     >
       <mat-icon>add</mat-icon>
     </button>
@@ -115,8 +115,7 @@
       >close</mat-icon
     >
   </div>
-  <app-preloader *ngIf="isLoading"></app-preloader>
-  <table *ngIf="!isLoading" mat-table [dataSource]="dataSource" class="inventory-table">
+  <table mat-table [dataSource]="dataSource" class="inventory-table">
     <ng-container matColumnDef="id">
       <th
         mat-header-cell
