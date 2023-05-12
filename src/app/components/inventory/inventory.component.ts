@@ -12,14 +12,14 @@ import { StorageService } from 'src/app/services/storage.service';
 import { ProductService } from 'src/app/services/product.service';
 import { Toast } from '../ui/preloader/Toasts/Toast';
 
-type TColumnName = 'id' | 'name' | 'storage' | 'price' | 'stock' | '';
+type TColumnName = 'name' | 'storage' | 'price' | 'stock' | '';
 
 type TSortingColumn = {
   column?: TColumnName;
   direction?: 'asc' | 'desc';
 };
 
-type TShownColumn = 'id' | 'name' | 'storage' | 'price' | 'stock' | '';
+type TShownColumn = 'name' | 'storage' | 'price' | 'stock' | '';
 @Component({
   selector: 'app-inventory',
   templateUrl: './inventory.component.html',
@@ -27,7 +27,6 @@ type TShownColumn = 'id' | 'name' | 'storage' | 'price' | 'stock' | '';
 })
 export class InventoryComponent implements OnInit {
   public displayedColumns: string[] = [
-    'id',
     'name',
     'storage',
     'price',

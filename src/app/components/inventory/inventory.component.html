@@ -116,32 +116,6 @@
     >
   </div>
   <table mat-table [dataSource]="dataSource" class="inventory-table">
-    <ng-container matColumnDef="id">
-      <th
-        mat-header-cell
-        *matHeaderCellDef
-        class="table-header"
-        (click)="handleSortChange('id')"
-        (mouseenter)="shownColumn = 'id'"
-        (mouseleave)="shownColumn = ''"
-      >
-        ID
-        <mat-icon
-          [style.rotate]="sortingColumn!.direction === 'desc' ? '180deg' : null"
-          [style.opacity]="
-            shownColumn === displayedColumns[0] &&
-            sortingColumn.column !== displayedColumns[0]
-              ? 0.5
-              : null
-          "
-          [class]="
-            sortingColumn.column === displayedColumns[0] ? 'shown' : 'hidden'
-          "
-          >keyboard_arrow_up</mat-icon
-        >
-      </th>
-      <td mat-cell *matCellDef="let item">{{ item._id }}</td>
-    </ng-container>
     <ng-container matColumnDef="name">
       <th
         mat-header-cell
@@ -155,13 +129,13 @@
         <mat-icon
           [style.rotate]="sortingColumn!.direction === 'desc' ? '180deg' : null"
           [style.opacity]="
-            shownColumn === displayedColumns[1] &&
-            sortingColumn.column !== displayedColumns[1]
+            shownColumn === displayedColumns[0] &&
+            sortingColumn.column !== displayedColumns[0]
               ? 0.5
               : null
           "
           [class]="
-            sortingColumn.column === displayedColumns[1] ? 'shown' : 'hidden'
+            sortingColumn.column === displayedColumns[0] ? 'shown' : 'hidden'
           "
           >keyboard_arrow_up</mat-icon
         >
@@ -196,13 +170,13 @@
         <mat-icon
           [style.rotate]="sortingColumn!.direction === 'desc' ? '180deg' : null"
           [style.opacity]="
-            shownColumn === displayedColumns[3] &&
-            sortingColumn.column !== displayedColumns[3]
+            shownColumn === displayedColumns[2] &&
+            sortingColumn.column !== displayedColumns[2]
               ? 0.5
               : null
           "
           [class]="
-            sortingColumn.column === displayedColumns[3] ? 'shown' : 'hidden'
+            sortingColumn.column === displayedColumns[2] ? 'shown' : 'hidden'
           "
           >keyboard_arrow_up</mat-icon
         >
@@ -228,13 +202,13 @@
         <mat-icon
           [style.rotate]="sortingColumn!.direction === 'desc' ? '180deg' : null"
           [style.opacity]="
-            shownColumn === displayedColumns[4] &&
-            sortingColumn.column !== displayedColumns[4]
+            shownColumn === displayedColumns[3] &&
+            sortingColumn.column !== displayedColumns[3]
               ? 0.5
               : null
           "
           [class]="
-            sortingColumn.column === displayedColumns[4] ? 'shown' : 'hidden'
+            sortingColumn.column === displayedColumns[3] ? 'shown' : 'hidden'
           "
           >keyboard_arrow_up</mat-icon
         >
