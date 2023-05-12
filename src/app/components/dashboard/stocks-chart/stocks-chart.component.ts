@@ -2,13 +2,13 @@ import {
   Component,
   OnInit,
   AfterViewInit,
-  ViewChild,
   ElementRef,
   AfterViewChecked,
   QueryList,
   ViewChildren,
 } from '@angular/core';
 import { ChartConfiguration, Chart } from 'chart.js';
+import { combineLatest, map } from 'rxjs';
 import { IInventory } from 'src/app/models/inventory';
 import { InventoryService } from 'src/app/services/inventory.service';
 import { StorageService } from 'src/app/services/storage.service';
@@ -86,39 +86,38 @@ export class StocksChartComponent
   ) {}
 
   ngOnInit(): void {
-    this.storagesService.getStorages().subscribe(
-      (res) => {
-      this.storagesList = res.sort((a,b) => a.name.localeCompare(b.name)).map((item) => item.name);
-      res.forEach(item => {
-        this.barChartData.push({
-          storageName: item.name,
-          stock: 0
+    combineLatest([
+      this.storagesService.getStorages(),
+      this.inventoryService.getInventory(),
+    ])
+      .pipe(
+        map(([storages, inventory]: [any[], IInventory[]]) => {
+          this.storagesList = storages.map((item) => item.name);
+          storages.forEach((item) => {
+            this.barChartData.push({
+              storageName: item.name,
+              stock: 0
+            })
+          });
+          inventory.forEach((item) => {
+            if (this.productsLabels.includes(item.productName)) {
+              this.stocksData[this.productsLabels.indexOf(item.productName)] += item.stock;
+            } else {
+              this.stocksData.push(item.stock);
+              this.productsLabels.push(item.productName);
+            }
+            this.totalProducts += item.stock;
+
+            this.barChartData.find(storage => item.storageName === storage.storageName)!.stock += item.stock;
+          });
         })
-      })
-    },
-    (error) => {
-      console.log(error);
-    },
-    () => {
-      this.inventoryService.getInventory().subscribe(
-        (res: IInventory[]) => {
-        res.forEach((item) => {
-          if (this.productsLabels.includes(item.productName)) {
-            this.stocksData[this.productsLabels.indexOf(item.productName)] += item.stock;
-          } else {
-            this.stocksData.push(item.stock);
-            this.productsLabels.push(item.productName);
-          }
-          this.totalProducts += item.stock;
-        });
-        res.map(item => {
-          this.barChartData.find(storage => item.storageName === storage.storageName)!.stock += item.stock
-        })
+      )
+      .subscribe({
+        complete: () => {
+          this.isLoading = false;
+        },
+        error: (err) => console.error(err),
       });
-      this.isLoading = false
-    }
-    );
-    
   }
 
   ngAfterViewInit(): void {
@@ -133,6 +132,5 @@ export class StocksChartComponent
       this.barChartCfg.data.labels = this.barChartData.map(item => item.storageName)
       this.charts.forEach((item) => item.update())
     }
-    
   }
 }
