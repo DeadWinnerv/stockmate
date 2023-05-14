@@ -36,7 +36,7 @@ export class InventoryComponent implements OnInit {
   protected productOptions: string[];
   protected filteredStorageOptions: Observable<string[]>;
   protected filteredProductOptions: Observable<string[]>;
-  protected toolBarActiveTab: 'filter' | 'add' = 'filter';
+  protected isAddingNewPosition: boolean = false;
 
   @ViewChild(SortTableDirective) sortTableDirective: SortTableDirective
   
@@ -117,6 +117,7 @@ export class InventoryComponent implements OnInit {
           icon: 'success',
           title: 'Товар успешно проведён',
         });
+        this.isAddingNewPosition = false
       },
       error: (error) => {
         this.isErrorDisplay = true;
@@ -125,10 +126,6 @@ export class InventoryComponent implements OnInit {
         this.inventoryForm.enable();
       },
     });
-  }
-
-  changeTab(tabName: 'filter' | 'add'): void {
-    this.toolBarActiveTab = tabName;
   }
 
   handleTableHeaderHover(i: number | 'total' | '') {

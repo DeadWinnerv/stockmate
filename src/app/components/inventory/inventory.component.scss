@@ -4,6 +4,74 @@ mat-icon {
 .inventory {
   display: flex;
   flex-direction: column;
+  .toolbar {
+    display: flex;
+    flex-direction: column;
+    &__button {
+      max-width: fit-content;
+      padding: 1rem;
+      border-radius: 6px;
+      background-color: #3e3e3e;
+      color: #FF9500;
+      letter-spacing: 1px;
+      font-size: 14px;
+      transition: 0.2s;
+    }
+    &__button:hover, &__button.active {
+      background-color: #FF9500;
+      color: #3e3e3e;
+      transition: 0.2s;
+      border-radius: 12px;
+    }
+    &__add-new-position-block {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: rgba(255,255,255,0.5);
+      backdrop-filter: blur(5px);
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 300px;
+    }
+    &__form {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 1rem;
+      background-color: #fff;
+      padding: 2rem;
+      border: #3e3e3e 1px solid;
+      border-radius: 12px;
+      input {
+        padding: 1rem;
+        border-bottom: #3e3e3e 1px solid;
+        font-size: 18px;
+      }
+      &__options {
+        display: flex;
+        gap: 3rem;
+        background-color: #fff;
+        button {
+          background-color: #fff;
+        }
+        button:disabled {
+          mat-icon {
+            opacity: 0;
+            transition: 0.2s;
+          }
+        }
+        mat-icon {
+            transition: 0.2s;
+            background-color: #fff;
+        }
+      }
+    }
+  }
   .table {
     display: grid;
     grid-template-rows: 1fr;
