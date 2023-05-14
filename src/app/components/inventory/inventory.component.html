@@ -1,12 +1,14 @@
 <app-preloader *ngIf="isLoading"></app-preloader>
 <div *ngIf="!isLoading" class="inventory">
-  <p class="title" appPageHeader>Остатки</p>
-  <div class="toolbar">
-    <button class="toolbar__button"
-    (click)="isAddingNewPosition = !isAddingNewPosition"
-    >
-      Провести товар
-  </button>
+  <div class="header">
+    <p class="title" appPageHeader>Остатки</p>
+    <div class="toolbar">
+      <button class="toolbar__button"
+      (click)="isAddingNewPosition = !isAddingNewPosition"
+      >
+        Провести товар
+    </button>
+  </div>
   <div class="toolbar__add-new-position-block" *ngIf="isAddingNewPosition">
     <form
       [formGroup]="inventoryForm"
@@ -34,7 +36,7 @@
         </p>
         <mat-autocomplete #productAutoComplete="matAutocomplete">
           <mat-option
-            *ngFor="let option of productOptions"
+            *ngFor="let option of filteredProductOptions | async"
             [value]="option"
           >
             {{ option }}
@@ -62,7 +64,7 @@
         </p>
         <mat-autocomplete #storageAutoComplete="matAutocomplete">
           <mat-option
-            *ngFor="let option of storageOptions"
+            *ngFor="let option of filteredStorageOptions | async"
             [value]="option"
           >
             {{ option }}

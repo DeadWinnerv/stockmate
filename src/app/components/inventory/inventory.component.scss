@@ -4,6 +4,11 @@ mat-icon {
 .inventory {
   display: flex;
   flex-direction: column;
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
   .toolbar {
     display: flex;
     flex-direction: column;
@@ -16,6 +21,7 @@ mat-icon {
       letter-spacing: 1px;
       font-size: 14px;
       transition: 0.2s;
+      margin: 1rem;
     }
     &__button:hover, &__button.active {
       background-color: #FF9500;
@@ -61,7 +67,7 @@ mat-icon {
         }
         button:disabled {
           mat-icon {
-            opacity: 0;
+            display: none;
             transition: 0.2s;
           }
         }
