@@ -35,6 +35,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import Swal from 'sweetalert2';
 import { PageHeaderDirective } from 'src/directives/pageHeader.directive';
 import { SortTableDirective } from 'src/directives/sortTable.directive';
+import { TableHeaderPipe } from 'src/pipes/tableHeader.pipe';
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,7 +53,8 @@ import { SortTableDirective } from 'src/directives/sortTable.directive';
     PreloaderComponent,
     ProductsComponent,
     PageHeaderDirective,
-    SortTableDirective
+    SortTableDirective,
+    TableHeaderPipe
   ],
   imports: [
     BrowserModule,

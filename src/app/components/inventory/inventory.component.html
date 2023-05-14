@@ -127,7 +127,7 @@
       <span *ngIf="header !== 'storageName'; else storageFilter"
         (click)="handleSortDirection(i)"
       >
-        {{ header }}
+        {{ header | tableHeader }}
       </span>
       <ng-template #storageFilter>
         <input

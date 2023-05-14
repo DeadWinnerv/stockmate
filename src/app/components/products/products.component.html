@@ -32,7 +32,7 @@
 				(mouseenter)="handleTableHeaderHover(i)"
         (mouseleave)="handleTableHeaderHover('')"
 				(click)="handleSortDirection(i)"
-			> {{ header }} 
+			> {{ header | tableHeader}} 
 			<mat-icon
           *ngIf="sortingColumn.column === i || shownColumn === i && header !== 'storageName'"
           [ngClass]="sortingColumn.direction === 'desc' && sortingColumn.column === i ? 'direction-desc' : null"
