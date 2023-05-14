@@ -22,16 +22,26 @@ export class StocksChartComponent
   implements OnInit, AfterViewInit, AfterViewChecked
 {
   isLoading: boolean = true;
-  stocksData: number[] = [];
+  stocksData: {
+    byStock: number[];
+    byTotalPrice: number[];
+  } = {
+    byStock: [],
+    byTotalPrice: [],
+  };
   productsLabels: string[] = [];
   totalProducts: number = 0;
+  dougnutChartBy: 'byCount' | 'byTotalPrice' = 'byCount';
   doughnutCfg: ChartConfiguration<'doughnut'> = {
     type: 'doughnut',
     data: {
       labels: this.productsLabels,
       datasets: [
         {
-          data: this.stocksData,
+          data:
+            this.dougnutChartBy === 'byCount'
+              ? this.stocksData.byStock
+              : this.stocksData.byTotalPrice,
         },
       ],
     },
@@ -55,14 +65,14 @@ export class StocksChartComponent
     },
   };
   storagesList: string[] = [];
-  barChartData: { storageName: string, stock: number }[] = []
+  barChartData: { storageName: string; stock: number }[] = [];
   barChartCfg: ChartConfiguration<'bar'> = {
     type: 'bar',
     data: {
-      labels: this.barChartData.map(item => item.storageName),
+      labels: this.barChartData.map((item) => item.storageName),
       datasets: [
-        { data: this.barChartData.map(item => item.stock), label: '' }
-      ]
+        { data: this.barChartData.map((item) => item.stock), label: '' },
+      ],
     },
     options: {
       maintainAspectRatio: false,
@@ -70,11 +80,11 @@ export class StocksChartComponent
       responsive: true,
       plugins: {
         legend: {
-          display: false
-        }
-      }
-    }
-  }
+          display: false,
+        },
+      },
+    },
+  };
 
   @ViewChildren('stocksChart') stocksChartList: QueryList<ElementRef>;
   stocksChartRefs: ElementRef[];
@@ -84,6 +94,7 @@ export class StocksChartComponent
     private inventoryService: InventoryService,
     private storagesService: StorageService
   ) {}
+
 
   ngOnInit(): void {
     combineLatest([
@@ -96,19 +107,30 @@ export class StocksChartComponent
           storages.forEach((item) => {
             this.barChartData.push({
               storageName: item.name,
-              stock: 0
-            })
+              stock: 0,
+            });
           });
           inventory.forEach((item) => {
             if (this.productsLabels.includes(item.productName)) {
-              this.stocksData[this.productsLabels.indexOf(item.productName)] += item.stock;
+              this.stocksData.byStock[
+                this.productsLabels.indexOf(item.productName)
+              ] += item.stock;
+              this.stocksData.byTotalPrice[
+                this.productsLabels.indexOf(item.productName)
+              ] += item.stock * item.productPrice;
             } else {
-              this.stocksData.push(item.stock);
+              this.stocksData.byStock.push(item.stock);
+              this.stocksData.byTotalPrice.push(item.stock * item.productPrice);
               this.productsLabels.push(item.productName);
             }
             this.totalProducts += item.stock;
 
-            this.barChartData.find(storage => item.storageName === storage.storageName)!.stock += item.stock;
+            this.barChartData.find(
+              (storage) => item.storageName === storage.storageName
+            )!.stock += item.stock;
+            this.barChartData.find(
+              (storage) => item.storageName === storage.storageName
+            )!.stock += item.stock;
           });
         })
       )
@@ -122,15 +144,24 @@ export class StocksChartComponent
 
   ngAfterViewInit(): void {
     this.stocksChartRefs = this.stocksChartList.toArray();
-    this.charts[0] = new Chart(this.stocksChartRefs[0].nativeElement, this.doughnutCfg);
-    this.charts[1] = new Chart(this.stocksChartRefs[1].nativeElement, this.barChartCfg)
-    
+    this.charts[0] = new Chart(
+      this.stocksChartRefs[0].nativeElement,
+      this.doughnutCfg
+    );
+    this.charts[1] = new Chart(
+      this.stocksChartRefs[1].nativeElement,
+      this.barChartCfg
+    );
   }
   ngAfterViewChecked() {
-    if (this.charts?.length>0) {
-      this.barChartCfg.data.datasets[0].data = this.barChartData.map(item => item.stock)
-      this.barChartCfg.data.labels = this.barChartData.map(item => item.storageName)
-      this.charts.forEach((item) => item.update())
+    if (this.charts?.length > 0) {
+      this.barChartCfg.data.datasets[0].data = this.barChartData.map(
+        (item) => item.stock
+      );
+      this.barChartCfg.data.labels = this.barChartData.map(
+        (item) => item.storageName
+      );
+      this.charts.forEach((item) => item.update());
     }
   }
 }

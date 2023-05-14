@@ -10,8 +10,13 @@
 			padding: 0.2rem;
 			box-shadow: #00000043 5px 5px 5px 5px;
 			max-height: max-content;
-			mat-form-field {
-				width: 100%;
+			&__options {
+				display: flex;
+				justify-content: space-between;
+				gap: 1rem;
+				mat-form-field {
+					width: 100%;
+				}
 			}
 			&__chart {
 				max-width: 100%;
