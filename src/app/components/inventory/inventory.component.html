@@ -128,9 +128,9 @@
         *ngFor="let header of displayedColumns; let i = index"
         (mouseenter)="handleTableHeaderHover(i)"
         (mouseleave)="handleTableHeaderHover('')"
-        (click)="handleSortDirection(i)"
       >
       <span *ngIf="header !== 'storageName'; else storageFilter"
+        (click)="handleSortDirection(i)"
       >
         {{ header }}
       </span>

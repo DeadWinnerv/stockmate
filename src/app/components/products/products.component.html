@@ -18,11 +18,28 @@
 			<input type="text" placeholder="Название">
 		</div>
 	</div>
-	<div class="table">
+	<div class="table"
+		appSortTable
+		[sortTable]="products"
+		[columnNum]="sortingColumn.column"
+    [sortDirection]="sortingColumn.direction"
+    [columns]="displayedColumns"
+	>
 		<div class="table__headers table__row">
-			<span>id</span>
-			<span>Название</span>
-			<span>Цена</span>
+			<span>ID</span>
+			<span
+				*ngFor="let header of displayedColumns; let i = index"
+				(mouseenter)="handleTableHeaderHover(i)"
+        (mouseleave)="handleTableHeaderHover('')"
+				(click)="handleSortDirection(i)"
+			> {{ header }} 
+			<mat-icon
+          *ngIf="sortingColumn.column === i || shownColumn === i && header !== 'storageName'"
+          [ngClass]="sortingColumn.direction === 'desc' && sortingColumn.column === i ? 'direction-desc' : null"
+          [class]="sortingColumn.direction === 'asc' && sortingColumn.column === i ? 'direction-asc' : ''"
+          >expand_less</mat-icon
+        >
+		</span>
 		</div>
 		<div class="table__row" *ngFor="let item of products">
 				<qrcode

@@ -57,6 +57,29 @@
 			font-weight: 700;
 			border-bottom: 1px solid #3e3e3e;
 			padding: 0.7rem;
+			min-height: 50px;
+			span {
+				display: flex;
+				align-items: center;
+				gap: 1rem;
+				cursor: pointer;
+				user-select: none;
+				mat-icon {
+          rotate: (0deg);
+          opacity: 0.5;
+          transition: 0.1s;
+        }
+        mat-icon.direction-asc {
+          rotate: (0deg);
+          opacity: 1;
+          transition: 0.1s;
+        }
+        mat-icon.direction-desc {
+          rotate: (180deg);
+          opacity: 1;
+          transition: 0.1s;
+        }
+			}
 		}
 	}
 }
