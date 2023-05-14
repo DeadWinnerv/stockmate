@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import { Component, OnChanges, OnInit, ViewChild} from '@angular/core';
 import { IInventory } from 'src/app/models/inventory';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/internal/Observable';
@@ -14,7 +14,7 @@ import { SortTableDirective } from 'src/directives/sortTable.directive';
   templateUrl: './inventory.component.html',
   styleUrls: ['./inventory.component.scss'],
 })
-export class InventoryComponent implements OnInit, OnChanges {
+export class InventoryComponent implements OnInit {
   requestError: any;
   isErrorDisplay: boolean = false;
   isLoading: boolean = true;
@@ -22,7 +22,7 @@ export class InventoryComponent implements OnInit, OnChanges {
   storages: IStorage[];
   products: IProduct[];
   protected inventoryForm: FormGroup;
-  protected shownColumn: string = '';
+  protected shownColumn: number | 'total' | '';
   protected displayedColumns: string[] = [];
   protected sortingColumn: {
     column: number | 'total' | '',
@@ -45,13 +45,6 @@ export class InventoryComponent implements OnInit, OnChanges {
     private StorageService: StorageService,
     private ProductService: ProductService,
   ) {}
-
-  ngOnChanges(changes: SimpleChanges): void {
-    // if(changes) {
-      console.log(changes);
-      
-    // }
-  }
 
   ngOnInit(): void {
     this.inventoryForm = new FormGroup({
@@ -138,14 +131,15 @@ export class InventoryComponent implements OnInit, OnChanges {
     this.toolBarActiveTab = tabName;
   }
 
-  handleHeaderHover(i: number | 'total' | '') {
-    !this.sortingColumn.direction
-    ? this.sortingColumn.column = i
-    : null
-    
+  handleTableHeaderHover(i: number | 'total' | '') {
+    this.shownColumn = i
   }
 
-  handleSortDirection() {
+  handleSortDirection(i: number) {
+    if(this.sortingColumn.column !== i) {
+      this.sortingColumn.column = i;
+      this.sortingColumn.direction = undefined
+    } 
     if (!this.sortingColumn.direction) {
       this.sortingColumn.direction = 'asc'
       this.INVENTORY = this.sortTableDirective.getSortedTable()
@@ -153,6 +147,8 @@ export class InventoryComponent implements OnInit, OnChanges {
       this.sortingColumn.direction = 'desc'
       this.INVENTORY = this.sortTableDirective.getSortedTable()
     } else {
+      this.shownColumn = ''
+      this.sortingColumn.column = ''
       this.sortingColumn.direction = undefined
     }
   }

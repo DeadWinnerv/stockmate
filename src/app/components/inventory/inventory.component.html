@@ -126,12 +126,11 @@
     <div class="table__row table__headers">
       <span
         *ngFor="let header of displayedColumns; let i = index"
-        (mouseenter)="handleHeaderHover(i)"
-        (mouseleave)="handleHeaderHover('')"
-        
+        (mouseenter)="handleTableHeaderHover(i)"
+        (mouseleave)="handleTableHeaderHover('')"
+        (click)="handleSortDirection(i)"
       >
       <span *ngIf="header !== 'storageName'; else storageFilter"
-        (click)="handleSortDirection()"
       >
         {{ header }}
       </span>
@@ -150,21 +149,22 @@
           </mat-option>
         </mat-autocomplete>
       </ng-template>
-        <mat-icon #sortIcon *ngIf="sortingColumn.column === i && header !== 'storageName'"
+        <mat-icon #sortIcon 
+          *ngIf="sortingColumn.column === i || shownColumn === i && header !== 'storageName'"
           [ngClass]="sortingColumn.direction === 'desc' && sortingColumn.column === i ? 'direction-desc' : null"
           [class]="sortingColumn.direction === 'asc' && sortingColumn.column === i ? 'direction-asc' : ''"
           >expand_less</mat-icon
         >
       </span>
       <span
-        (mouseenter)="handleHeaderHover('total')"
-        (mouseleave)="handleHeaderHover('')"
-        (click)="handleSortDirection()"
+        (mouseenter)="handleTableHeaderHover('total')"
+        (mouseleave)="handleTableHeaderHover('')"
+        (click)="handleSortDirection(0)"
       >
         Всего
         <mat-icon
           #sortIcon
-          *ngIf="sortingColumn.column === 'total'"
+          *ngIf="sortingColumn.column === 'total' || shownColumn === 'total'"
           [ngClass]="sortingColumn.direction === 'desc' && sortingColumn.column === 'total' ? 'direction-desc' : null"
           [class]="sortingColumn.direction === 'asc' && sortingColumn.column === 'total' ? 'direction-asc' : ''"
           >expand_less</mat-icon
