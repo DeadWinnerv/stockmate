@@ -1,1 +1,68 @@
-<p>orders works!</p>
+<app-preloader *ngIf="isLoading" ></app-preloader>
+<div class="orders" *ngIf="!isLoading">
+	<div class="header">
+		<div class="header__title" appPageHeader>
+			Заявки
+	</div>
+		<button class="header__button">
+			Создать заявку
+		</button>
+	</div>
+	<div class="total-info">
+		<div class="total-info__details">Всего заявок: 1000</div>
+		<div class="total-info__details">В обработке: 1000</div>
+		<div class="total-info__details">На приёмке: 1000</div>
+		<div class="total-info__details">Завершённые: 1000</div>
+	</div>
+	<div class="table" 
+		appSortTable
+		[sortTable]="orders"
+    [columnNum]="sortingColumn.column"
+    [sortDirection]="sortingColumn.direction"
+    [columns]="displayedColumns"
+	>
+		<div class="table__headers table__row">
+			<span 
+			*ngFor="let header of displayedColumns; let i = index"
+			(mouseenter)="handleTableHeaderHover(i)"
+      (mouseleave)="handleTableHeaderHover('')"
+			(click)="handleSortDirection(i)"
+			>
+				{{ header | tableHeader }}
+				<mat-icon 
+						*ngIf="sortingColumn.column === i || shownColumn === i && header !== 'storageName'"
+						[ngClass]="sortingColumn.direction === 'desc' && sortingColumn.column === i ? 'direction-desc' : null"
+						[class]="sortingColumn.direction === 'asc' && sortingColumn.column === i ? 'direction-asc' : ''"
+						>expand_less</mat-icon
+					>
+			</span>
+		</div>
+		<div class="table__row"
+			*ngFor="let row of orders; let i = index"
+		>
+			<span class="cell"> {{ row.createdAt }} </span>
+			<span class="cell"> {{ row.storageName }} </span>
+			<div class="cell-positions"> 
+				<mat-icon
+					(click)="showDetails(i)"
+					[class]="shownDetails === i ? 'expanded' : null"
+				>
+					expand_less
+				</mat-icon>
+				<div class="cell-positions__details"
+					*ngIf="shownDetails === i"
+				>
+					<div class="details" 
+						*ngFor="let item of row.positions">
+						<span> {{ i+1 }}. </span>
+						<span>{{ item.product.name }}</span>
+						<span>{{ item.count }} шт.</span>
+					</div>
+				</div>
+			</div>
+			<span class="cell"> {{ row.orderPrice }} </span>
+			<span class="cell_status"> {{ row.status }} </span>
+			<span class="cell"> {{ row.updatedAt }} </span>
+		</div>
+	</div>
+</div>
