@@ -1,113 +1,109 @@
-<div class="inventory">
-  <p class="title">Остатки</p>
-  <div class="toolbar">
-    <button
-      (click)="changeTab('add')"
-      class="btn"
-      [ngClass]="toolBarActiveTab === 'add' ? 'active' : null"
-    >
-      Провести новый продукт
-    </button>
-    <button
-      (click)="changeTab('filter')"
-      class="btn"
-      [ngClass]="toolBarActiveTab === 'filter' ? 'active' : null"
-    >
-      Поиск по инвентарю
+<app-preloader *ngIf="isLoading"></app-preloader>
+<div *ngIf="!isLoading" class="inventory">
+  <div class="header">
+    <p class="title" appPageHeader>Остатки</p>
+    <div class="toolbar">
+      <button class="toolbar__button"
+      (click)="isAddingNewPosition = !isAddingNewPosition"
+      >
+        Провести товар
     </button>
   </div>
-  <form
-    [formGroup]="inventoryForm"
-    (ngSubmit)="addInventory()"
-    *ngIf="toolBarActiveTab === 'add'"
-    class="inventory-add-new-block tab"
-  >
-    <div>
-      <input
-        formControlName="productId"
-        type="text"
-        placeholder="Продукт"
-        [formControl]="chooseProductForm"
-        [matAutocomplete]="productAutoComplete"
-      />
-      <p
-        *ngIf="this.chooseProductForm.invalid && this.chooseProductForm.touched"
-        [class]="
-          this.chooseProductForm.invalid && this.chooseProductForm.touched
-            ? 'input-warning shown'
-            : 'input-warning'
-        "
-      >
-        Укажите товар
-      </p>
-    </div>
-    <mat-autocomplete #productAutoComplete="matAutocomplete">
-      <mat-option
-        *ngFor="let option of filteredProductOptions | async"
-        [value]="option"
-      >
-        {{ option }}
-      </mat-option>
-    </mat-autocomplete>
-    <div>
-      <input
-        formControlName="storageId"
-        type="text"
-        placeholder="Склад"
-        [formControl]="chooseStorageForm"
-        [matAutocomplete]="storageAutoComplete"
-      />
-      <p
-        *ngIf="this.chooseStorageForm.invalid && this.chooseStorageForm.touched"
-        [class]="
-          this.chooseStorageForm.invalid && this.chooseStorageForm.touched
-            ? 'input-warning shown'
-            : 'input-warning'
-        "
-      >
-        Укажите склад
-      </p>
-    </div>
-    <mat-autocomplete #storageAutoComplete="matAutocomplete">
-      <mat-option
-        *ngFor="let option of filteredStorageOptions | async"
-        [value]="option"
-      >
-        {{ option }}
-      </mat-option>
-    </mat-autocomplete>
-    <div>
-      <input formControlName="stock" type="text" placeholder="Остаток" />
-      <p
-        *ngIf="
-          this.inventoryForm.get('stock')?.invalid &&
-          this.inventoryForm.get('stock')?.touched
-        "
-        [class]="
-          this.inventoryForm.get('stock')?.invalid &&
-          this.inventoryForm.get('stock')?.touched
-            ? 'input-warning shown'
-            : 'input-warning'
-        "
-      >
-        Укажите остаток(числом)
-      </p>
-    </div>
-    <button
-      type="submit"
-      [disabled]="
-        this.inventoryForm.get('stock')?.invalid ||
-        this.chooseStorageForm.invalid ||
-        this.chooseProductForm.invalid ||
-        inventoryForm.disabled
-      "
+  <div class="toolbar__add-new-position-block" *ngIf="isAddingNewPosition">
+    <form
+      [formGroup]="inventoryForm"
+      (ngSubmit)="addInventory()"
+      class="toolbar__form"
+      *ngIf="isAddingNewPosition"
     >
-      <mat-icon>add</mat-icon>
-    </button>
-  </form>
-  <div *ngIf="toolBarActiveTab === 'filter'" class="filter-inventory-block tab">
-    <input type="text" placeholder="id" />
-    <input type="text" placeholder="Название" />
+      <div>
+        <input
+          formControlName="productId"
+          type="text"
+          placeholder="Продукт"
+          [formControl]="chooseProductForm"
+          [matAutocomplete]="productAutoComplete"
+        />
+        <p
+          *ngIf="this.chooseProductForm.invalid && this.chooseProductForm.touched"
+          [class]="
+            this.chooseProductForm.invalid && this.chooseProductForm.touched
+              ? 'input-warning shown'
+              : 'input-warning'
+          "
+        >
+          Укажите товар
+        </p>
+        <mat-autocomplete #productAutoComplete="matAutocomplete">
+          <mat-option
+            *ngFor="let option of filteredProductOptions | async"
+            [value]="option"
+          >
+            {{ option }}
+          </mat-option>
+        </mat-autocomplete>
+      </div>
+      <div>
+        <input
+          formControlName="storageId"
+          type="text"
+          placeholder="Склад"
+          [formControl]="chooseStorageForm"
+          [matAutocomplete]="storageAutoComplete"
+          mat-input
+        />
+        <p
+          *ngIf="this.chooseStorageForm.invalid && this.chooseStorageForm.touched"
+          [class]="
+            this.chooseStorageForm.invalid && this.chooseStorageForm.touched
+              ? 'input-warning shown'
+              : 'input-warning'
+          "
+        >
+          Укажите склад
+        </p>
+        <mat-autocomplete #storageAutoComplete="matAutocomplete">
+          <mat-option
+            *ngFor="let option of filteredStorageOptions | async"
+            [value]="option"
+          >
+            {{ option }}
+          </mat-option>
+        </mat-autocomplete>
+      </div>
+      <div>
+        <input formControlName="stock" type="text" placeholder="Остаток" mat-input />
+        <p
+          *ngIf="
+            this.inventoryForm.get('stock')?.invalid &&
+            this.inventoryForm.get('stock')?.touched
+          "
+          [class]="
+            this.inventoryForm.get('stock')?.invalid &&
+            this.inventoryForm.get('stock')?.touched
+              ? 'input-warning shown'
+              : 'input-warning'
+          "
+        >
+          Укажите остаток(числом)
+        </p>
+      </div>
+      <div class="toolbar__form__options">
+        <button
+          type="submit"
+          [disabled]="
+            this.inventoryForm.get('stock')?.invalid ||
+            this.chooseStorageForm.invalid ||
+            this.chooseProductForm.invalid ||
+            inventoryForm.disabled
+          "
+        >
+        <mat-icon>done</mat-icon>
+        </button>
+            <mat-icon (click)="isAddingNewPosition = !isAddingNewPosition">cancel</mat-icon>
+      </div>
+    </form>
+  </div>
   </div>
   <div *ngIf="isErrorDisplay" class="request-error">
     {{ requestError }}
@@ -115,142 +111,67 @@
       >close</mat-icon
     >
   </div>
-  <app-preloader *ngIf="isLoading"></app-preloader>
-  <table *ngIf="!isLoading" mat-table [dataSource]="dataSource" class="inventory-table">
-    <ng-container matColumnDef="id">
-      <th
-        mat-header-cell
-        *matHeaderCellDef
-        class="table-header"
-        (click)="handleSortChange('id')"
-        (mouseenter)="shownColumn = 'id'"
-        (mouseleave)="shownColumn = ''"
+  <div class="table"
+    appSortTable
+    [sortTable]="INVENTORY"
+    [columnNum]="sortingColumn.column"
+    [sortDirection]="sortingColumn.direction"
+    [columns]="displayedColumns"
+    >
+    <div class="table__row table__headers">
+      <span
+        *ngFor="let header of displayedColumns; let i = index"
+        (mouseenter)="handleTableHeaderHover(i)"
+        (mouseleave)="handleTableHeaderHover('')"
       >
-        ID
+      <span *ngIf="header !== 'storageName'; else storageFilter"
+        (click)="handleSortDirection(i)"
+      >
+        {{ header | tableHeader }}
+      </span>
+      <ng-template #storageFilter>
+        <input
+        type="text"
+        placeholder="Склад"
+        [matAutocomplete]="filterStorageAutocomplete"
+        />
+        <mat-autocomplete #filterStorageAutocomplete="matAutocomplete">
+          <mat-option
+            *ngFor="let option of filteredStorageOptions | async"
+            [value]="option"
+          >
+            {{ option }}
+          </mat-option>
+        </mat-autocomplete>
+      </ng-template>
+        <mat-icon 
+          *ngIf="sortingColumn.column === i || shownColumn === i && header !== 'storageName'"
+          [ngClass]="sortingColumn.direction === 'desc' && sortingColumn.column === i ? 'direction-desc' : null"
+          [class]="sortingColumn.direction === 'asc' && sortingColumn.column === i ? 'direction-asc' : ''"
+          >expand_less</mat-icon
+        >
+      </span>
+      <span
+        (mouseenter)="handleTableHeaderHover('total')"
+        (mouseleave)="handleTableHeaderHover('')"
+        (click)="handleSortDirection(0)"
+      >
+        Всего
         <mat-icon
-          [style.rotate]="sortingColumn!.direction === 'desc' ? '180deg' : null"
-          [style.opacity]="
-            shownColumn === displayedColumns[0] &&
-            sortingColumn.column !== displayedColumns[0]
-              ? 0.5
-              : null
-          "
-          [class]="
-            sortingColumn.column === displayedColumns[0] ? 'shown' : 'hidden'
-          "
-          >keyboard_arrow_up</mat-icon
+          *ngIf="sortingColumn.column === 'total' || shownColumn === 'total'"
+          [ngClass]="sortingColumn.direction === 'desc' && sortingColumn.column === 'total' ? 'direction-desc' : null"
+          [class]="sortingColumn.direction === 'asc' && sortingColumn.column === 'total' ? 'direction-asc' : ''"
+          >expand_less</mat-icon
         >
-      </th>
-      <td mat-cell *matCellDef="let item">{{ item._id }}</td>
-    </ng-container>
-    <ng-container matColumnDef="name">
-      <th
-        mat-header-cell
-        *matHeaderCellDef
-        class="table-header"
-        (click)="handleSortChange('name')"
-        (mouseenter)="shownColumn = 'name'"
-        (mouseleave)="shownColumn = ''"
-      >
-        Название
-        <mat-icon
-          [style.rotate]="sortingColumn!.direction === 'desc' ? '180deg' : null"
-          [style.opacity]="
-            shownColumn === displayedColumns[1] &&
-            sortingColumn.column !== displayedColumns[1]
-              ? 0.5
-              : null
-          "
-          [class]="
-            sortingColumn.column === displayedColumns[1] ? 'shown' : 'hidden'
-          "
-          >keyboard_arrow_up</mat-icon
-        >
-      </th>
-      <td mat-cell *matCellDef="let item">{{ item.productName }}</td>
-    </ng-container>
-    <ng-container matColumnDef="storage">
-      <th mat-header-cell *matHeaderCellDef>
-        <mat-select
-          [(value)]="storageFilter"
-          (valueChange)="handleStorageFilterChange()"
-        >
-          <mat-option value="all">Все склады</mat-option>
-          <mat-option *ngFor="let item of storages" [value]="item.name">{{
-            item.name
-          }}</mat-option>
-        </mat-select>
-      </th>
-      <td mat-cell *matCellDef="let item">{{ item.storageName }}</td>
-    </ng-container>
-    <ng-container matColumnDef="price">
-      <th
-        mat-header-cell
-        *matHeaderCellDef
-        class="table-header"
-        class="table-header"
-        (click)="handleSortChange('price')"
-        (mouseenter)="shownColumn = 'price'"
-        (mouseleave)="shownColumn = ''"
-      >
-        Цена
-        <mat-icon
-          [style.rotate]="sortingColumn!.direction === 'desc' ? '180deg' : null"
-          [style.opacity]="
-            shownColumn === displayedColumns[3] &&
-            sortingColumn.column !== displayedColumns[3]
-              ? 0.5
-              : null
-          "
-          [class]="
-            sortingColumn.column === displayedColumns[3] ? 'shown' : 'hidden'
-          "
-          >keyboard_arrow_up</mat-icon
-        >
-      </th>
-      <td
-        mat-cell
-        [class]="sortingColumn!.direction === 'desc' ? 'reversed' : null"
-        *matCellDef="let item"
-      >
-        {{ item.productPrice | currency : "₽" }}
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="stock">
-      <th
-        mat-header-cell
-        *matHeaderCellDef
-        class="table-header"
-        (click)="handleSortChange('stock')"
-        (mouseenter)="shownColumn = 'stock'"
-        (mouseleave)="shownColumn = ''"
-      >
-        Остаток
-        <mat-icon
-          [style.rotate]="sortingColumn!.direction === 'desc' ? '180deg' : null"
-          [style.opacity]="
-            shownColumn === displayedColumns[4] &&
-            sortingColumn.column !== displayedColumns[4]
-              ? 0.5
-              : null
-          "
-          [class]="
-            sortingColumn.column === displayedColumns[4] ? 'shown' : 'hidden'
-          "
-          >keyboard_arrow_up</mat-icon
-        >
-      </th>
-      <td mat-cell *matCellDef="let item">{{ item.stock }}</td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
-  <mat-paginator
-    [pageSizeOptions]="[10, 20, 50, 100]"
-    showFirstLastButtons
-    aria-label="Select page of periodic elements"
-    class="inventory-paginator"
-  >
-  </mat-paginator>
+      </span>
+    </div>
+    <div class="table__row" *ngFor="let row of INVENTORY">
+      <span>{{ row.productName }}</span>
+      <span>{{ row.productPrice | currency : "₽" }}</span>
+      <span>{{ row.stock }}</span>
+      <span>{{ row.storageName }}</span>
+      <span>{{ row.productPrice * row.stock | currency : "₽" }}</span>
+      <mat-icon>more_horiz</mat-icon>
+    </div>
+  </div>
 </div>

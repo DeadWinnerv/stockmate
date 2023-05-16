@@ -1,4 +1,3 @@
-import { style, trigger, state, transition, animate } from '@angular/animations';
 import { Component, HostBinding, HostListener, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
@@ -8,27 +7,7 @@ type TButton = 'profile' | 'dashboard' | 'inventory' | 'orders' | 'storages' | '
 @Component({
   selector: 'app-side-menu',
   templateUrl: './side-menu.component.html',
-  styleUrls: ['./side-menu.component.scss'],
-  animations: [
-    trigger('openCloseMenu', [
-      state('open', style({
-        'width': '18vw'
-      })
-      ),
-      state('close', style({
-        'width': '5vw'
-      })
-      ),
-      transition('open => close', [
-        animate('0.2s'),
-      ]
-      ),
-      transition('close => open', [
-        animate('0.2s'),
-      ]
-      )
-    ])
-  ]
+  styleUrls: ['./side-menu.component.scss']
 })
 export class SideMenuComponent implements OnInit {
   activeButton: TButton = 'dashboard';

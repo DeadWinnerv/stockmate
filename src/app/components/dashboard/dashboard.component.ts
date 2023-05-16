@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 
 
 export class DashboardComponent {
-  buttonValue: 'expenses' | 'orders' | 'stocks' = 'expenses';
+  buttonValue: 'expenses' | 'orders' | 'stocks' = 'stocks';
 
   setCurrentGroupValue(value: 'expenses' | 'orders' | 'stocks'): void {
     this.buttonValue = value;

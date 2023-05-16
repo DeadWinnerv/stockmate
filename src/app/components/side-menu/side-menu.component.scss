@@ -11,12 +11,12 @@ mat-icon {
 	top: 0;
 	left: 0;
 	bottom: 0;
-	max-width: fit-content;
-	height: 100%;
 	background-color: #3E3E3E;
 	display: flex;
+	flex-grow: 1;
 	flex-direction: column;
 	justify-content: space-around;
+	transition-delay: 0.2s;
 	&__logo {
 		display: flex;
 		justify-content: space-between;
@@ -31,6 +31,8 @@ mat-icon {
 			span {
 				font-size: 26px;
 				color: #FF9500;
+				transform-origin: left;
+
 			}
 		}
 		:last-child {
@@ -40,7 +42,7 @@ mat-icon {
 	.side-menu__block {
 		display: flex;
 		flex-direction: column;
-		align-items: start;
+		align-items: flex-start;
 		ul {
 			width: 100%;
 			li {
@@ -55,6 +57,9 @@ mat-icon {
 						color: #fff;
 						font-size: 18px;
 						transition: 0.2s;
+						max-height: auto;
+						max-width: 80%;
+						transform-origin: left;
 					}
 				}
 				a:hover {
@@ -88,9 +93,12 @@ mat-icon {
 }
 
 .hidden {
-	max-width: fit-content;
+	transition: all 0.5s;
 	span {
-		max-width: 0;
+		transform-origin: right;
+		transform: scaleX(0);
+		animation: span 0.2s;
+		opacity: 0;
 		overflow: hidden;
 		position: absolute;
 		margin: 0;

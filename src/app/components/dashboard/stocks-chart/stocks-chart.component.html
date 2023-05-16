@@ -1,20 +1,43 @@
-<div class="stocks-block">
-  <p>Статистика по остаткам</p>
-  <div class="stocks-charts">
-		<div class="stocks-charts__stocks-by-storage">
-			<span>Больше всего позиций</span>
-			<select name="" id="">
-				<option value="">Все</option>
-				<option value="">Хоругвино</option>
-				<option value="">Тверь</option>
-				<option value="">Воронеж</option>
-			</select>
-			<canvas
-				baseChart
-				type="doughnut"
-				[datasets]="doughnutData"
-				[labels]="doughnutLabels"
+<app-preloader *ngIf="isLoading"></app-preloader>
+<div class="stocks-chart">
+	<div class="stocks-chart__title" appPageHeader>
+		Статистика по остаткам
+	</div>
+	<div class="stocks-chart__content">
+		<div class="chart-block">
+			<form action="" class="chart-block__options">
+				<mat-form-field>
+					<mat-label>Склад</mat-label>
+					<mat-select value="">
+						<mat-option value="">Все</mat-option>
+						<mat-option *ngFor="let storage of storagesList" [value]="storage"> {{ storage }} </mat-option>
+					</mat-select>
+				</mat-form-field>
+				<mat-form-field>
+					<mat-select [value]="dougnutChartBy">
+						<mat-option value="byCount">Количество</mat-option>
+						<mat-option value="byTotalPrice">Сумма денег</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</form>
+			<canvas class="chart-block__chart"
+			baseChart
+				#stocksChart
 			></canvas>
 		</div>
-  </div>
+		<div class="chart-block">
+			<form action="" class="chart-block__options">
+				<mat-form-field>
+					<mat-select value="byCount">
+						<mat-option value="byCount">Количество</mat-option>
+						<mat-option value="byTotalPrice">Сумма денег</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</form>
+			<canvas class="chart-block__chart"
+			baseChart
+			#stocksChart
+				></canvas>
+	</div>
+	</div>
 </div>

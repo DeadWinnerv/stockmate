@@ -1,33 +1,63 @@
-<div class="products">
-	<div class="header">
+<app-preloader *ngIf="isLoading"></app-preloader>
+<div class="products" *ngIf="!isLoading">
+	<div class="products__header" appPageHeader>
 		Шаблоны товаров
 	</div>
 	<div class="toolbar">
-		<div class="toolbar-tabs">
+		<div class="toolbar__buttons">
 			<button class="tab-btn" [ngClass]="activeTab==='addNew' ? 'active' : null" (click)="handleTabChange('addNew')">Создать новый товар</button>
 			<button class="tab-btn" [ngClass]="activeTab==='filter' ? 'active' : null" (click)="handleTabChange('filter')">Фильтры</button>
 		</div>
-		<form [formGroup]="productForm" (ngSubmit)="addProduct()" class="add-new-tab tab" *ngIf="activeTab==='addNew'">
+		<form [formGroup]="productForm" (ngSubmit)="addProduct()" class="toolbar__tab" *ngIf="activeTab==='addNew'">
 			<input formControlName="name" type="text" placeholder="Название">
 			<input formControlName="price" type="text" placeholder="Цена">
-			<button type="submit" [disabled]="productForm.invalid || productForm.disabled"><mat-icon>add</mat-icon></button>
+			<button class="tab__btn_submit" type="submit" [disabled]="productForm.invalid || productForm.disabled"><mat-icon>add</mat-icon></button>
 		</form>
-		<div class="add-new-tab tab" *ngIf="activeTab==='filter'">
+		<div class="toolbar__tab" *ngIf="activeTab==='filter'">
 			<input type="text" placeholder="ID">
 			<input type="text" placeholder="Название">
 		</div>
 	</div>
-  <app-preloader *ngIf="isLoading"></app-preloader>
-	<div *ngIf="!isLoading" class="products-table">
-		<div class="table-headers table-row">
-			<span>id</span>
-			<span>Название</span>
-			<span>Цена</span>
+	<div class="table"
+		appSortTable
+		[sortTable]="products"
+		[columnNum]="sortingColumn.column"
+    [sortDirection]="sortingColumn.direction"
+    [columns]="displayedColumns"
+	>
+		<div class="table__headers table__row">
+			<span>ID</span>
+			<span
+				*ngFor="let header of displayedColumns; let i = index"
+				(mouseenter)="handleTableHeaderHover(i)"
+        (mouseleave)="handleTableHeaderHover('')"
+				(click)="handleSortDirection(i)"
+			> {{ header | tableHeader}} 
+			<mat-icon
+          *ngIf="sortingColumn.column === i || shownColumn === i && header !== 'storageName'"
+          [ngClass]="sortingColumn.direction === 'desc' && sortingColumn.column === i ? 'direction-desc' : null"
+          [class]="sortingColumn.direction === 'asc' && sortingColumn.column === i ? 'direction-asc' : ''"
+          >expand_less</mat-icon
+        >
+		</span>
 		</div>
-		<div class="table-row" *ngFor="let item of products">
-			<span>{{item._id}}</span>
+		<div class="table__row" *ngFor="let item of products">
+				<qrcode
+					[qrdata]="item._id"
+					[allowEmptyString]="true"
+					[cssClass]="'center'"
+					[colorDark]="'#000000ff'"
+					[colorLight]="'#ffffffff'"
+					[elementType]="'svg'"
+					[errorCorrectionLevel]="'L'"
+					[scale]="1"
+					[title]="'A custom title attribute'"
+					[width]="60"
+				></qrcode>
 			<span>{{item.name}}</span>
 			<span>{{item.price}}</span>
+			<mat-icon>edit</mat-icon>
+			<mat-icon>close</mat-icon>
 		</div>
 	</div>
 </div>

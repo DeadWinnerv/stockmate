@@ -1,7 +1,7 @@
 <div class="dashboard">
   <div class="tabs-menu">
-    <button [ngClass]="buttonValue === 'expenses' ? 'active' : null" (click)="setCurrentGroupValue('expenses')">Расходы</button>
-		<button [ngClass]="buttonValue === 'orders' ? 'active' : null" (click)="setCurrentGroupValue('orders')">Заявки</button>
+    <button [ngClass]="buttonValue === 'expenses' ? 'active' : null" (click)="setCurrentGroupValue('expenses')" disabled title="В процессе разработки">Расходы</button>
+		<button [ngClass]="buttonValue === 'orders' ? 'active' : null" (click)="setCurrentGroupValue('orders')" disabled title="В процессе разработки">Заявки</button>
 		<button [ngClass]="buttonValue === 'stocks' ? 'active' : null" (click)="setCurrentGroupValue('stocks')">Остатки</button>
   </div>
 	<div class="content">
