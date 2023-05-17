@@ -38,6 +38,11 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
   }
   ngOnInit(): void {
+    console.log('for dev only:');
+    console.log('login: user');
+    console.log('password: 392311219Bo!');
+    
+    
     this.loginForm = new FormGroup({
       login: new FormControl('', [Validators.required]),
       password: new FormControl('', [

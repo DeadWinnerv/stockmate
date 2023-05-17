@@ -9,12 +9,15 @@
     <p [class]="this.loginForm.get('password')?.invalid && this.loginForm.get('password')?.touched ? 'input-warning shown' : 'input-warning'" class="input-warning">Введите пароль</p>
 		<button type="submit" [disabled]="loginForm.invalid || loginForm.disabled">Войти</button>
 		<span>Нет аккаунта? <a routerLink="/register">Зарегистрироваться</a></span>
+		<span>dev: look in console</span>
 	</form>
 	<div class="stockmate-info">
 		<div class="stockmate-info__logo">
 			<mat-icon>inventory_2</mat-icon>
 			<p>Stockmate</p>
 		</div>
-		<p class="motto">Управляйте своим инвентарем проще, чем когда-либо.</p>
+		<p class="motto">
+			Управляйте своим инвентарем проще, чем когда-либо.
+		</p>
 	</div>
 </div>
