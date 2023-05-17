@@ -9,6 +9,7 @@ import { StorageService } from 'src/app/services/storage.service';
 import { ProductService } from 'src/app/services/product.service';
 import { Toast } from '../ui/preloader/Toasts/Toast';
 import { SortTableDirective } from 'src/directives/sortTable.directive';
+import { map, startWith } from 'rxjs';
 @Component({
   selector: 'app-inventory',
   templateUrl: './inventory.component.html',
@@ -22,10 +23,10 @@ export class InventoryComponent implements OnInit {
   storages: IStorage[];
   products: IProduct[];
   protected inventoryForm: FormGroup;
-  protected shownColumn: number | 'total' | '';
+  protected shownColumn: number | '';
   protected displayedColumns: string[] = [];
   protected sortingColumn: {
-    column: number | 'total' | '',
+    column: number | '',
     direction?: 'asc' | 'desc'
   } = {
     column: ''
@@ -56,6 +57,20 @@ export class InventoryComponent implements OnInit {
       ]),
     });
     this.loadInventory();
+    this.filteredStorageOptions = this.chooseStorageForm.valueChanges.pipe(
+      startWith(''),
+      map((value: string | any) => {
+        const name = typeof value === 'string' ? value : value?.name;
+        return name ? this._filterOptions(name as string, this.storageOptions) : this.storageOptions;
+      }),
+    );
+    this.filteredProductOptions = this.chooseProductForm.valueChanges.pipe(
+      startWith(''),
+      map((value: string | any) => {
+        const name = typeof value === 'string' ? value : value?.name;
+        return name ? this._filterOptions(name as string, this.productOptions) : this.productOptions.slice();
+      }),
+    );
   }
   loadInventory() {
     this.isLoading = true;
@@ -98,12 +113,14 @@ export class InventoryComponent implements OnInit {
     });
   }
   addInventory() {
+    this.isAddingNewPosition = false;
+    this.isLoading = true;
     this.inventoryForm.disable();
     this.inventoryForm.value.storageId = this.storages.find(
-      (item) => item.name == this.chooseStorageForm.value
+      (item) => item.name === this.chooseStorageForm.value
     )?._id;
     this.inventoryForm.value.productId = this.products.find(
-      (item) => item.name == this.chooseProductForm.value
+      (item) => item.name === this.chooseProductForm.value
     )?._id;
 
     this.InventoryService.addInventory(this.inventoryForm.value).subscribe({
@@ -118,17 +135,19 @@ export class InventoryComponent implements OnInit {
           title: 'Товар успешно проведён',
         });
         this.isAddingNewPosition = false
+        this.isLoading = false;
       },
       error: (error) => {
         this.isErrorDisplay = true;
         this.requestError = error.error.msg;
         console.warn(error);
         this.inventoryForm.enable();
+        this.isLoading = false;
       },
     });
   }
 
-  handleTableHeaderHover(i: number | 'total' | '') {
+  handleTableHeaderHover(i: number | '') {
     this.shownColumn = i
   }
 
@@ -148,5 +167,10 @@ export class InventoryComponent implements OnInit {
       this.sortingColumn.column = ''
       this.sortingColumn.direction = undefined
     }
+  }
+
+  private _filterOptions(name: string, options: string[]) {
+    const filterValue = name.toLowerCase();
+    return options.filter(option => option.toLowerCase().includes(filterValue));
   }
 }

@@ -16,7 +16,7 @@
       class="toolbar__form"
       *ngIf="isAddingNewPosition"
     >
-      <div>
+      <div class="input-block">
         <input
           formControlName="productId"
           type="text"
@@ -43,7 +43,7 @@
           </mat-option>
         </mat-autocomplete>
       </div>
-      <div>
+      <div class="input-block">
         <input
           formControlName="storageId"
           type="text"
@@ -52,6 +52,14 @@
           [matAutocomplete]="storageAutoComplete"
           mat-input
         />
+        <mat-autocomplete #storageAutoComplete="matAutocomplete">
+          <mat-option
+            *ngFor="let option of filteredStorageOptions | async"
+            [value]="option"
+          >
+            {{ option }}
+          </mat-option>
+        </mat-autocomplete>
         <p
           *ngIf="this.chooseStorageForm.invalid && this.chooseStorageForm.touched"
           [class]="
@@ -62,17 +70,9 @@
         >
           Укажите склад
         </p>
-        <mat-autocomplete #storageAutoComplete="matAutocomplete">
-          <mat-option
-            *ngFor="let option of filteredStorageOptions | async"
-            [value]="option"
-          >
-            {{ option }}
-          </mat-option>
-        </mat-autocomplete>
       </div>
-      <div>
-        <input formControlName="stock" type="text" placeholder="Остаток" mat-input />
+      <div class="input-block">
+        <input formControlName="stock" type="text" placeholder="Остаток" aria-label="Number" mat-input />
         <p
           *ngIf="
             this.inventoryForm.get('stock')?.invalid &&
@@ -98,7 +98,7 @@
             inventoryForm.disabled
           "
         >
-        <mat-icon>done</mat-icon>
+          Провести товар
         </button>
             <mat-icon (click)="isAddingNewPosition = !isAddingNewPosition">cancel</mat-icon>
       </div>
@@ -148,19 +148,6 @@
           *ngIf="sortingColumn.column === i || shownColumn === i && header !== 'storageName'"
           [ngClass]="sortingColumn.direction === 'desc' && sortingColumn.column === i ? 'direction-desc' : null"
           [class]="sortingColumn.direction === 'asc' && sortingColumn.column === i ? 'direction-asc' : ''"
-          >expand_less</mat-icon
-        >
-      </span>
-      <span
-        (mouseenter)="handleTableHeaderHover('total')"
-        (mouseleave)="handleTableHeaderHover('')"
-        (click)="handleSortDirection(0)"
-      >
-        Всего
-        <mat-icon
-          *ngIf="sortingColumn.column === 'total' || shownColumn === 'total'"
-          [ngClass]="sortingColumn.direction === 'desc' && sortingColumn.column === 'total' ? 'direction-desc' : null"
-          [class]="sortingColumn.direction === 'asc' && sortingColumn.column === 'total' ? 'direction-asc' : ''"
           >expand_less</mat-icon
         >
       </span>
