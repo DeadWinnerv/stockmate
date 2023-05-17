@@ -1,25 +1,66 @@
 <app-preloader *ngIf="isLoading"></app-preloader>
 <div class="orders" *ngIf="!isLoading">
-	<form action="" class="new-order-form" [style]="isAddingNewOrder ? 'transform: scaleY(1)' : 'transform: scaleY(0)'">
-		<div class="title">Создать заявку</div>
-		<input type="text" placeholder="new order">
-		<input type="text" placeholder="new order">
-		<input type="text" placeholder="new order">
-		<input type="text" placeholder="new order">
-		<button type="submit" class="new-order-form__btn">
-			Подтвердить
-		</button>
-	</form>
+  <form
+    action=""
+    class="new-order-form"
+    [style]="isAddingNewOrder ? 'transform: scaleY(1)' : 'transform: scaleY(0)'"
+  >
+    <div class="title">Создать заявку</div>
+    <div class="new-order-form__input-block">
+      <input
+        type="text"
+        placeholder="Склад"
+        [matAutocomplete]="storageAuto"
+        [formControl]="storageInput"
+      />
+      <mat-autocomplete #storageAuto="matAutocomplete">
+        <mat-option
+          [value]="option"
+          *ngFor="let option of filteredStorageOptions | async"
+          >{{ option }}</mat-option
+        >
+      </mat-autocomplete>
+    </div>
+    <div class="new-order-form__input-block">
+      <input type="text" placeholder="Стоимость заявки" />
+    </div>
+    <div class="new-order-form__input-block new-order-form__positions">
+      <input type="text" placeholder="Позиции" 
+				[formControl]="productsFilter"
+			/>
+      <div class="products-list">
+        <div class="products-list__item" *ngFor="let productOption of filteredProductOptions | async">
+          <input
+            class="input_checkbox"
+            type="checkbox"
+            name=""
+            id=""
+            [value]="productOption"
+          />
+          <label for="">
+            {{ productOption }}
+          </label>
+          <input class="input_count" type="text" placeholder="Кол-во" />
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="new-order-form__btn">Подтвердить</button>
+  </form>
   <div class="header">
     <div class="header__title" appPageHeader>Заявки</div>
-    <button class="header__button" (click)="isAddingNewOrder = !isAddingNewOrder">Создать заявку</button>
+    <button
+      class="header__button"
+      (click)="isAddingNewOrder = !isAddingNewOrder"
+    >
+      Создать заявку
+    </button>
   </div>
-	<div class="empty-table-alert" *ngIf="isTableEmpty">
-		<span>Заявок нет...</span>
-		<span class="loader"></span>
-	</div>
+  <div class="empty-table-alert" *ngIf="isTableEmpty">
+    <span>Заявок нет...</span>
+    <span class="loader"></span>
+  </div>
   <div
-		*ngIf="!isTableEmpty"
+    *ngIf="!isTableEmpty"
     class="table"
     appSortTable
     [sortTable]="ordersList"
@@ -134,7 +175,7 @@
           </div>
         </div>
       </div>
-      <span class="cell"> {{ row.orderPrice }} </span>
+      <span class="cell"> {{ row.orderPrice | currency : "₽" }} </span>
       <span class="cell_status"> {{ row.status }} </span>
       <span class="cell"> {{ row.updatedAt }} </span>
     </div>
