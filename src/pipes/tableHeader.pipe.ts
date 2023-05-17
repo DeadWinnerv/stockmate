@@ -22,6 +22,16 @@ export class TableHeaderPipe implements PipeTransform {
         return 'Название';
       case 'price':
         return 'Цена';
+      case 'createdAt':
+        return 'Создано'
+      case 'updatedAt':
+        return 'Обновлено'
+      case 'status':
+        return 'Статус'
+      case 'positions':
+        return 'Позиции'
+      case 'orderPrice':
+        return 'Стоимость'
       default:
         return value;
     }
