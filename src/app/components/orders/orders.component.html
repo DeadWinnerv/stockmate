@@ -1,68 +1,137 @@
-<app-preloader *ngIf="isLoading" ></app-preloader>
+<app-preloader *ngIf="isLoading"></app-preloader>
 <div class="orders" *ngIf="!isLoading">
-	<div class="header">
-		<div class="header__title" appPageHeader>
-			Заявки
-	</div>
-		<button class="header__button">
-			Создать заявку
+	<form action="" class="new-order-form" [style]="isAddingNewOrder ? 'transform: scaleY(1)' : 'transform: scaleY(0)'">
+		<div class="title">Создать заявку</div>
+		<input type="text" placeholder="new order">
+		<input type="text" placeholder="new order">
+		<input type="text" placeholder="new order">
+		<input type="text" placeholder="new order">
+		<button type="submit" class="new-order-form__btn">
+			Подтвердить
 		</button>
-	</div>
-	<div class="total-info">
-		<div class="total-info__details">Всего заявок: 1000</div>
-		<div class="total-info__details">В обработке: 1000</div>
-		<div class="total-info__details">На приёмке: 1000</div>
-		<div class="total-info__details">Завершённые: 1000</div>
-	</div>
-	<div class="table" 
-		appSortTable
-		[sortTable]="orders"
+	</form>
+  <div class="header">
+    <div class="header__title" appPageHeader>Заявки</div>
+    <button class="header__button" (click)="isAddingNewOrder = !isAddingNewOrder">Создать заявку</button>
+  </div>
+  <div
+    class="table"
+    appSortTable
+    [sortTable]="orders"
     [columnNum]="sortingColumn.column"
     [sortDirection]="sortingColumn.direction"
     [columns]="displayedColumns"
-	>
-		<div class="table__headers table__row">
-			<span 
-			*ngFor="let header of displayedColumns; let i = index"
-			(mouseenter)="handleTableHeaderHover(i)"
-      (mouseleave)="handleTableHeaderHover('')"
-			(click)="handleSortDirection(i)"
-			>
-				{{ header | tableHeader }}
-				<mat-icon 
-						*ngIf="sortingColumn.column === i || shownColumn === i && header !== 'storageName'"
-						[ngClass]="sortingColumn.direction === 'desc' && sortingColumn.column === i ? 'direction-desc' : null"
-						[class]="sortingColumn.direction === 'asc' && sortingColumn.column === i ? 'direction-asc' : ''"
-						>expand_less</mat-icon
-					>
-			</span>
-		</div>
-		<div class="table__row"
-			*ngFor="let row of orders; let i = index"
-		>
-			<span class="cell"> {{ row.createdAt }} </span>
-			<span class="cell"> {{ row.storageName }} </span>
-			<div class="cell-positions"> 
-				<mat-icon
-					(click)="showDetails(i)"
-					[class]="shownDetails === i ? 'expanded' : null"
-				>
-					expand_less
-				</mat-icon>
-				<div class="cell-positions__details"
-					*ngIf="shownDetails === i"
-				>
-					<div class="details" 
-						*ngFor="let item of row.positions">
-						<span> {{ i+1 }}. </span>
-						<span>{{ item.product.name }}</span>
-						<span>{{ item.count }} шт.</span>
-					</div>
-				</div>
-			</div>
-			<span class="cell"> {{ row.orderPrice }} </span>
-			<span class="cell_status"> {{ row.status }} </span>
-			<span class="cell"> {{ row.updatedAt }} </span>
-		</div>
-	</div>
+  >
+    <div class="table-filter">
+      <button
+        class="table-filter__button"
+        [ngClass]="activeFilter === 'created' ? 'active' : null"
+        (click)="activeFilter = 'created'"
+      >
+        <span>Созданы</span>
+        <span
+          class="count"
+          [style]="activeFilter === 'created' ? 'opacity: 1' : null"
+          >1209</span
+        >
+      </button>
+      <button
+        class="table-filter__button"
+        [ngClass]="activeFilter === 'paid' ? 'active' : null"
+        (click)="activeFilter = 'paid'"
+      >
+        <span>Оплачены</span>
+        <span
+          class="count"
+          [style]="activeFilter === 'paid' ? 'opacity: 1' : null"
+          >8</span
+        >
+      </button>
+      <button
+        class="table-filter__button"
+        [ngClass]="activeFilter === 'delievering' ? 'active' : null"
+        (click)="activeFilter = 'delievering'"
+      >
+        <span>В доставке</span>
+        <span
+          class="count"
+          [style]="activeFilter === 'delievering' ? 'opacity: 1' : null"
+          >43</span
+        >
+      </button>
+      <button
+        class="table-filter__button"
+        [ngClass]="activeFilter === 'acceptence' ? 'active' : null"
+        (click)="activeFilter = 'acceptence'"
+      >
+        <span>Приёмка</span>
+        <span
+          class="count"
+          [style]="activeFilter === 'acceptence' ? 'opacity: 1' : null"
+          >213</span
+        >
+      </button>
+      <button
+        class="table-filter__button"
+        [ngClass]="activeFilter === 'completed' ? 'active' : null"
+        (click)="activeFilter = 'completed'"
+      >
+        <span>Завершены</span>
+        <span
+          class="count"
+          [style]="activeFilter === 'completed' ? 'opacity: 1' : null"
+          >123</span
+        >
+      </button>
+    </div>
+    <div class="table__headers table__row">
+      <span
+        *ngFor="let header of displayedColumns; let i = index"
+        (mouseenter)="handleTableHeaderHover(i)"
+        (mouseleave)="handleTableHeaderHover('')"
+        (click)="handleSortDirection(i)"
+      >
+        {{ header | tableHeader }}
+        <mat-icon
+          *ngIf="
+            sortingColumn.column === i ||
+            (shownColumn === i && header !== 'storageName')
+          "
+          [ngClass]="
+            sortingColumn.direction === 'desc' && sortingColumn.column === i
+              ? 'direction-desc'
+              : null
+          "
+          [class]="
+            sortingColumn.direction === 'asc' && sortingColumn.column === i
+              ? 'direction-asc'
+              : ''
+          "
+          >expand_less</mat-icon
+        >
+      </span>
+    </div>
+    <div class="table__row" *ngFor="let row of orders; let i = index">
+      <span class="cell"> {{ row.createdAt }} </span>
+      <span class="cell"> {{ row.storageName }} </span>
+      <div class="cell-positions">
+        <mat-icon
+          (click)="showDetails(i)"
+          [class]="shownDetails === i ? 'expanded' : null"
+        >
+          expand_less
+        </mat-icon>
+        <div class="cell-positions__details" *ngIf="shownDetails === i">
+          <div class="details" *ngFor="let item of row.positions">
+            <span> {{ i + 1 }}. </span>
+            <span>{{ item.product.name }}</span>
+            <span>{{ item.count }} шт.</span>
+          </div>
+        </div>
+      </div>
+      <span class="cell"> {{ row.orderPrice }} </span>
+      <span class="cell_status"> {{ row.status }} </span>
+      <span class="cell"> {{ row.updatedAt }} </span>
+    </div>
+  </div>
 </div>

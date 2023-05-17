@@ -11,6 +11,7 @@ import { SortTableDirective } from 'src/directives/sortTable.directive';
 export class OrdersComponent {
   isLoading: boolean = false;
   orders: IOrder[] = [...ORDERS];
+  protected activeFilter: 'created' | 'paid' | 'delievering' | 'acceptence' | 'completed' = 'created'
   protected displayedColumns: string[] = [
     ...Object.keys(this.orders[0]).filter(
       (item) =>
@@ -26,7 +27,8 @@ export class OrdersComponent {
     column: '',
   };
   protected shownColumn: number | 'total' | '';
-  protected shownDetails: number | undefined
+  protected shownDetails: number | undefined;
+  protected isAddingNewOrder = false;
 
   @ViewChild(SortTableDirective) sortTableDirective: SortTableDirective;
 
