@@ -1,25 +1,18 @@
-import { Component, ViewChild } from '@angular/core';
-import { ORDERS } from './ORDERS';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { IOrder } from 'src/app/models/order';
 import { SortTableDirective } from 'src/directives/sortTable.directive';
+import { OrdersService } from 'src/app/services/orders.service';
 
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.scss'],
 })
-export class OrdersComponent {
+export class OrdersComponent implements OnInit {
   isLoading: boolean = false;
-  orders: IOrder[] = [...ORDERS];
+  ordersList: IOrder[];
   protected activeFilter: 'created' | 'paid' | 'delievering' | 'acceptence' | 'completed' = 'created'
-  protected displayedColumns: string[] = [
-    ...Object.keys(this.orders[0]).filter(
-      (item) =>
-        !['id', 'createdby', '__v'].some((column) =>
-          item.toLowerCase().includes(column)
-        )
-    ),
-  ];
+  protected displayedColumns: string[] = [];
   protected sortingColumn: {
     column: number | 'total' | '';
     direction?: 'asc' | 'desc';
@@ -29,8 +22,38 @@ export class OrdersComponent {
   protected shownColumn: number | 'total' | '';
   protected shownDetails: number | undefined;
   protected isAddingNewOrder = false;
+  protected isTableEmpty = false;
 
   @ViewChild(SortTableDirective) sortTableDirective: SortTableDirective;
+
+  constructor(private ordersService: OrdersService) { }
+  ngOnInit(): void {
+    this.loadOrdersList()
+  }
+
+  loadOrdersList() {
+    this.isLoading = true;
+    this.ordersService.getOrdersList().subscribe({
+      next: (res) => {
+        if (res.length > 0) {
+          this.ordersList = [...res];
+          console.log(res);
+          this.displayedColumns = [
+            ...Object.keys(res[0]).filter(
+              (item) =>
+                !['id', 'createdby', '__v'].some((column) =>
+                  item.toLowerCase().includes(column)
+                )
+            ),
+          ]
+        } else {
+          this.isTableEmpty = true;
+        }
+        this.isLoading = false
+      },
+      error: (err) => console.log(err)
+    })
+  }
 
   handleTableHeaderHover(i: number | 'total' | '') {
     this.shownColumn = i
@@ -43,10 +66,10 @@ export class OrdersComponent {
     } 
     if (!this.sortingColumn.direction) {
       this.sortingColumn.direction = 'asc'
-      this.orders = this.sortTableDirective.getSortedTable()
+      this.ordersList = this.sortTableDirective.getSortedTable()
     } else if (this.sortingColumn.direction === 'asc') {
       this.sortingColumn.direction = 'desc'
-      this.orders = this.sortTableDirective.getSortedTable()
+      this.ordersList = this.sortTableDirective.getSortedTable()
     } else {
       this.shownColumn = ''
       this.sortingColumn.column = ''

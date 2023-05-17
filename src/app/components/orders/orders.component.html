@@ -14,10 +14,15 @@
     <div class="header__title" appPageHeader>Заявки</div>
     <button class="header__button" (click)="isAddingNewOrder = !isAddingNewOrder">Создать заявку</button>
   </div>
+	<div class="empty-table-alert" *ngIf="isTableEmpty">
+		<span>Заявок нет...</span>
+		<span class="loader"></span>
+	</div>
   <div
+		*ngIf="!isTableEmpty"
     class="table"
     appSortTable
-    [sortTable]="orders"
+    [sortTable]="ordersList"
     [columnNum]="sortingColumn.column"
     [sortDirection]="sortingColumn.direction"
     [columns]="displayedColumns"
@@ -111,7 +116,7 @@
         >
       </span>
     </div>
-    <div class="table__row" *ngFor="let row of orders; let i = index">
+    <div class="table__row" *ngFor="let row of ordersList; let i = index">
       <span class="cell"> {{ row.createdAt }} </span>
       <span class="cell"> {{ row.storageName }} </span>
       <div class="cell-positions">
