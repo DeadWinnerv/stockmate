@@ -4,6 +4,7 @@
     action=""
     class="new-order-form"
     [style]="isAddingNewOrder ? 'transform: scaleY(1)' : 'transform: scaleY(0)'"
+    [formGroup]="addNewOrderForm"
   >
     <div class="title">Создать заявку</div>
     <div class="new-order-form__input-block">
@@ -12,7 +13,13 @@
         placeholder="Склад"
         [matAutocomplete]="storageAuto"
         [formControl]="storageInput"
+        formControlName="storageId"
       />
+      <span class="input-warning"
+        *ngIf="this.storageInput.invalid && this.storageInput.touched"
+      >
+        Укажите склад
+      </span>
       <mat-autocomplete #storageAuto="matAutocomplete">
         <mat-option
           [value]="option"
@@ -22,7 +29,14 @@
       </mat-autocomplete>
     </div>
     <div class="new-order-form__input-block">
-      <input type="text" placeholder="Стоимость заявки" />
+      <input type="text" placeholder="Стоимость заявки"
+        formControlName="orderPrice"
+      />
+      <span class="input-warning"
+        *ngIf="this.addNewOrderForm.get('orderPrice')!.invalid && this.addNewOrderForm.get('orderPrice')!.touched"
+      >
+        Укажите стоимость заявки
+      </span>
     </div>
     <div class="new-order-form__input-block new-order-form__positions">
       <input type="text" placeholder="Позиции" 
@@ -35,6 +49,7 @@
             type="checkbox"
             name=""
             id=""
+            formControlName="positions"
             [value]="productOption"
           />
           <label for="">
@@ -44,7 +59,13 @@
         </div>
       </div>
     </div>
-    <button type="submit" class="new-order-form__btn">Подтвердить</button>
+    <button type="submit" class="new-order-form__btn"
+      [disabled]="this.addNewOrderForm.disabled 
+      || storageInput.invalid
+      || this.addNewOrderForm.get('orderPrice')?.invalid
+      "
+      (click)="addOrder()"
+    >Подтвердить</button>
   </form>
   <div class="header">
     <div class="header__title" appPageHeader>Заявки</div>

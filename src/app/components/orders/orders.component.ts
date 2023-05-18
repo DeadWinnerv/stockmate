@@ -6,7 +6,8 @@ import { ProductService } from 'src/app/services/product.service';
 import { IProduct } from 'src/app/models/product';
 import { StorageService } from 'src/app/services/storage.service';
 import { Observable, map, startWith } from 'rxjs';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { IStorage } from 'src/app/models/storage';
 
 @Component({
   selector: 'app-orders',
@@ -39,6 +40,8 @@ export class OrdersComponent implements OnInit, OnDestroy {
   protected storageInput = new FormControl('', Validators.required)
   protected filteredProductOptions: Observable<string[]>
   protected productsFilter = new FormControl('')
+  protected addNewOrderForm: FormGroup
+  private _storages: IStorage[]
 
 
   @ViewChild(SortTableDirective) sortTableDirective: SortTableDirective;
@@ -49,6 +52,11 @@ export class OrdersComponent implements OnInit, OnDestroy {
     private storageService: StorageService
   ) {}
   ngOnInit(): void {
+    this.addNewOrderForm = new FormGroup({
+      storageId: new FormControl('', Validators.required),
+      orderPrice: new FormControl('', Validators.required),
+      positions: new FormControl(''),
+    })
     this.loadProductsList();
     this.loadOrdersList();
     this.loadStorages();
@@ -63,7 +71,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
       startWith(''),
       map((value) => {
         const name = value
-        return name !== '' && name ? this._filterOptions(name as string, this.productsList.map(item => item.name)) : this.productsList.map(item => item.name);
+        return (name !== '' && name) ? this._filterOptions(name as string, this.productsList.map(item => item.name)) : this.productsList.map(item => item.name);
       })
     )
   }
@@ -96,6 +104,19 @@ export class OrdersComponent implements OnInit, OnDestroy {
     });
   }
 
+  addOrder() {
+    this.isAddingNewOrder = false;
+    this.isLoading = true;
+    this.addNewOrderForm.disable()
+    this.addNewOrderForm.value.storageId = this._storages.find(
+      (item) => {
+        item.name === this.storageInput.value
+      })?._id
+    const positions: IProduct[] = []
+    console.log(this.addNewOrderForm.value.positions)
+    
+  }
+
   loadProductsList() {
     this.productsService.getProducts().subscribe({
       next: (res) => {
@@ -112,6 +133,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
   loadStorages() {
     this.storageService.getStorages().subscribe({
       next: (res) => {
+        this._storages = res
         this.storageOptions = res.map(storage => storage.name)
       },
       error: (err) => {
