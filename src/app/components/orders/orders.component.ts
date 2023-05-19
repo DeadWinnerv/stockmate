@@ -8,6 +8,8 @@ import { StorageService } from 'src/app/services/storage.service';
 import { Observable, map, startWith } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IStorage } from 'src/app/models/storage';
+import { IOrderPosition } from 'src/app/models/position';
+import { Toast } from '../ui/preloader/Toasts/Toast';
 
 @Component({
   selector: 'app-orders',
@@ -34,15 +36,15 @@ export class OrdersComponent implements OnInit, OnDestroy {
   protected shownDetails: number | undefined;
   protected isTableEmpty = false;
   protected productsList: IProduct[] = [];
-  protected isAddingNewOrder = this.productsList[0] ? false : true;
+  protected isAddingNewOrder = this.isTableEmpty;
   protected storageOptions: string[];
   protected filteredStorageOptions: Observable<string[]>;
   protected storageInput = new FormControl('', Validators.required);
   protected filteredProductOptions: Observable<string[]>;
   protected productsFilter = new FormControl('');
-  protected selectedProducts: IProduct[] = []
+  protected selectedProductsList: IProduct[] = []
+  protected selectedPositions: IOrderPosition[] = []
   protected addNewOrderForm: FormGroup;
-  protected positionCountInput = new FormControl('', Validators.required)
   private _storages: IStorage[];
   
 
@@ -55,7 +57,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
   ) {}
   ngOnInit(): void {
     this.addNewOrderForm = new FormGroup({
-      storageId: new FormControl('', Validators.required),
+      storageName: new FormControl('', Validators.required),
       orderPrice: new FormControl('', Validators.required),
       positions: new FormControl(''),
     });
@@ -77,9 +79,14 @@ export class OrdersComponent implements OnInit, OnDestroy {
         const name = value;
         const product = this.productsList.find((item) => item.name === name) ?? null
         if (product) {
-          if (!this.selectedProducts.includes(product))
+          if (!this.selectedProductsList.includes(product))
           {
-            this.selectedProducts.push((product) as any)
+            this.selectedProductsList.push((product) as any)
+            const index = this.selectedProductsList.indexOf(product)
+            this.selectedPositions[index] = {
+              product,
+              count: 0
+            }
             this.productsFilter.reset()
             return this.productsList.map(item => item.name)
           }
@@ -120,19 +127,47 @@ export class OrdersComponent implements OnInit, OnDestroy {
     });
   }
 
+  showValue(e: any) {
+    console.log(e.target.value);
+    
+  }
+
   addOrder() {
     this.isAddingNewOrder = false;
     this.isLoading = true;
     this.addNewOrderForm.disable();
-    this.addNewOrderForm.value.storageId = this._storages.find((item) => {
-      item.name === this.storageInput.value;
-    })?._id;
-    console.log(this.positionCountInput.value);
+    console.log(this._storages.find(item => this.storageInput.value === item.name)!._id);
+    console.log(this.addNewOrderForm.get('storageName')?.value);
+    console.log(this.selectedPositions);
+    console.log(this.addNewOrderForm.get('orderPrice')?.value);
+    
+    this.ordersService.addOrder({
+      storageId: this._storages.find(item => this.storageInput.value === item.name)!._id, //temp
+      storageName: this.storageInput.value!,
+      positions: this.selectedPositions,
+      orderPrice: this.addNewOrderForm.get('orderPrice')?.value,
+    }).subscribe({
+      next: (res) => {
+        this.isLoading = false;
+        this.isAddingNewOrder = false;
+        this.addNewOrderForm.enable()
+        this.addNewOrderForm.reset()
+        this.selectedPositions = []
+        this.selectedProductsList = []
+        this.loadOrdersList()
+      },
+      error: (err) => {
+        this.isLoading = false;
+        this.isAddingNewOrder = true;
+        Toast.fire(err.error.msg)
+        console.log(err);
+      },
+    })
     
   }
 
   removeSelectedProduct(id: string) {
-    this.selectedProducts = this.selectedProducts.filter((item) => item._id !== id)
+    this.selectedProductsList = this.selectedProductsList.filter((item) => item._id !== id)
   }
 
   loadProductsList() {

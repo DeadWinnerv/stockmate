@@ -1,11 +1,12 @@
 import { IOrderPosition } from "./position"
 
 export interface IOrder {
-	_id: string,
-	createdAt: string,
+	_id?: string,
+	createdAt?: string,
+	storageId?: string,
 	storageName: string,
 	positions: IOrderPosition[],
 	orderPrice: number,
-	status: 'created' | 'paid' | 'delievering' | 'acceptence' | 'completed',
-	updatedAt: string
+	status?: 'created' | 'paid' | 'delievering' | 'acceptence' | 'completed',
+	updatedAt?: string
 }

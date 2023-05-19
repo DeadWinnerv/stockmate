@@ -19,7 +19,7 @@
         placeholder="Склад"
         [matAutocomplete]="storageAuto"
         [formControl]="storageInput"
-        formControlName="storageId"
+        formControlName="storageName"
       />
       <mat-autocomplete #storageAuto="matAutocomplete">
         <mat-option
@@ -52,16 +52,16 @@
         class="positions__filter"
       />
       <span class="input-warning"
-       *ngIf="selectedProducts.length > 0"
+       *ngIf="selectedProductsList.length > 0"
       >Введите количество товара для всех позиций</span>
       <div class="products-list">
         <div
           class="products-list__product"
-          *ngFor="let product of selectedProducts ?? []; let i = index"
+          *ngFor="let product of selectedProductsList ?? []; let i = index"
         >
           <span> {{ product.name }} </span>
-          <input type="text" placeholder="к-во" class="input-count"
-            [formControl]="positionCountInput"
+          <input type="text" placeholder="к-во" class="input-count"s
+            [value]="selectedPositions[i].count"
           />
           <mat-icon (click)="removeSelectedProduct(product._id)" >close</mat-icon>
         </div>
@@ -81,7 +81,7 @@
         this.addNewOrderForm.disabled ||
         storageInput.invalid ||
         this.addNewOrderForm.get('orderPrice')?.invalid ||
-        selectedProducts.length < 1
+        selectedProductsList.length < 1
       "
       (click)="addOrder()"
     >
