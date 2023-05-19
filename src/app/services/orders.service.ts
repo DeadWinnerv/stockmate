@@ -12,7 +12,7 @@ export class OrdersService {
   getOrdersList(): Observable<IOrder[]> {
     return this.http.get<IOrder[]>('https://stockmate-back.onrender.com/orders')
   }
-  addOrder(order: IOrder[]): Observable<IOrder[]> {
-    return this.http.post<IOrder[]>('https://stockmate-back.onrender.com/orders', order)
+  addOrder(order: IOrder): Observable<IOrder> {
+    return this.http.post<IOrder>('https://stockmate-back.onrender.com/orders', order)
   }
 }
