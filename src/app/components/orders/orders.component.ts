@@ -36,13 +36,15 @@ export class OrdersComponent implements OnInit, OnDestroy {
   protected productsList: IProduct[] = [];
   protected isAddingNewOrder = this.productsList[0] ? false : true;
   protected storageOptions: string[];
-  protected filteredStorageOptions: Observable<string[]>
-  protected storageInput = new FormControl('', Validators.required)
-  protected filteredProductOptions: Observable<string[]>
-  protected productsFilter = new FormControl('')
-  protected addNewOrderForm: FormGroup
-  private _storages: IStorage[]
-
+  protected filteredStorageOptions: Observable<string[]>;
+  protected storageInput = new FormControl('', Validators.required);
+  protected filteredProductOptions: Observable<string[]>;
+  protected productsFilter = new FormControl('');
+  protected selectedProducts: IProduct[] = []
+  protected addNewOrderForm: FormGroup;
+  protected positionCountInput = new FormControl('', Validators.required)
+  private _storages: IStorage[];
+  
 
   @ViewChild(SortTableDirective) sortTableDirective: SortTableDirective;
 
@@ -56,29 +58,42 @@ export class OrdersComponent implements OnInit, OnDestroy {
       storageId: new FormControl('', Validators.required),
       orderPrice: new FormControl('', Validators.required),
       positions: new FormControl(''),
-    })
+    });
     this.loadProductsList();
     this.loadOrdersList();
     this.loadStorages();
     this.filteredStorageOptions = this.storageInput.valueChanges.pipe(
       startWith(''),
       map((value) => {
-        const name = value
-        return name ? this._filterOptions(name as string, this.storageOptions) : this.storageOptions;
+        const name = value;
+        return name
+          ? this._filterOptions(name as string, this.storageOptions)
+          : this.storageOptions;
       })
-    )
+    );
     this.filteredProductOptions = this.productsFilter.valueChanges.pipe(
       startWith(''),
       map((value) => {
-        const name = value
-        return (name !== '' && name) ? this._filterOptions(name as string, this.productsList.map(item => item.name)) : this.productsList.map(item => item.name);
+        const name = value;
+        const product = this.productsList.find((item) => item.name === name) ?? null
+        if (product) {
+          if (!this.selectedProducts.includes(product))
+          {
+            this.selectedProducts.push((product) as any)
+            this.productsFilter.reset()
+          }
+        }
+        return name !== '' && name
+          ? this._filterOptions(
+              name as string,
+              this.productsList.map((item) => item.name)
+            )
+          : this.productsList.map((item) => item.name);
       })
-    )
+    );
   }
 
-  ngOnDestroy(): void {
-    
-  }
+  ngOnDestroy(): void {}
 
   loadOrdersList() {
     this.isLoading = true;
@@ -107,39 +122,40 @@ export class OrdersComponent implements OnInit, OnDestroy {
   addOrder() {
     this.isAddingNewOrder = false;
     this.isLoading = true;
-    this.addNewOrderForm.disable()
-    this.addNewOrderForm.value.storageId = this._storages.find(
-      (item) => {
-        item.name === this.storageInput.value
-      })?._id
-    const positions: IProduct[] = []
-    console.log(this.addNewOrderForm.value.positions)
+    this.addNewOrderForm.disable();
+    this.addNewOrderForm.value.storageId = this._storages.find((item) => {
+      item.name === this.storageInput.value;
+    })?._id;
+    console.log(this.positionCountInput.value);
     
+  }
+
+  removeSelectedProduct(id: string) {
+    this.selectedProducts = this.selectedProducts.filter((item) => item._id !== id)
   }
 
   loadProductsList() {
     this.productsService.getProducts().subscribe({
       next: (res) => {
         this.productsList = res;
-        this.filteredProductOptions.subscribe
+        this.filteredProductOptions.subscribe;
       },
       error: (err) => {
         console.error(err);
-        
-      }
-    })
+      },
+    });
   }
 
   loadStorages() {
     this.storageService.getStorages().subscribe({
       next: (res) => {
-        this._storages = res
-        this.storageOptions = res.map(storage => storage.name)
+        this._storages = res;
+        this.storageOptions = res.map((storage) => storage.name);
       },
       error: (err) => {
         console.error(err);
-      }
-    })
+      },
+    });
   }
 
   handleTableHeaderHover(i: number | 'total' | '') {
@@ -172,6 +188,8 @@ export class OrdersComponent implements OnInit, OnDestroy {
 
   private _filterOptions(name: string, options: string[]) {
     const filterValue = name.toLowerCase();
-    return options.filter(option => option.toLowerCase().includes(filterValue));
+    return options.filter((option) =>
+      option.toLowerCase().includes(filterValue)
+    );
   }
 }

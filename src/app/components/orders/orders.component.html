@@ -8,6 +8,12 @@
   >
     <div class="title">Создать заявку</div>
     <div class="new-order-form__input-block">
+      <span
+        class="input-warning"
+        *ngIf="this.storageInput.invalid && this.storageInput.touched"
+      >
+        Укажите склад
+      </span>
       <input
         type="text"
         placeholder="Склад"
@@ -15,11 +21,6 @@
         [formControl]="storageInput"
         formControlName="storageId"
       />
-      <span class="input-warning"
-        *ngIf="this.storageInput.invalid && this.storageInput.touched"
-      >
-        Укажите склад
-      </span>
       <mat-autocomplete #storageAuto="matAutocomplete">
         <mat-option
           [value]="option"
@@ -29,43 +30,63 @@
       </mat-autocomplete>
     </div>
     <div class="new-order-form__input-block">
-      <input type="text" placeholder="Стоимость заявки"
-        formControlName="orderPrice"
-      />
-      <span class="input-warning"
-        *ngIf="this.addNewOrderForm.get('orderPrice')!.invalid && this.addNewOrderForm.get('orderPrice')!.touched"
+      <span
+        class="input-warning"
+        *ngIf="
+          this.addNewOrderForm.get('orderPrice')!.invalid &&
+          this.addNewOrderForm.get('orderPrice')!.touched
+        "
       >
         Укажите стоимость заявки
       </span>
+      <input
+        type="text"
+        placeholder="Стоимость заявки"
+        formControlName="orderPrice"
+      />
     </div>
     <div class="new-order-form__input-block new-order-form__positions">
       <input type="text" placeholder="Позиции" 
-				[formControl]="productsFilter"
-			/>
+        [formControl]="productsFilter"
+        [matAutocomplete]="productsAuto"
+        class="positions__filter"
+      />
+      <span class="input-warning"
+       *ngIf="selectedProducts.length > 0"
+      >Введите количество товара для всех позиций</span>
       <div class="products-list">
-        <div class="products-list__item" *ngFor="let productOption of filteredProductOptions | async">
-          <input
-            class="input_checkbox"
-            type="checkbox"
-            name=""
-            id=""
-            formControlName="positions"
-            [value]="productOption"
+        <div
+          class="products-list__product"
+          *ngFor="let product of selectedProducts ?? []; let i = index"
+        >
+          <span> {{ product.name }} </span>
+          <input type="text" placeholder="к-во" class="input-count"
+            [formControl]="positionCountInput"
           />
-          <label for="">
-            {{ productOption }}
-          </label>
-          <input class="input_count" type="text" placeholder="Кол-во" />
+          <mat-icon (click)="removeSelectedProduct(product._id)" >close</mat-icon>
         </div>
       </div>
+      <mat-autocomplete
+        #productsAuto="matAutocomplete"
+      >
+        <mat-option [value]="productOption" *ngFor="let productOption of filteredProductOptions | async;">
+          {{ productOption }}
+        </mat-option>
+      </mat-autocomplete>
     </div>
-    <button type="submit" class="new-order-form__btn"
-      [disabled]="this.addNewOrderForm.disabled 
-      || storageInput.invalid
-      || this.addNewOrderForm.get('orderPrice')?.invalid
+    <button
+      type="submit"
+      class="new-order-form__btn"
+      [disabled]="
+        this.addNewOrderForm.disabled ||
+        storageInput.invalid ||
+        this.addNewOrderForm.get('orderPrice')?.invalid ||
+        selectedProducts.length < 1
       "
       (click)="addOrder()"
-    >Подтвердить</button>
+    >
+      Подтвердить
+    </button>
   </form>
   <div class="header">
     <div class="header__title" appPageHeader>Заявки</div>
