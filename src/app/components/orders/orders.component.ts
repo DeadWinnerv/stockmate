@@ -65,8 +65,8 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this.filteredStorageOptions = this.storageInput.valueChanges.pipe(
       startWith(''),
       map((value) => {
-        const name = value;
-        return name
+        const name = value
+        return name && name !== ''
           ? this._filterOptions(name as string, this.storageOptions)
           : this.storageOptions;
       })
@@ -81,9 +81,10 @@ export class OrdersComponent implements OnInit, OnDestroy {
           {
             this.selectedProducts.push((product) as any)
             this.productsFilter.reset()
+            return this.productsList.map(item => item.name)
           }
         }
-        return name !== '' && name
+        return name && name !== ''
           ? this._filterOptions(
               name as string,
               this.productsList.map((item) => item.name)
