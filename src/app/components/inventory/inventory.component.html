@@ -134,6 +134,7 @@
         type="text"
         placeholder="Склад"
         [matAutocomplete]="filterStorageAutocomplete"
+        [formControl]="filterStorageInput"
         />
         <mat-autocomplete #filterStorageAutocomplete="matAutocomplete">
           <mat-option

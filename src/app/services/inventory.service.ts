@@ -9,11 +9,12 @@ import { Observable } from 'rxjs';
 export class InventoryService {
   constructor(private http: HttpClient) {}
 
-  getInventory(): Observable<IInventory[]> {
+  getInventory(filter: string = ''): Observable<IInventory[]> {
     return this.http.get<IInventory[]>(
-      'https://stockmate-back.onrender.com/inventory'
+      `https://stockmate-back.onrender.com/inventory/${filter}`
     );
   }
+
   addInventory(inventory: IInventory): Observable<IInventory[]> {
     return this.http.post<IInventory[]>(
       'https://stockmate-back.onrender.com/inventory',
