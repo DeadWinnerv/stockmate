@@ -24,7 +24,8 @@ export class OrdersComponent implements OnInit, OnDestroy {
     | 'paid'
     | 'delievering'
     | 'acceptence'
-    | 'completed' = 'created';
+    | 'completed' 
+    | '' = '';
   protected displayedColumns: string[] = [];
   protected sortingColumn: {
     column: number | 'total' | '';
@@ -109,7 +110,6 @@ export class OrdersComponent implements OnInit, OnDestroy {
       next: (res) => {
         if (res.length > 0) {
           this.ordersList = [...res];
-          console.log(res);
           this.displayedColumns = [
             ...Object.keys(res[0]).filter(
               (item) =>
@@ -127,19 +127,10 @@ export class OrdersComponent implements OnInit, OnDestroy {
     });
   }
 
-  showValue(e: any) {
-    console.log(e.target.value);
-    
-  }
-
   addOrder() {
     this.isAddingNewOrder = false;
     this.isLoading = true;
     this.addNewOrderForm.disable();
-    console.log(this._storages.find(item => this.storageInput.value === item.name)!._id);
-    console.log(this.addNewOrderForm.get('storageName')?.value);
-    console.log(this.selectedPositions);
-    console.log(this.addNewOrderForm.get('orderPrice')?.value);
     
     this.ordersService.addOrder({
       storageId: this._storages.find(item => this.storageInput.value === item.name)!._id, //temp

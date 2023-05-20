@@ -110,7 +110,19 @@
     [sortDirection]="sortingColumn.direction"
     [columns]="displayedColumns"
   >
-    <div class="table-filter">
+  <div class="table-filter">
+      <button
+        class="table-filter__button"
+        [ngClass]="activeFilter === '' ? 'active' : null"
+        (click)="activeFilter = ''"
+      >
+        <span>Все</span>
+        <span
+          class="count"
+          [style]="activeFilter === '' ? 'opacity: 1' : null"
+          >{{ ordersList.length }}</span
+        >
+      </button>
       <button
         class="table-filter__button"
         [ngClass]="activeFilter === 'created' ? 'active' : null"
@@ -120,7 +132,7 @@
         <span
           class="count"
           [style]="activeFilter === 'created' ? 'opacity: 1' : null"
-          >1209</span
+          >{{ ordersList.length }}</span
         >
       </button>
       <button
@@ -132,7 +144,7 @@
         <span
           class="count"
           [style]="activeFilter === 'paid' ? 'opacity: 1' : null"
-          >8</span
+          >{{ ordersList.length }}</span
         >
       </button>
       <button
@@ -144,7 +156,7 @@
         <span
           class="count"
           [style]="activeFilter === 'delievering' ? 'opacity: 1' : null"
-          >43</span
+          >{{ ordersList.length }}</span
         >
       </button>
       <button
@@ -156,7 +168,7 @@
         <span
           class="count"
           [style]="activeFilter === 'acceptence' ? 'opacity: 1' : null"
-          >213</span
+          >{{ ordersList.length }}</span
         >
       </button>
       <button
@@ -168,7 +180,7 @@
         <span
           class="count"
           [style]="activeFilter === 'completed' ? 'opacity: 1' : null"
-          >123</span
+          >{{ ordersList.length }}</span
         >
       </button>
     </div>
@@ -200,26 +212,26 @@
       </span>
     </div>
     <div class="table__row" *ngFor="let row of ordersList; let i = index">
-      <span class="cell"> {{ row.createdAt }} </span>
       <span class="cell"> {{ row.storageName }} </span>
       <div class="cell-positions">
         <mat-icon
-          (click)="showDetails(i)"
-          [class]="shownDetails === i ? 'expanded' : null"
+        (click)="showDetails(i)"
+        [class]="shownDetails === i ? 'expanded' : null"
         >
-          expand_less
-        </mat-icon>
-        <div class="cell-positions__details" *ngIf="shownDetails === i">
-          <div class="details" *ngFor="let item of row.positions">
-            <span> {{ i + 1 }}. </span>
-            <span>{{ item.product.name }}</span>
-            <span>{{ item.count }} шт.</span>
-          </div>
+        expand_less
+      </mat-icon>
+      <div class="cell-positions__details" *ngIf="shownDetails === i">
+        <div class="details" *ngFor="let item of row.positions; let i = index">
+          <span> {{ i + 1 }}. </span>
+          <span>{{ item.product.name }}</span>
+          <span>{{ item.count }} шт.</span>
         </div>
       </div>
-      <span class="cell"> {{ row.orderPrice | currency : "₽" }} </span>
-      <span class="cell_status"> {{ row.status }} </span>
-      <span class="cell"> {{ row.updatedAt }} </span>
+    </div>
+    <span class="cell"> {{ row.orderPrice | currency : "₽" }} </span>
+    <span class="cell_status"> {{ row.status }} </span>
+    <span class="cell"> {{ row.createdAt | date: 'hh:mm dd.MM.YY' }} </span>
+      <span class="cell"> {{ row.updatedAt | date: 'hh:mm dd.MM.YY' }} </span>
     </div>
   </div>
 </div>
