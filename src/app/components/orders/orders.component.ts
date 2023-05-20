@@ -139,7 +139,6 @@ export class OrdersComponent implements OnInit, OnDestroy {
       orderPrice: this.addNewOrderForm.get('orderPrice')?.value,
     }).subscribe({
       next: (res) => {
-        this.isLoading = false;
         this.isAddingNewOrder = false;
         this.addNewOrderForm.enable()
         this.addNewOrderForm.reset()
@@ -159,6 +158,10 @@ export class OrdersComponent implements OnInit, OnDestroy {
 
   removeSelectedProduct(id: string) {
     this.selectedProductsList = this.selectedProductsList.filter((item) => item._id !== id)
+  }
+
+  addPositionCount(i: number, event: any) {
+    this.selectedPositions[i].count = event.target.value
   }
 
   loadProductsList() {

@@ -60,8 +60,9 @@
           *ngFor="let product of selectedProductsList ?? []; let i = index"
         >
           <span> {{ product.name }} </span>
-          <input type="text" placeholder="к-во" class="input-count"s
+          <input type="text" placeholder="к-во" class="input-count"
             [value]="selectedPositions[i].count"
+            (change)="addPositionCount(i, $event)"
           />
           <mat-icon (click)="removeSelectedProduct(product._id)" >close</mat-icon>
         </div>
