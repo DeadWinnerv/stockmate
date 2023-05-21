@@ -16,6 +16,7 @@ import { debounceTime, map, startWith } from 'rxjs';
   styleUrls: ['./inventory.component.scss'],
 })
 export class InventoryComponent implements OnInit, OnDestroy {
+  isEmpty = false;
   requestError: any;
   isErrorDisplay: boolean = false;
   isLoading: boolean = true;
@@ -119,15 +120,21 @@ export class InventoryComponent implements OnInit, OnDestroy {
     });
     this.InventoryService.getInventory(this.storageFilter).subscribe({
       next: (res) => {
-        this.INVENTORY = res
-        this.displayedColumns = [...Object.keys(this.INVENTORY[0]).filter(
-            (item) =>
-              !['id', 'createdby', '__v'].some((column) =>
-                item.toLowerCase().includes(column)
-              )
-          ),
-        ];
-        this.isLoading = false;
+        if (!res[0]) {
+          this.isEmpty = true;
+          this.isLoading = false;
+        } else {
+          this.isEmpty = false;
+          this.INVENTORY = res
+          this.displayedColumns = [...Object.keys(this.INVENTORY[0]).filter(
+              (item) =>
+                !['id', 'createdby', '__v'].some((column) =>
+                  item.toLowerCase().includes(column)
+                )
+            ),
+          ];
+          this.isLoading = false;
+        }
       },
       error: (err) => {
         console.log(err);

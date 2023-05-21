@@ -12,6 +12,7 @@ import { SortTableDirective } from 'src/directives/sortTable.directive';
   styleUrls: ['./products.component.scss']
 })
 export class ProductsComponent {
+  isEmpty = false;
   requestError: any;
   isErrorDisplay: boolean = false;
   constructor(private service: ProductService){
@@ -53,15 +54,21 @@ export class ProductsComponent {
     this.isLoading = true;
     this.service.getProducts().subscribe({
       next: (res: any) => {
-        this.products = res;
-        this.displayedColumns = [...Object.keys(this.products[0]).filter(
-          (item) =>
-            !['id', 'createdby', '__v'].some((column) =>
-              item.toLowerCase().includes(column)
-            )
-        ),
-      ];
-        this.isLoading = false;
+        if (!res[0]) {
+          this.isEmpty = true
+          this.isLoading = false;
+        } else {
+          this.isEmpty = false;
+          this.products = res;
+          this.displayedColumns = [...Object.keys(this.products[0]).filter(
+            (item) =>
+              !['id', 'createdby', '__v'].some((column) =>
+                item.toLowerCase().includes(column)
+              )
+          ),
+        ];
+          this.isLoading = false;
+        }
       },
       error: (err) => {
         console.log(err)
