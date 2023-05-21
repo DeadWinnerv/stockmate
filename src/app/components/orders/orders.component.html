@@ -4,14 +4,22 @@
     action=""
     class="new-order-form"
     [style]="isAddingNewOrder ? 'transform: scaleY(1)' : 'transform: scaleY(0)'"
+    [formGroup]="addNewOrderForm"
   >
     <div class="title">Создать заявку</div>
     <div class="new-order-form__input-block">
+      <span
+        class="input-warning"
+        *ngIf="this.storageInput.invalid && this.storageInput.touched"
+      >
+        Укажите склад
+      </span>
       <input
         type="text"
         placeholder="Склад"
         [matAutocomplete]="storageAuto"
         [formControl]="storageInput"
+        formControlName="storageName"
       />
       <mat-autocomplete #storageAuto="matAutocomplete">
         <mat-option
@@ -22,29 +30,64 @@
       </mat-autocomplete>
     </div>
     <div class="new-order-form__input-block">
-      <input type="text" placeholder="Стоимость заявки" />
+      <span
+        class="input-warning"
+        *ngIf="
+          this.addNewOrderForm.get('orderPrice')!.invalid &&
+          this.addNewOrderForm.get('orderPrice')!.touched
+        "
+      >
+        Укажите стоимость заявки
+      </span>
+      <input
+        type="text"
+        placeholder="Стоимость заявки"
+        formControlName="orderPrice"
+      />
     </div>
     <div class="new-order-form__input-block new-order-form__positions">
       <input type="text" placeholder="Позиции" 
-				[formControl]="productsFilter"
-			/>
+        [formControl]="productsFilter"
+        [matAutocomplete]="productsAuto"
+        class="positions__filter"
+      />
+      <span class="input-warning"
+       *ngIf="selectedProductsList.length > 0"
+      >Введите количество товара для всех позиций</span>
       <div class="products-list">
-        <div class="products-list__item" *ngFor="let productOption of filteredProductOptions | async">
-          <input
-            class="input_checkbox"
-            type="checkbox"
-            name=""
-            id=""
-            [value]="productOption"
+        <div
+          class="products-list__product"
+          *ngFor="let product of selectedProductsList ?? []; let i = index"
+        >
+          <span> {{ product.name }} </span>
+          <input type="text" placeholder="к-во" class="input-count"
+            [value]="selectedPositions[i].count"
+            (change)="addPositionCount(i, $event)"
           />
-          <label for="">
-            {{ productOption }}
-          </label>
-          <input class="input_count" type="text" placeholder="Кол-во" />
+          <mat-icon (click)="removeSelectedProduct(product._id)" >close</mat-icon>
         </div>
       </div>
+      <mat-autocomplete
+        #productsAuto="matAutocomplete"
+      >
+        <mat-option [value]="productOption" *ngFor="let productOption of filteredProductOptions | async;">
+          {{ productOption }}
+        </mat-option>
+      </mat-autocomplete>
     </div>
-    <button type="submit" class="new-order-form__btn">Подтвердить</button>
+    <button
+      type="submit"
+      class="new-order-form__btn"
+      [disabled]="
+        this.addNewOrderForm.disabled ||
+        storageInput.invalid ||
+        this.addNewOrderForm.get('orderPrice')?.invalid ||
+        selectedProductsList.length < 1
+      "
+      (click)="addOrder()"
+    >
+      Подтвердить
+    </button>
   </form>
   <div class="header">
     <div class="header__title" appPageHeader>Заявки</div>
@@ -68,7 +111,19 @@
     [sortDirection]="sortingColumn.direction"
     [columns]="displayedColumns"
   >
-    <div class="table-filter">
+  <div class="table-filter">
+      <button
+        class="table-filter__button"
+        [ngClass]="activeFilter === '' ? 'active' : null"
+        (click)="activeFilter = ''"
+      >
+        <span>Все</span>
+        <span
+          class="count"
+          [style]="activeFilter === '' ? 'opacity: 1' : null"
+          >{{ ordersList.length }}</span
+        >
+      </button>
       <button
         class="table-filter__button"
         [ngClass]="activeFilter === 'created' ? 'active' : null"
@@ -78,7 +133,7 @@
         <span
           class="count"
           [style]="activeFilter === 'created' ? 'opacity: 1' : null"
-          >1209</span
+          >{{ ordersList.length }}</span
         >
       </button>
       <button
@@ -90,7 +145,7 @@
         <span
           class="count"
           [style]="activeFilter === 'paid' ? 'opacity: 1' : null"
-          >8</span
+          >{{ ordersList.length }}</span
         >
       </button>
       <button
@@ -102,7 +157,7 @@
         <span
           class="count"
           [style]="activeFilter === 'delievering' ? 'opacity: 1' : null"
-          >43</span
+          >{{ ordersList.length }}</span
         >
       </button>
       <button
@@ -114,7 +169,7 @@
         <span
           class="count"
           [style]="activeFilter === 'acceptence' ? 'opacity: 1' : null"
-          >213</span
+          >{{ ordersList.length }}</span
         >
       </button>
       <button
@@ -126,7 +181,7 @@
         <span
           class="count"
           [style]="activeFilter === 'completed' ? 'opacity: 1' : null"
-          >123</span
+          >{{ ordersList.length }}</span
         >
       </button>
     </div>
@@ -158,26 +213,26 @@
       </span>
     </div>
     <div class="table__row" *ngFor="let row of ordersList; let i = index">
-      <span class="cell"> {{ row.createdAt }} </span>
       <span class="cell"> {{ row.storageName }} </span>
       <div class="cell-positions">
         <mat-icon
-          (click)="showDetails(i)"
-          [class]="shownDetails === i ? 'expanded' : null"
+        (click)="showDetails(i)"
+        [class]="shownDetails === i ? 'expanded' : null"
         >
-          expand_less
-        </mat-icon>
-        <div class="cell-positions__details" *ngIf="shownDetails === i">
-          <div class="details" *ngFor="let item of row.positions">
-            <span> {{ i + 1 }}. </span>
-            <span>{{ item.product.name }}</span>
-            <span>{{ item.count }} шт.</span>
-          </div>
+        expand_less
+      </mat-icon>
+      <div class="cell-positions__details" *ngIf="shownDetails === i">
+        <div class="details" *ngFor="let item of row.positions; let i = index">
+          <span> {{ i + 1 }}. </span>
+          <span>{{ item.product.name }}</span>
+          <span>{{ item.count }} шт.</span>
         </div>
       </div>
-      <span class="cell"> {{ row.orderPrice | currency : "₽" }} </span>
-      <span class="cell_status"> {{ row.status }} </span>
-      <span class="cell"> {{ row.updatedAt }} </span>
+    </div>
+    <span class="cell"> {{ row.orderPrice | currency : "₽" }} </span>
+    <span class="cell_status"> {{ row.status }} </span>
+    <span class="cell"> {{ row.createdAt | date: 'hh:mm dd.MM.YY' }} </span>
+      <span class="cell"> {{ row.updatedAt | date: 'hh:mm dd.MM.YY' }} </span>
     </div>
   </div>
 </div>

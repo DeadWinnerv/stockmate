@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit, ViewChild} from '@angular/core';
+import { Component, OnChanges, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import { IInventory } from 'src/app/models/inventory';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/internal/Observable';
@@ -9,13 +9,14 @@ import { StorageService } from 'src/app/services/storage.service';
 import { ProductService } from 'src/app/services/product.service';
 import { Toast } from '../ui/preloader/Toasts/Toast';
 import { SortTableDirective } from 'src/directives/sortTable.directive';
-import { map, startWith } from 'rxjs';
+import { debounceTime, map, startWith } from 'rxjs';
 @Component({
   selector: 'app-inventory',
   templateUrl: './inventory.component.html',
   styleUrls: ['./inventory.component.scss'],
 })
-export class InventoryComponent implements OnInit {
+export class InventoryComponent implements OnInit, OnDestroy {
+  isEmpty = false;
   requestError: any;
   isErrorDisplay: boolean = false;
   isLoading: boolean = true;
@@ -38,6 +39,9 @@ export class InventoryComponent implements OnInit {
   protected filteredStorageOptions: Observable<string[]>;
   protected filteredProductOptions: Observable<string[]>;
   protected isAddingNewPosition: boolean = false;
+  filterStorageInput = new FormControl('')
+  storageFilter: string = '';
+  storageFilterObs$: Observable<any>
 
   @ViewChild(SortTableDirective) sortTableDirective: SortTableDirective
   
@@ -64,6 +68,22 @@ export class InventoryComponent implements OnInit {
         return name ? this._filterOptions(name as string, this.storageOptions) : this.storageOptions;
       }),
     );
+    this.filteredStorageOptions = this.filterStorageInput.valueChanges.pipe(
+      startWith(''),
+      map((value: string | any) => {
+        const name = typeof value === 'string' ? value : value?.name;
+        return name ? this._filterOptions(name as string, this.storageOptions) : this.storageOptions;
+      }),
+    );
+    this.storageFilterObs$ = this.filterStorageInput.valueChanges.pipe(
+      debounceTime(1000),
+    )
+    this.storageFilterObs$.subscribe({
+      next: (res: string | any) => {
+        this.storageFilter = typeof res === 'string' ? res : ''
+        this.loadInventory()
+      }
+    })
     this.filteredProductOptions = this.chooseProductForm.valueChanges.pipe(
       startWith(''),
       map((value: string | any) => {
@@ -72,6 +92,10 @@ export class InventoryComponent implements OnInit {
       }),
     );
   }
+
+  ngOnDestroy(): void {
+  }
+
   loadInventory() {
     this.isLoading = true;
     this.StorageService.getStorages().subscribe({
@@ -94,17 +118,23 @@ export class InventoryComponent implements OnInit {
         this.isLoading = false;
       },
     });
-    this.InventoryService.getInventory().subscribe({
+    this.InventoryService.getInventory(this.storageFilter).subscribe({
       next: (res) => {
-        this.INVENTORY = res
-        this.displayedColumns = [...Object.keys(this.INVENTORY[0]).filter(
-            (item) =>
-              !['id', 'createdby', '__v'].some((column) =>
-                item.toLowerCase().includes(column)
-              )
-          ),
-        ];
-        this.isLoading = false;
+        if (!res[0]) {
+          this.isEmpty = true;
+          this.isLoading = false;
+        } else {
+          this.isEmpty = false;
+          this.INVENTORY = res
+          this.displayedColumns = [...Object.keys(this.INVENTORY[0]).filter(
+              (item) =>
+                !['id', 'createdby', '__v'].some((column) =>
+                  item.toLowerCase().includes(column)
+                )
+            ),
+          ];
+          this.isLoading = false;
+        }
       },
       error: (err) => {
         console.log(err);

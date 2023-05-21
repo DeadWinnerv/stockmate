@@ -111,7 +111,12 @@
       >close</mat-icon
     >
   </div>
+  <div class="empty-table" *ngIf="isEmpty">
+    <h1>Инвентарь пуст</h1>
+    <div class="loader"></div>
+  </div>
   <div class="table"
+    *ngIf="!isEmpty"
     appSortTable
     [sortTable]="INVENTORY"
     [columnNum]="sortingColumn.column"
@@ -134,6 +139,7 @@
         type="text"
         placeholder="Склад"
         [matAutocomplete]="filterStorageAutocomplete"
+        [formControl]="filterStorageInput"
         />
         <mat-autocomplete #filterStorageAutocomplete="matAutocomplete">
           <mat-option

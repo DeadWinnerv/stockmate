@@ -18,7 +18,12 @@
 			<input type="text" placeholder="Название">
 		</div>
 	</div>
+	<div class="empty-table" *ngIf="isEmpty">
+    <h1>Товары не найдены</h1>
+    <div class="loader"></div>
+  </div>
 	<div class="table"
+		*ngIf="!isEmpty"
 		appSortTable
 		[sortTable]="products"
 		[columnNum]="sortingColumn.column"
