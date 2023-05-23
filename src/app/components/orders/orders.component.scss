@@ -289,6 +289,50 @@
 					}
 				}
 			}
+			.cell {
+				display: flex;
+				align-items: center;
+			}
+			.cell_status {
+				position: relative;
+				max-width: fit-content;
+				&__info {
+					display: flex;
+					align-items: center;
+					justify-content: space-between;
+					gap: 8px;
+					padding: 4px;
+					mat-icon {
+						transform: rotate(90deg);
+					}
+				}
+				&__details {
+					position: absolute;
+					z-index: 1;
+					option {
+						display: flex;
+					align-items: center;
+					justify-content: space-between;
+					gap: 8px;
+					padding: 4px;
+					}
+				}
+				.created {
+					background-color: #ff9500;
+				}
+				.paid {
+					background-color: #0eb93e;
+				}
+				.delievering {
+					background-color: #04c6b6;
+				}
+				.acceptence {
+					background-color: #9900ff;
+				}
+				.completed {
+					background-color: #bcbcbc;
+				}
+			}
 		}
 		&__headers {
 			box-shadow: none;

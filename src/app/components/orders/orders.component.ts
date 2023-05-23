@@ -19,6 +19,7 @@ import { Toast } from '../ui/preloader/Toasts/Toast';
 export class OrdersComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
   ordersList: IOrder[];
+  statusOptionsExpanded: number | undefined = undefined;
   protected activeFilter:
     | 'created'
     | 'paid'

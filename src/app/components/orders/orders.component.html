@@ -46,31 +46,39 @@
       />
     </div>
     <div class="new-order-form__input-block new-order-form__positions">
-      <input type="text" placeholder="Позиции" 
+      <input
+        type="text"
+        placeholder="Позиции"
         [formControl]="productsFilter"
         [matAutocomplete]="productsAuto"
         class="positions__filter"
       />
-      <span class="input-warning"
-       *ngIf="selectedProductsList.length > 0"
-      >Введите количество товара для всех позиций</span>
+      <span class="input-warning" *ngIf="selectedProductsList.length > 0"
+        >Введите количество товара для всех позиций</span
+      >
       <div class="products-list">
         <div
           class="products-list__product"
           *ngFor="let product of selectedProductsList ?? []; let i = index"
         >
           <span> {{ product.name }} </span>
-          <input type="text" placeholder="к-во" class="input-count"
+          <input
+            type="text"
+            placeholder="к-во"
+            class="input-count"
             [value]="selectedPositions[i].count"
             (change)="addPositionCount(i, $event)"
           />
-          <mat-icon (click)="removeSelectedProduct(product._id)" >close</mat-icon>
+          <mat-icon (click)="removeSelectedProduct(product._id)"
+            >close</mat-icon
+          >
         </div>
       </div>
-      <mat-autocomplete
-        #productsAuto="matAutocomplete"
-      >
-        <mat-option [value]="productOption" *ngFor="let productOption of filteredProductOptions | async;">
+      <mat-autocomplete #productsAuto="matAutocomplete">
+        <mat-option
+          [value]="productOption"
+          *ngFor="let productOption of filteredProductOptions | async"
+        >
           {{ productOption }}
         </mat-option>
       </mat-autocomplete>
@@ -111,7 +119,7 @@
     [sortDirection]="sortingColumn.direction"
     [columns]="displayedColumns"
   >
-  <div class="table-filter">
+    <div class="table-filter">
       <button
         class="table-filter__button"
         [ngClass]="activeFilter === '' ? 'active' : null"
@@ -216,23 +224,43 @@
       <span class="cell"> {{ row.storageName }} </span>
       <div class="cell-positions">
         <mat-icon
-        (click)="showDetails(i)"
-        [class]="shownDetails === i ? 'expanded' : null"
+          (click)="showDetails(i)"
+          [class]="shownDetails === i ? 'expanded' : null"
         >
-        expand_less
-      </mat-icon>
-      <div class="cell-positions__details" *ngIf="shownDetails === i">
-        <div class="details" *ngFor="let item of row.positions; let i = index">
-          <span> {{ i + 1 }}. </span>
-          <span>{{ item.product.name }}</span>
-          <span>{{ item.count }} шт.</span>
+          expand_less
+        </mat-icon>
+        <div class="cell-positions__details" *ngIf="shownDetails === i">
+          <div
+            class="details"
+            *ngFor="let item of row.positions; let i = index"
+          >
+            <span> {{ i + 1 }}. </span>
+            <span>{{ item.product.name }}</span>
+            <span>{{ item.count }} шт.</span>
+          </div>
         </div>
       </div>
-    </div>
-    <span class="cell"> {{ row.orderPrice | currency : "₽" }} </span>
-    <span class="cell_status"> {{ row.status }} </span>
-    <span class="cell"> {{ row.createdAt | date: 'hh:mm dd.MM.YY' }} </span>
-      <span class="cell"> {{ row.updatedAt | date: 'hh:mm dd.MM.YY' }} </span>
+      <span class="cell"> {{ row.orderPrice | currency : "₽" }} </span>
+      <span class="cell_status">
+        <span class="cell_status__info"
+          [ngClass]="row.status">
+          {{ row.status }}
+          <mat-icon
+            (click)="statusOptionsExpanded === i ? statusOptionsExpanded = undefined : statusOptionsExpanded = i "
+          >expand_less</mat-icon>
+        </span>
+        <div class="cell_status__details"
+          *ngIf="statusOptionsExpanded === i"
+        >
+        <option class="created" *ngIf="row.status !== 'created'" value="">created</option>
+        <option class="paid" *ngIf="row.status !== 'paid'" value="">paid</option>
+        <option class="delievering" *ngIf="row.status !== 'delievering'" value="">delievering</option>
+        <option class="acceptence" *ngIf="row.status !== 'acceptence'" value="">acceptence</option>
+        <option class="completed" *ngIf="row.status !== 'completed'" value="">completed</option>
+      </div>
+      </span>
+      <span class="cell"> {{ row.createdAt | date : "hh:mm dd.MM.YY" }} </span>
+      <span class="cell"> {{ row.updatedAt | date : "hh:mm dd.MM.YY" }} </span>
     </div>
   </div>
 </div>
